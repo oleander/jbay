@@ -6,4 +6,7 @@ public class Auction {
 	public Auction(String msg) {
 		this.message = msg;
 	}
+	public boolean isValid() {
+		return true;
+	}
 }
