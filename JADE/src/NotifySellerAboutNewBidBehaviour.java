@@ -3,9 +3,15 @@ import jade.core.behaviours.Behaviour;
 
 public class NotifySellerAboutNewBidBehaviour extends Behaviour {
 
+	private Mediator mediator;
+	
+	public NotifySellerAboutNewBidBehaviour(Mediator mediator) {
+		this.mediator = mediator;
+	}
+
 	@Override
 	public void action() {
-		// TODO Auto-generated method stub
+		// Find seller 
 		
 	}
 

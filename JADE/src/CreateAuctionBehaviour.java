@@ -1,12 +1,17 @@
 import jade.core.behaviours.Behaviour;
+import jade.lang.acl.ACLMessage;
 
 
 public class CreateAuctionBehaviour extends Behaviour {
 
 	@Override
 	public void action() {
-		// TODO Auto-generated method stub
-		
+		ACLMessage msg = myAgent.receive();
+		if (msg != null) {
+			((Mediator) myAgent).getAuctionQueue().add(new Auction(msg.getContent()));
+		} else { 
+			block(); 
+		} 
 	}
 
 	@Override
