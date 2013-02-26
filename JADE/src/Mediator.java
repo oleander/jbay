@@ -10,7 +10,8 @@ public class Mediator extends Agent {
   protected void setup() {
 	this.auctionQueue = (Queue<Auction>) new LinkedList();
   }
-
+  
+  @Override
   protected void takeDown(){
     System.out.println("Mediator " + getAID().getName() + " terminating.");
   }
