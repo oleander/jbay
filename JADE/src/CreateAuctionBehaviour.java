@@ -4,7 +4,6 @@ import jade.lang.acl.ACLMessage;
 
 
 public class CreateAuctionBehaviour extends Behaviour {
-
 	private static final String VALIDMESSAGE = "valid-message";
 	private static final String INVALIDMESSAGE = "invalid-message";
 
@@ -14,9 +13,10 @@ public class CreateAuctionBehaviour extends Behaviour {
 		ACLMessage msg = myAgent.receive();
 		
 		// Fetch sender
-		String sender = msg.getSender().getName();
-		ACLMessage senderMessage = new ACLMessage(ACLMessage.INFORM); 
-		senderMessage.addReceiver(new AID(sender, AID.ISLOCALNAME));
+//		String sender = msg.getSender().getName();
+//		ACLMessage senderMessage = new ACLMessage(ACLMessage.INFORM); 
+//		senderMessage.addReceiver(new AID(sender, AID.ISLOCALNAME));
+		ACLMessage sellerChannel = msg.createReply();
 		
 		if (msg != null) {
 			// Create auction
@@ -25,10 +25,11 @@ public class CreateAuctionBehaviour extends Behaviour {
 			// Is auction valid?
 			if(auction.isValid()){
 				// 
-				senderMessage.setContent(VALIDMESSAGE);
+				sellerChannel.setContent(VALIDMESSAGE);
 			} else {
-				senderMessage.setContent(INVALIDMESSAGE);
+				sellerChannel.setContent(INVALIDMESSAGE);
 			}
+			myAgent.send((sellerChannel));
 			
 			((Mediator) myAgent).getAuctionQueue().add(auction);
 		} else { 
@@ -41,5 +42,8 @@ public class CreateAuctionBehaviour extends Behaviour {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+
+
 
 }

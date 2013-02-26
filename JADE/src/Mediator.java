@@ -8,7 +8,10 @@ public class Mediator extends Agent {
   private Queue<Auction> auctionQueue;
   
   protected void setup() {
-	this.auctionQueue = (Queue<Auction>) new LinkedList();
+	  System.out.println("mediator started");
+	this.auctionQueue = (Queue<Auction>) new LinkedList();	
+	addBehaviour(new CreateAuctionBehaviour());
+	
   }
   
   @Override
