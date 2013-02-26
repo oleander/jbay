@@ -16,7 +16,9 @@ public class Mediator extends Agent {
     System.out.println("Mediator " + getAID().getName() + " terminating.");
   }
   
-  public Queue<Auction> getAuctionQueue(){
-	  return this.auctionQueue;
-  }
+
+public Queue<Auction> getAuctionQueue() {
+	// TODO Auto-generated method stub
+	return null;
+}
 }
