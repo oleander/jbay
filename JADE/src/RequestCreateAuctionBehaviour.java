@@ -29,7 +29,6 @@ public class RequestCreateAuctionBehaviour extends Behaviour {
             }
             break;
         } else { 
-            System.out.println("BLOCK!");
             block(); 
         }
     }
