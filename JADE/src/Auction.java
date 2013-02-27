@@ -10,16 +10,11 @@ Struct class for auctions
 */
 @Model
 public class Auction implements Serializable {
-    @Id
-    private Integer id;
-    @Attribute
-    private String type;
-    @Attribute
-    private int minPrice;
-    @Attribute
-    private String description;  
+    private String description;
+	private int minPrice;
+	private String type;
 
-    public Auction(String description) {
+	public Auction(String description) {
         this.description = description;
         // TODO: Fix this. Should not be static
         this.minPrice = 1000;

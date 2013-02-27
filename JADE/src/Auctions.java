@@ -10,62 +10,59 @@ import redis.clients.johm.JOhm;
 
 
 public class Auctions {
-	
-	
-	
-//  public Auctions() {
-//    // Use redis server on localhost
-//    JedisPool jedisPool = new JedisPool(new JedisPoolConfig(), "localhost");
-//    JOhm.setPool(jedisPool);
-//  }
-  
-  private static Auctions instance;
-  private Auctions(){}
-  
-  public static Auctions getInstance(){
-	  if(instance == null){
-		  instance = new Auctions();
-	  }
-	  
-	  return instance;
-  }
-  
-  /*
-   * Store auction in database
-   */  
-  public void store(Auction auction){
-    JOhm.save(auction);
-  }
-  
-  /*
-   * Find auction by it's unique id
-   */
-  public Auction findByid(int id){
-    return JOhm.get(Auction.class, id);
-  }
+    private static Auctions instance;
+    private ArrayList<Auction> auctions;
 
+    public Auctions(){
+        this.auctions = new ArrayList<Auction>();
+    }
 
-  /*
-  * Delete user by id
-  */
-  public boolean deleteByid(int id){
-    return JOhm.delete(Auction.class, id);
-  }
+    public static Auctions getInstance(){
+        if(instance == null){
+          instance = new Auctions();
+        }
 
-  /*
-   * Search by string
-   */
-  public ArrayList<Auction> search(String any) {
-    ArrayList<Auction> auctions = new ArrayList<Auction>();
-    Set<Auction> currentAuctions = JOhm.getAll(Auction.class);
-    
-    for(Auction auction : currentAuctions){
-        if(auction.getDescription().contains(any)){
-            auctions.add(auction);
-        } else if (auction.getType().contains(any)){
-            auctions.add(auction);
+        return instance;
+    }
+  
+    /*
+    * Store auction in database
+    * @return Auction id
+    */  
+    public int store(Auction auction){
+        synchronized(this){
+            this.auctions.add(auction);
+            return this.auctions.size() - 1;
         }
     }
-    return auctions;
-  }
+  
+    /*
+    * Find auction by it's unique id
+    */
+    public Auction findByid(int id){
+        return this.auctions.get(id);
+    }
+
+
+    /*
+    * Delete user by id
+    */
+    public boolean deleteByid(int id){
+        return this.auctions.remove(id) == null;
+    }
+
+    /*
+    * Search by string
+    */
+    public ArrayList<Auction> search(String any) {
+        ArrayList<Auction> foundAuctions = new ArrayList<Auction>();
+        for(Auction auction : this.auctions){
+            if(auction.getDescription().contains(any)){
+                foundAuctions.add(auction);
+            } else if (auction.getType().contains(any)){
+                foundAuctions.add(auction);
+            }
+        }
+        return foundAuctions;
+    }
 }
