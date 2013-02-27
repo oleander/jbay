@@ -11,8 +11,8 @@ import jade.lang.acl.ACLMessage;
 public class AuctionEndedBehaviour extends WakerBehaviour {
     private Auction auction;
 
-    public AuctionEndedBehaviour(Agent a, Integer i, Auction auction) {
-        super(a, i);
+    public AuctionEndedBehaviour(Agent agent, Integer time, Auction auction) {
+        super(agent, time);
         this.auction = auction;
     }
 
