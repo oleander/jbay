@@ -13,13 +13,13 @@ public class ResponseMakeBidBehaviour extends CyclicBehaviour {
 		if (msg != null) {
 			
 			try {
-//				Bid newBid = (Bid) msg.getContentObject();
-//				if(newBid.getAmount() > ){
-//					
-//				} else {
-//					ACLMessagemsg.createReply()
-//				}
-//				
+				Bid newBid = (Bid) msg.getContentObject();
+				if(newBid.getAmount() > ){
+					
+				} else {
+					ACLMessagemsg.createReply()
+				}
+				
 				
 			} catch (UnreadableException e) {
 				// TODO Auto-generated catch block
