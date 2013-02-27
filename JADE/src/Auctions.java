@@ -48,7 +48,9 @@ public class Auctions {
     * Delete user by id
     */
     public boolean deleteByid(int id){
-        return this.auctions.remove(id) == null;
+        synchronized(this){
+            return this.auctions.remove(id) == null;
+        }
     }
 
     /*
