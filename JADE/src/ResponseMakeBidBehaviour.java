@@ -13,7 +13,7 @@ public class ResponseMakeBidBehaviour extends CyclicBehaviour {
                 if(newBid.getAmount() > 10){
                     // TODO: Add logic
                 } else {
-                    ACLMessagemsg.createReply()
+                    ACLMessage reply = msg.createReply();
                 }
             } catch (UnreadableException e) {
                 e.printStackTrace();
