@@ -1,3 +1,6 @@
+import java.io.IOException;
+import java.io.Serializable;
+
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
@@ -29,16 +32,27 @@ public class ResponseMakeBidBehaviour extends CyclicBehaviour {
     
     public void notifySellerAboutNewBid(Seller seller, Auction auction, Bid bid){
     	ACLMessage notification = new ACLMessage(ACLMessage.INFORM);
-    	notification.addReceiver(new AID("seller", AID.ISLOCALNAME));
-    	notification.setContent("Dear " + seller.getName() + "! A new bid has been made to" +
-    			" your auction " + auction.getDescription() + ". The highest bid is now " + 
-    			auction.getHigestBid());
-    	
-    			
-    	ACLMessage senderMessage = new ACLMessage(ACLMessage.REQUEST); 
-        // Mediator is our receiver
-        senderMessage.addReceiver(new AID("mediator", AID.ISLOCALNAME));
-        senderMessage.setContent(auction.toString());
-        myAgent.send(senderMessage);
+    	notification.addReceiver(new AID(seller.getName(), AID.ISLOCALNAME));
+//    	notification.setContent("Dear " + seller.getName() + "! A new bid has been made to" +
+//    			" your auction " + auction.getDescription() + ". The highest bid is now " + 
+//    			auction.getHigestBid());
+    	try {
+			notification.setContentObject((Serializable) new AuctionNotification(auction, Mediator.SELLERNEWBID));
+			myAgent.send(notification);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+    }
+    
+    public void notifyNotHighestBidder(Buyer bidder, Auction auction, Bid bid){
+    	ACLMessage notification = new ACLMessage(ACLMessage.INFORM);
+    	notification.addReceiver(new AID(bidder.getName(), AID.ISLOCALNAME));
+    	try {
+    		notification.setContentObject((Serializable) new AuctionNotification(auction, Mediator.NOTHIGHESTBIDDER));
+			myAgent.send(notification);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 }
