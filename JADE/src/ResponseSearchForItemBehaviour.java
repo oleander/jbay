@@ -16,15 +16,8 @@ public class ResponseSearchForItemBehaviour extends CyclicBehaviour {
 		
 		if (msg != null) {
 			String searchQuery = msg.getContent();
-			
-			
-			//<FETCH FROM DATABASE>
-			
-			List<Auction> searchResults = new LinkedList<Auction>();
-			searchResults.add(new Auction("makrill"));
-			searchResults.add(new Auction("torsk"));
-						
-			//</FETCH FROM DATABASE>
+			Auctions auctions = Auctions.getInstance();
+			List<Auction> searchResults = auctions.search(searchQuery);
 			
 			ACLMessage searchResultsMessage = msg.createReply();
 			try {
