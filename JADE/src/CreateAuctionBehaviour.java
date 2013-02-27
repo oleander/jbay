@@ -12,7 +12,6 @@ public class CreateAuctionBehaviour extends Behaviour {
     ACLMessage msg = myAgent.receive();
 
     if (msg != null) {
-      System.out.println("JJJAAAAA, vi fick svar!");
       // Channel for contact seller
       ACLMessage sellerChannel = msg.createReply();
     
@@ -21,10 +20,8 @@ public class CreateAuctionBehaviour extends Behaviour {
       
       // Is auction valid?
       if(auction.isValid()){
-        System.out.println("Ja allt är bra");
         sellerChannel.setContent(Mediator.VALIDAUCTION);
       } else {
-        System.out.println("Nej de va inte bra");
         sellerChannel.setContent(Mediator.INVALIDAUCTION);
       }
 
@@ -38,11 +35,6 @@ public class CreateAuctionBehaviour extends Behaviour {
 
   @Override
   public boolean done() {
-    // TODO Auto-generated method stub
     return false;
   }
-  
-
-
-
 }
