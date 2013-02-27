@@ -3,16 +3,16 @@ import jade.core.behaviours.Behaviour;
 
 public class NotifyLoserOfAuctionBehaviour extends Behaviour {
 
-	@Override
-	public void action() {
-		// TODO Auto-generated method stub
-		
-	}
+  @Override
+  public void action() {
+    // TODO Auto-generated method stub
+    
+  }
 
-	@Override
-	public boolean done() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+  @Override
+  public boolean done() {
+    // TODO Auto-generated method stub
+    return false;
+  }
 
 }

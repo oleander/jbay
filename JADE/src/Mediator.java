@@ -4,14 +4,15 @@ import jade.core.Agent;
 import jade.util.leap.LinkedList;
 
 public class Mediator extends Agent {
+  public final static int VALIDAUCTION = 1;
+  public final static int INVALIDAUCTION = 1;
+  
   static final long serialVersionUID = 1;
   private Queue<Auction> auctionQueue;
   
   protected void setup() {
-	  System.out.println("mediator started");
-	this.auctionQueue = (Queue<Auction>) new LinkedList();	
-	addBehaviour(new CreateAuctionBehaviour());
-	
+    this.auctionQueue = (Queue<Auction>) new LinkedList();  
+    addBehaviour(new CreateAuctionBehaviour());
   }
   
   @Override
@@ -19,9 +20,7 @@ public class Mediator extends Agent {
     System.out.println("Mediator " + getAID().getName() + " terminating.");
   }
   
-
-public Queue<Auction> getAuctionQueue() {
-	// TODO Auto-generated method stub
-	return null;
-}
+  public Queue<Auction> getAuctionQueue() {
+    return null;
+  }
 }
