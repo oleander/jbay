@@ -12,6 +12,7 @@ public class RequestCreateAuctionBehaviour extends Behaviour {
   public void action() {
     // Create auction
     Auction auction = new Auction("fisk");
+    Auctions auctions = new Auctions();
 
     // Request auction
     this.createAuction(auction);
@@ -22,6 +23,7 @@ public class RequestCreateAuctionBehaviour extends Behaviour {
         if (msg != null) {
             if(msg.getContent().equals(Mediator.VALIDAUCTION)){
                 System.out.println("Auction was created in RequestCreateAuctionBehaviour");
+                auctions.store(auction);
             } else if(msg.getContent().equals(Mediator.INVALIDAUCTION)) {
                 System.out.println("Auction could not be created in RequestCreateAuctionBehaviour");
             } else {
