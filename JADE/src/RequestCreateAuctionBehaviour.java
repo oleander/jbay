@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -40,7 +42,11 @@ public class RequestCreateAuctionBehaviour extends Behaviour {
     ACLMessage senderMessage = new ACLMessage(ACLMessage.REQUEST); 
     // Mediator is our receiver
     senderMessage.addReceiver(new AID("mediator", AID.ISLOCALNAME));
-    senderMessage.setContent(auction.toString());
+    try {
+		senderMessage.setContentObject(auction);
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
     myAgent.send(senderMessage);
   }
 
