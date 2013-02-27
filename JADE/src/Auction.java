@@ -48,7 +48,7 @@ public class Auction implements Serializable {
     /*
      * @return Is the given bid the highest one?
      */
-    public boolean makeBid(Bid bid) {
+    public synchronized boolean makeBid(Bid bid) {
         Bid higestBid = this.getHigestBid();
         if(higestBid != null){
             if(higestBid.getAmount() > bid.getAmount()){

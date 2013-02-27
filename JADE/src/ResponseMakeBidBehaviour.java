@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
@@ -16,11 +17,21 @@ public class ResponseMakeBidBehaviour extends CyclicBehaviour {
             try {
                 Bid newBid = (Bid) msg.getContentObject();
                 Auction auction = Auctions.getInstance().findByid(newBid.getAuctionID());
-                if(auction.makeBid(newBid)){
+                synchronized (auction) {
+                	Bid formerHighestBid = auction.getHigestBid();
+                	if(auction.makeBid(newBid)){
+                    	notifySellerAboutNewBid(auction.getSeller(), auction);
+                    	notifyNotHighestBidder(formerHighestBid.getBidder(), auction);            	
+                    	
+                    } else {
+                        ACLMessage reply = msg.createReply();
+                        reply.setContent(Mediator.INVALIDBID);
+                        myAgent.send(reply);
+                    }
                 	
-                } else {
-                    ACLMessage reply = msg.createReply();
-                }
+				}
+                
+                
             } catch (UnreadableException e) {
                 e.printStackTrace();
             }
@@ -30,7 +41,7 @@ public class ResponseMakeBidBehaviour extends CyclicBehaviour {
     }
     
     
-    public void notifySellerAboutNewBid(Seller seller, Auction auction, Bid bid){
+    public void notifySellerAboutNewBid(Seller seller, Auction auction){
     	ACLMessage notification = new ACLMessage(ACLMessage.INFORM);
     	notification.addReceiver(new AID(seller.getName(), AID.ISLOCALNAME));
 //    	notification.setContent("Dear " + seller.getName() + "! A new bid has been made to" +
@@ -45,7 +56,9 @@ public class ResponseMakeBidBehaviour extends CyclicBehaviour {
 
     }
     
-    public void notifyNotHighestBidder(Buyer bidder, Auction auction, Bid bid){
+
+    
+    public void notifyNotHighestBidder(Buyer bidder, Auction auction){
     	ACLMessage notification = new ACLMessage(ACLMessage.INFORM);
     	notification.addReceiver(new AID(bidder.getName(), AID.ISLOCALNAME));
     	try {
