@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import com.sun.tools.internal.jxc.gen.config.Config;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -11,10 +10,24 @@ import redis.clients.johm.JOhm;
 
 
 public class Auctions {
-  public Auctions() {
-    // Use redis server on localhost
-    JedisPool jedisPool = new JedisPool(new JedisPoolConfig(), "localhost");
-    JOhm.setPool(jedisPool);
+	
+	
+	
+//  public Auctions() {
+//    // Use redis server on localhost
+//    JedisPool jedisPool = new JedisPool(new JedisPoolConfig(), "localhost");
+//    JOhm.setPool(jedisPool);
+//  }
+  
+  private static Auctions instance;
+  private Auctions(){}
+  
+  public static Auctions getInstance(){
+	  if(instance == null){
+		  instance = new Auctions();
+	  }
+	  
+	  return instance;
   }
   
   /*

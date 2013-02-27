@@ -22,6 +22,7 @@ public class ResponseSearchForItemBehaviour extends CyclicBehaviour {
 			
 			List<Auction> searchResults = new LinkedList<Auction>();
 			searchResults.add(new Auction("makrill"));
+			searchResults.add(new Auction("torsk"));
 						
 			//</FETCH FROM DATABASE>
 			

@@ -12,7 +12,7 @@ public class RequestCreateAuctionBehaviour extends Behaviour {
   public void action() {
     // Create auction
     Auction auction = new Auction("fisk");
-    Auctions auctions = new Auctions();
+    Auctions auctions = Auctions.getInstance();
 
     // Request auction
     this.createAuction(auction);

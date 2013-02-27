@@ -21,6 +21,6 @@ public class Mediator extends Agent {
   }
   
   public Auctions getAuctions() {
-    return new Auctions();
+    return Auctions.getInstance();
   }
 }
