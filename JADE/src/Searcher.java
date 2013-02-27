@@ -5,7 +5,8 @@ public class Searcher extends Agent {
   
   @Override
   protected void setup(){
-    
+	  System.out.println("Searcher started");
+	  addBehaviour(new ResponseSearchForItemBehaviour());
   }
   
   @Override

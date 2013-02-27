@@ -32,12 +32,12 @@ public class Auctions {
   }
 
 
-  // /*
-  //  * Delete user by id
-  //  */
-  // public boolean deleteByid(int id){
-  //   return JOhm.delete(Auction.class, id);
-  // }
+  /*
+  * Delete user by id
+  */
+  public boolean deleteByid(int id){
+    return JOhm.delete(Auction.class, id);
+  }
 
   /*
    * Search by string

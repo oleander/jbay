@@ -1,7 +1,7 @@
+import java.util.LinkedList;
 import java.util.Queue;
 
 import jade.core.Agent;
-import java.util.LinkedList;
 
 public class Mediator extends Agent {
   public final static String VALIDAUCTION = "1";
@@ -21,6 +21,6 @@ public class Mediator extends Agent {
   }
   
   public Queue<Auction> getAuctionQueue() {
-    return this.auctionQueue;
+    return null;
   }
 }
