@@ -10,6 +10,8 @@ public class Mediator extends Agent {
   public final static String AUCTIONHASENDED = "4";
   public final static String LOOSEROFAUCTION = "5";
   public final static String SELLERNEWBID = "6";
+  public final static String NOTHIGHESTBIDDER = "7";
+  public final static String INVALIDBID = "8";
 
   static final long serialVersionUID = 1;
   private Queue<Auction> auctionQueue;

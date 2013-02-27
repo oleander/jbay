@@ -1,3 +1,7 @@
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.List;
+
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
@@ -13,11 +17,21 @@ public class ResponseMakeBidBehaviour extends CyclicBehaviour {
             try {
                 Bid newBid = (Bid) msg.getContentObject();
                 Auction auction = Auctions.getInstance().findByid(newBid.getAuctionID());
-                if(auction.makeBid(newBid)){
+                synchronized (auction) {
+                	Bid formerHighestBid = auction.getHigestBid();
+                	if(auction.makeBid(newBid)){
+                    	notifySellerAboutNewBid(auction.getSeller(), auction);
+                    	notifyNotHighestBidder(formerHighestBid.getBidder(), auction);            	
+                    	
+                    } else {
+                        ACLMessage reply = msg.createReply();
+                        reply.setContent(Mediator.INVALIDBID);
+                        myAgent.send(reply);
+                    }
                 	
-                } else {
-                    ACLMessage reply = msg.createReply();
-                }
+				}
+                
+                
             } catch (UnreadableException e) {
                 e.printStackTrace();
             }
@@ -27,18 +41,31 @@ public class ResponseMakeBidBehaviour extends CyclicBehaviour {
     }
     
     
-    public void notifySellerAboutNewBid(Seller seller, Auction auction, Bid bid){
+    public void notifySellerAboutNewBid(Seller seller, Auction auction){
     	ACLMessage notification = new ACLMessage(ACLMessage.INFORM);
-    	notification.addReceiver(new AID("seller", AID.ISLOCALNAME));
-    	notification.setContent("Dear " + seller.getName() + "! A new bid has been made to" +
-    			" your auction " + auction.getDescription() + ". The highest bid is now " + 
-    			auction.getHigestBid());
-    	
-    			
-    	ACLMessage senderMessage = new ACLMessage(ACLMessage.REQUEST); 
-        // Mediator is our receiver
-        senderMessage.addReceiver(new AID("mediator", AID.ISLOCALNAME));
-        senderMessage.setContent(auction.toString());
-        myAgent.send(senderMessage);
+    	notification.addReceiver(new AID(seller.getName(), AID.ISLOCALNAME));
+//    	notification.setContent("Dear " + seller.getName() + "! A new bid has been made to" +
+//    			" your auction " + auction.getDescription() + ". The highest bid is now " + 
+//    			auction.getHigestBid());
+    	try {
+			notification.setContentObject((Serializable) new AuctionNotification(auction, Mediator.SELLERNEWBID));
+			myAgent.send(notification);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+    }
+    
+
+    
+    public void notifyNotHighestBidder(Buyer bidder, Auction auction){
+    	ACLMessage notification = new ACLMessage(ACLMessage.INFORM);
+    	notification.addReceiver(new AID(bidder.getName(), AID.ISLOCALNAME));
+    	try {
+    		notification.setContentObject((Serializable) new AuctionNotification(auction, Mediator.NOTHIGHESTBIDDER));
+			myAgent.send(notification);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 }
