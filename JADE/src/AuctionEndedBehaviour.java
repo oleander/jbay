@@ -8,7 +8,7 @@ import jade.core.behaviours.WakerBehaviour;
 import jade.lang.acl.ACLMessage;
 
 
-public class AuctionEndedBehaviour extends WakerBehaviour {
+public class AuctionEndedBehaviour extends WB {
     private Auction auction;
 
     public AuctionEndedBehaviour(Agent agent, Integer time, Auction auction) {
@@ -38,7 +38,7 @@ public class AuctionEndedBehaviour extends WakerBehaviour {
             // - A person that has already got the message
             // - The winner
             if(loosers.contains(looser) && ! looser.equals(winner)){
-                this.packageAndSendTo(looser, Mediator.LOSEROFAUCTION);
+                this.packageAndSendTo(looser, Mediator.LOOSEROFAUCTION);
                 loosers.add(looser);
             }
         }
@@ -50,17 +50,4 @@ public class AuctionEndedBehaviour extends WakerBehaviour {
     private void packageAndSendTo(Agent agent, String status) {
         this.sendMessageTo(agent, new AuctionNotification(this.auction, status));
     }
-
-    private void sendMessageTo(Agent agent, Object item) {
-        ACLMessage senderMessage = new ACLMessage(ACLMessage.REQUEST); 
-        senderMessage.addReceiver(new AID(agent.getName(), AID.ISLOCALNAME));
-        try {
-            senderMessage.setContentObject((Serializable) item);
-            myAgent.send(senderMessage);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
 }
