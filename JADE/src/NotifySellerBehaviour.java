@@ -6,7 +6,7 @@ import jade.lang.acl.UnreadableException;
 /*
 Used by: Seller
 */
-public class NotifyAboutEndedAuctionBehaviour extends CB {
+public class NotifySellerBehaviour extends CB {
     @Override
     public void action() {
         ACLMessage msg = myAgent.receive();
@@ -14,7 +14,7 @@ public class NotifyAboutEndedAuctionBehaviour extends CB {
             try {
                 AuctionNotification an = (AuctionNotification) msg.getContentObject();
                 if(an.getStatus().equals(Mediator.AUCTIONHASENDED)){
-                    say("Auction has ended, the winner is " + an.getAuction().);
+                    this.notifyAboutEndedAuction(an.getAuction());
                 }
             } catch (UnreadableException e) {
                 say("Could not receive message");
@@ -22,5 +22,17 @@ public class NotifyAboutEndedAuctionBehaviour extends CB {
         } else {
             block();
         }
+    }
+
+    /*
+     * Is triggered when auction has ended
+     */
+    public void notifyAboutEndedAuction(Auction auction){
+        String name = "none";
+        Bid bid = auction.getHigestBid();
+        if(bid != null){
+            name = bid.getBidder().getName();
+        }
+        say("Auction has ended, the winner is " + name);
     }
 }
