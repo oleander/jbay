@@ -1,11 +1,13 @@
 import jade.core.behaviours.Behaviour;
 
 
-public class NotifyWinnerOfAuctionBehaviour extends Behaviour {
+/*
+ * Used by: Mediator
+ */
+public class NotifyWinnerOfAuctionBehaviour extends B {
 
   @Override
   public void action() {
-    // TODO Auto-generated method stub
     
   }
 

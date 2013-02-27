@@ -27,9 +27,8 @@ public class AuctionEndedBehaviour extends WB {
         Bid higestBid = this.auction.getHigestBid();
         Buyer winner = null;
         
-		if(higestBid != null){
-            winner = higestBid.getBidder();
-            this.packageAndSendTo(winner, Mediator.WINNEROFAUCTION);
+        if(higestBid != null){
+            this.notifyWinnerOfAuction(higestBid.getBidder());
         }
 
         for(Bid bid : this.auction.getBids()){
@@ -38,16 +37,31 @@ public class AuctionEndedBehaviour extends WB {
             // - A person that has already got the message
             // - The winner
             if(loosers.contains(looser) && ! looser.equals(winner)){
-                this.packageAndSendTo(looser, Mediator.LOOSEROFAUCTION);
+                this.notifyLoserOfAuction(looser);
                 loosers.add(looser);
             }
         }
 
         // Notify seller about ended auction
-        this.packageAndSendTo(seller, Mediator.AUCTIONHASENDED);
+        this.notifyAboutEndedAuction(seller);
     }
 
     private void packageAndSendTo(Agent agent, String status) {
         this.sendMessageTo(agent, new AuctionNotification(this.auction, status));
+    }
+
+    private void notifyWinnerOfAuction(bidder){
+        say("Sending notifyWinnerOfAuction to " + winner.getName());
+        this.packageAndSendTo(winner, Mediator.WINNEROFAUCTION);
+    }
+
+    private void notifyLoserOfAuction(looser){
+        say("Sending notifyLoserOfAuction to " + loosers.getName());
+        this.packageAndSendTo(looser, Mediator.LOOSEROFAUCTION);
+    }
+
+    private void notifyAboutEndedAuction(seller){
+        say("Sending notifyAboutEndedAuction to " + seller.getName());
+        this.packageAndSendTo(seller, Mediator.AUCTIONHASENDED);
     }
 }
