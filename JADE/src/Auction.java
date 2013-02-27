@@ -13,6 +13,7 @@ public class Auction implements Serializable {
     private String description;
 	private int minPrice;
 	private String type;
+    private ArrayList<Bid> bids = new ArrayList<Bid>();
 
 	public Auction(String description) {
         this.description = description;
@@ -42,5 +43,41 @@ public class Auction implements Serializable {
 
     public String getType() {
         return this.type;
+    }
+
+    /*
+     * @return Is the given bid the highest one?
+     */
+    public boolean makeBid(Bid bid) {
+        Bid higestBid = this.getHigestBid();
+        if(higestBid != null){
+            if(higestBid.getAmount() > bid.getAmount()){
+                // Bid is not valid, amount too low
+                return false;
+            }
+        }
+
+        return this.bids.add(bid);
+    }
+
+    /*
+     * @return Higest bid for auction
+     */
+    public Bid getHigestBid(){
+        Bid higestBid = null;
+        for (Bid bid : this.bids) {
+            if(higestBid != null && bid.getAmount() > higestBid.getAmount()){
+                higestBid = bid;
+            }
+        }
+
+        return higestBid;
+    }
+
+    /*
+     * @return All bids for auction
+     */
+    public ArrayList<Bid> getBids(){
+        return this.bids;
     }
 }
