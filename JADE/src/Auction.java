@@ -80,4 +80,9 @@ public class Auction implements Serializable {
     public ArrayList<Bid> getBids(){
         return this.bids;
     }
+
+	public Seller getSeller() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
