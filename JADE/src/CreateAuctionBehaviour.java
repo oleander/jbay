@@ -11,20 +11,24 @@ public class CreateAuctionBehaviour extends Behaviour {
     // Fetch message
     ACLMessage msg = myAgent.receive();
 
-    // Channel for contact seller
-    ACLMessage sellerChannel = msg.createReply();
-    
     if (msg != null) {
+      System.out.println("JJJAAAAA, vi fick svar!");
+      // Channel for contact seller
+      ACLMessage sellerChannel = msg.createReply();
+    
       // Create auction
       Auction auction = new Auction(msg.getContent());
       
       // Is auction valid?
       if(auction.isValid()){
+        System.out.println("Ja allt är bra");
         sellerChannel.setContent(Mediator.VALIDAUCTION);
       } else {
+        System.out.println("Nej de va inte bra");
         sellerChannel.setContent(Mediator.INVALIDAUCTION);
       }
-      myAgent.send((sellerChannel));
+
+      myAgent.send(sellerChannel);
       
       ((Mediator) myAgent).getAuctionQueue().add(auction);
     } else { 

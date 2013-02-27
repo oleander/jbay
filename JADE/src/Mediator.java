@@ -1,7 +1,7 @@
 import java.util.Queue;
 
 import jade.core.Agent;
-import jade.util.leap.LinkedList;
+import java.util.LinkedList;
 
 public class Mediator extends Agent {
   public final static String VALIDAUCTION = "1";
@@ -11,7 +11,7 @@ public class Mediator extends Agent {
   private Queue<Auction> auctionQueue;
   
   protected void setup() {
-    this.auctionQueue = (Queue<Auction>) new LinkedList();  
+    this.auctionQueue = new LinkedList<Auction>();  
     addBehaviour(new CreateAuctionBehaviour());
   }
   
@@ -21,6 +21,6 @@ public class Mediator extends Agent {
   }
   
   public Queue<Auction> getAuctionQueue() {
-    return null;
+    return this.auctionQueue;
   }
 }

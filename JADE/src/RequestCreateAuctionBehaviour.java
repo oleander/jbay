@@ -16,18 +16,22 @@ public class RequestCreateAuctionBehaviour extends Behaviour {
     // Request auction
     this.createAuction(auction);
 
-    // Wait for status on created auction
-    ACLMessage msg = myAgent.receive();
-    if (msg != null) {
-        if(msg.getContent().equals(Mediator.VALIDAUCTION)){
-            System.out.println("Auction was created in RequestCreateAuctionBehaviour");
-        } else if(msg.getContent().equals(Mediator.INVALIDAUCTION)) {
-            System.out.println("Auction could not be created in RequestCreateAuctionBehaviour");
-        } else {
-            System.out.println("Something strange has been passed in RequestCreateAuctionBehaviour");
+    while(true){
+        // Wait for status on created auction
+        ACLMessage msg = myAgent.receive();
+        if (msg != null) {
+            if(msg.getContent().equals(Mediator.VALIDAUCTION)){
+                System.out.println("Auction was created in RequestCreateAuctionBehaviour");
+            } else if(msg.getContent().equals(Mediator.INVALIDAUCTION)) {
+                System.out.println("Auction could not be created in RequestCreateAuctionBehaviour");
+            } else {
+                System.out.println("Something strange has been passed in RequestCreateAuctionBehaviour :" + msg.getContent());
+            }
+            break;
+        } else { 
+            System.out.println("BLOCK!");
+            block(); 
         }
-    } else { 
-        block(); 
     }
   }
 
@@ -41,6 +45,6 @@ public class RequestCreateAuctionBehaviour extends Behaviour {
 
   @Override
   public boolean done() {
-    return false;
+    return true;
   }
 }
