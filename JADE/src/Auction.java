@@ -1,7 +1,9 @@
+import java.io.Serializable;
+
 import jade.lang.acl.ACLMessage;
 
 
-public class Auction {
+public class Auction implements Serializable {
   private String description;
   private int minPrice;
   private String type;
