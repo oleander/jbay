@@ -38,7 +38,7 @@ public class AuctionEndedBehaviour extends WakerBehaviour {
             // - A person that has already got the message
             // - The winner
             if(loosers.contains(looser) && ! looser.equals(winner)){
-                this.packageAndSendTo(looser, Mediator.LOOSEROFAUCTION);
+                this.packageAndSendTo(looser, Mediator.LOSEROFAUCTION);
                 loosers.add(looser);
             }
         }
@@ -62,21 +62,5 @@ public class AuctionEndedBehaviour extends WakerBehaviour {
         }
     }
 
-    private class AuctionNotification {
-        private Auction auction;
-		private String status;
 
-		public AuctionNotification(Auction auction, String status) {
-            this.auction = auction;
-            this.status = status;
-        }
-
-        public Auction getAuction(){
-            return this.auction;
-        }
-
-        public String getStatus(){
-            return this.status;
-        }
-    }
 }
