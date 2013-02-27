@@ -10,6 +10,7 @@ public class CreateAuctionBehaviour extends Behaviour {
   public void action() {
     // Fetch message
     ACLMessage msg = myAgent.receive();
+    Auctions auctions = new Auctions();
 
     if (msg != null) {
       // Channel for contact seller
@@ -27,7 +28,7 @@ public class CreateAuctionBehaviour extends Behaviour {
 
       myAgent.send(sellerChannel);
       
-      ((Mediator) myAgent).getAuctionQueue().add(auction);
+      ((Mediator) myAgent).getAuctions().store(auction);
     } else { 
       block(); 
     } 

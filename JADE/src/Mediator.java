@@ -20,7 +20,7 @@ public class Mediator extends Agent {
     System.out.println("Mediator " + getAID().getName() + " terminating.");
   }
   
-  public Queue<Auction> getAuctionQueue() {
-    return null;
+  public Auctions getAuctions() {
+    return new Auctions();
   }
 }
