@@ -10,31 +10,26 @@ import jade.lang.acl.ACLMessage;
 
 public class ResponseSearchForItemBehaviour extends CyclicBehaviour {
 
-	@Override
-	public void action() {
-		ACLMessage msg = myAgent.receive();
-		
-		if (msg != null) {
-			String searchQuery = msg.getContent();
-			Auctions auctions = Auctions.getInstance();
-			List<Auction> searchResults = auctions.search(searchQuery);
-			
-			ACLMessage searchResultsMessage = msg.createReply();
-			try {
-				searchResultsMessage.setContentObject((Serializable) searchResults);
-				myAgent.send(searchResultsMessage);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-		} else {
-			block();
-		}
-		
-	}
-
-
-
-
-
+    @Override
+    public void action() {
+        ACLMessage msg = myAgent.receive();
+        
+        if (msg != null) {
+            String searchQuery = msg.getContent();
+            Auctions auctions = Auctions.getInstance();
+            List<Auction> searchResults = auctions.search(searchQuery);
+            
+            ACLMessage searchResultsMessage = msg.createReply();
+            try {
+                searchResultsMessage.setContentObject((Serializable) searchResults);
+                myAgent.send(searchResultsMessage);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            
+        } else {
+            block();
+        }
+        
+    }
 }

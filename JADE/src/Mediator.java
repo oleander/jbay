@@ -5,7 +5,10 @@ import jade.core.Agent;
 
 public class Mediator extends Agent {
   public final static String VALIDAUCTION = "1";
-  public final static String INVALIDAUCTION = "1";
+  public final static String INVALIDAUCTION = "2";
+  public final static String WINNEROFAUCTION = "3";
+  public final static String AUCTIONHASENDED = "4";
+  public final static String LOOSEROFAUCTION = "5";
 
   static final long serialVersionUID = 1;
   private Queue<Auction> auctionQueue;
