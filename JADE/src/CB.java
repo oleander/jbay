@@ -61,18 +61,13 @@ public abstract class CB extends CyclicBehaviour {
 
     private void request(MessageTemplate mt, Message message){
         ACLMessage reply;
-        while(true){
-            reply = myAgent.receive(mt);
-            if (reply != null) { 
-                try {
-                    message.execute(reply, reply.getContentObject(), reply.getSender(), reply.getConversationId());
-                } catch (UnreadableException e) {
-                    say("Something went wrong: " + e.getMessage());
-                }
-                break;
-            } else {
-                block();
-            } 
+        reply = myAgent.receive(mt);
+        if (reply != null) { 
+            try {
+                message.execute(reply, reply.getContentObject(), reply.getSender(), reply.getConversationId());
+            } catch (UnreadableException e) {
+                say("Something went wrong: " + e.getMessage());
+            }
         }
     }
     
