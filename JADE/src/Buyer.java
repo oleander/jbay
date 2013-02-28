@@ -11,8 +11,21 @@ public class Buyer extends Agent {
   
   @Override
   protected void setup(){
-
+	  
 	  System.out.println("Buyer started");
+	  
+	  Object[] args = getArguments();
+	  for (int i = 0; i < args.length; i+=2){
+		  itemsMap.put((String) args[i], Integer.parseInt((String) args[i + 1]));
+	  }
+	  
+//	  itemsMap.put(key, value);
+	  
+	  for (String key : itemsMap.keySet()){
+		  System.out.println(key + itemsMap.get(key));
+	  }
+
+	  
 //	  searchForItem();
     // Makes it possible to search for auctions
 	  addSearchBehaviours();  
