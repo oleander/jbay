@@ -12,6 +12,19 @@ public class ListenToNewBidsBuyerBehaviour extends CB {
 	private int maxPrice;
 	private int interval;
 	
+	
+	
+
+	public ListenToNewBidsBuyerBehaviour(Auction auction, int maxPrice,
+			int interval) {
+		super();
+		this.auction = auction;
+		this.maxPrice = maxPrice;
+		this.interval = interval;
+	}
+
+
+
 
 	@Override
 	public void action() {
