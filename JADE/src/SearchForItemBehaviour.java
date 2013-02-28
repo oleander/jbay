@@ -27,31 +27,9 @@ public class SearchForItemBehaviour extends B {
     public void action() {
         switch(step){
         case 0:
-<<<<<<< HEAD
-//        	DFAgentDescription template = new DFAgentDescription();
-//            ServiceDescription sd = new ServiceDescription();
-//            sd.setType("searching");
-//            template.addServices(sd); 
-//            DFAgentDescription searcher = null;
-//            
-//            try {
-//                searcher = DFService.search(myAgent, template)[0];
-//            } catch (FIPAException e1) {
-//                e1.printStackTrace();
-//            }   
-//
-//            if(searcher == null){
-//                say("No searcher found");
-//                return;
-//            }
-
-            //this.sendMessageTo(searcher.getName(), id , Mediator.SEARCHFORAUCTION, ACLMessage.PROPOSE, "Fisk");
-			this.sendMessageTo("searcher", id , Mediator.SEARCHFORAUCTION, ACLMessage.PROPOSE, "Car");
-            System.out.println("Sending search query to Searcher");
-=======
             this.sendMessageTo("searcher", id , Mediator.SEARCHFORAUCTION, ACLMessage.REQUEST, this.item);
             say("Sending search query to Searcher");
->>>>>>> 14ae4145f957d52fd4ddddc8a6856045ee78fc33
+
             step = 1;
             break;
         case 1:
