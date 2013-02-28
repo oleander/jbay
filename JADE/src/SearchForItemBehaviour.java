@@ -27,30 +27,25 @@ public class SearchForItemBehaviour extends B {
     public void action() {
         switch(step){
         case 0:
-        	DFAgentDescription template = new DFAgentDescription();
-            ServiceDescription sd = new ServiceDescription();
-            sd.setType("searching");
-            template.addServices(sd); 
-            DFAgentDescription searcher = null;
-            
-            try {
-                searcher = DFService.search(myAgent, template)[0];
-            } catch (FIPAException e1) {
-                e1.printStackTrace();
-            }   
+//        	DFAgentDescription template = new DFAgentDescription();
+//            ServiceDescription sd = new ServiceDescription();
+//            sd.setType("searching");
+//            template.addServices(sd); 
+//            DFAgentDescription searcher = null;
+//            
+//            try {
+//                searcher = DFService.search(myAgent, template)[0];
+//            } catch (FIPAException e1) {
+//                e1.printStackTrace();
+//            }   
+//
+//            if(searcher == null){
+//                say("No searcher found");
+//                return;
+//            }
 
-            if(searcher == null){
-                say("No searcher found");
-                return;
-            }
-
-            // Search for item
-            try {
-    			this.sendMessageTo(searcher.getName(), id , Mediator.SEARCHFORAUCTION, ACLMessage.PROPOSE, "Fisk");
-    		} catch (IOException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}
+            //this.sendMessageTo(searcher.getName(), id , Mediator.SEARCHFORAUCTION, ACLMessage.PROPOSE, "Fisk");
+			this.sendMessageTo("searcher", id , Mediator.SEARCHFORAUCTION, ACLMessage.PROPOSE, "Fisk");
             
             step = 1;
             break;
