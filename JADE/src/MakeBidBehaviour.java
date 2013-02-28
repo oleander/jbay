@@ -9,6 +9,16 @@ import java.util.Date;
 
 public class MakeBidBehaviour extends Behaviour {
 	private static final long serialVersionUID = -1288633840082856281L;
+	
+	private Auction auction;
+	private Bid bid;
+	
+
+public MakeBidBehaviour(Auction auction, Bid bid) {
+		super();
+		this.auction = auction;
+		this.bid = bid;
+	}
 
 @Override
   public void action() {      

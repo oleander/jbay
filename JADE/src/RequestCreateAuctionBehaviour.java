@@ -7,10 +7,15 @@ import jade.core.AID;
 */
 public class RequestCreateAuctionBehaviour extends B {
 	private static final long serialVersionUID = 6112036204823563993L;
+	private Auction auction;
+	
+	public RequestCreateAuctionBehaviour(Auction auction) {
+		super();
+		this.auction = auction;
+	}
 
 	@Override
     public void action() {
-    	Auction auction = new Auction("Car");;
         Notification notifiction = new Notification(auction, Mediator.CREATENEWAUCTION);
         say("Sending CREATENEWAUCTION to mediator");
         this.sendMessageTo("mediator", notifiction);
