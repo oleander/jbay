@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.util.UUID;
 
 /*
  * Encapsulates a message send over channel 
  */
-public class Notification {
+public class Notification implements Serializable {
     private Object item;
 	private String status;
     private String id;
