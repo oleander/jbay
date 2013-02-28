@@ -7,6 +7,7 @@ public class Buyer extends Agent {
   static final long serialVersionUID = 3;
   
   private Map<String, Integer>itemsMap;
+  private int maxBid;
   
   @Override
   protected void setup(){
@@ -34,9 +35,15 @@ public class Buyer extends Agent {
 	  }
   }
   
-  protected void makeBid(){
-	  addBehaviour(new MakeBidBehaviour());
-  }
+  
+  
+  public int getMaxBid() {
+	return maxBid;
+}
+
+//protected void makeBid(){
+//	  addBehaviour(new MakeBidBehaviour());
+//  }
   
   @Override
   protected void takeDown(){

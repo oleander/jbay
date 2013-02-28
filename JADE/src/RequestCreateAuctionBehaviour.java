@@ -7,9 +7,17 @@ import jade.lang.acl.ACLMessage;
     Use for requesting a new auction
 */
 public class RequestCreateAuctionBehaviour extends B {
+
     private static final long serialVersionUID = 6112036204823563993L;
     private int step = 0;
+    private Auction auction;
     private String id = Helper.getUUID();
+    
+    public RequestCreateAuctionBehaviour(Auction auction) {
+		super();
+		this.auction = auction;
+	}
+    
     @Override
     public void action() {
         switch(this.step){
@@ -36,6 +44,7 @@ public class RequestCreateAuctionBehaviour extends B {
                         say("Invalid auction created in RequestCreateAuctionBehaviour");
                     } else {
                         say("Strange status code from Mediator");
+
                     }
 
                     step = 2;
