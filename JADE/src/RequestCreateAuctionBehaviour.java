@@ -1,5 +1,4 @@
-import jade.lang.acl.ACLMessage;
-
+import jade.core.AID;
 
 
 /*
@@ -13,10 +12,11 @@ public class RequestCreateAuctionBehaviour extends B {
     public void action() {
     	Auction auction = new Auction("Car");;
         Notification notifiction = new Notification(auction, Mediator.CREATENEWAUCTION);
+        say("Sending CREATENEWAUCTION to mediator");
         this.sendMessageTo("mediator", notifiction);
 
         this.addListeners(Mediator.VALIDAUCTION, notifiction, new Message(){
-            public void execute(Object object, ACLMessage sender){
+            public void execute(Object object, AID sender){
                 Auction auction = (Auction) object;
                 say("Auction was created in ListenToConfirmCreatedAuctionBehaviour: " + auction);
             }
@@ -24,7 +24,7 @@ public class RequestCreateAuctionBehaviour extends B {
 
         // Listen for invalid auction
         this.addListeners(Mediator.INVALIDAUCTION, notifiction, new Message(){
-            public void execute(Object object, ACLMessage sender){
+            public void execute(Object object, AID sender){
                 Auction auction = (Auction) object;
                 say("Auction could not be created in ListenToConfirmCreatedAuctionBehaviour: " + auction);
             }

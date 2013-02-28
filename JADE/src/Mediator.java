@@ -20,7 +20,7 @@ public class Mediator extends Agent {
     this.addBehaviour(new CreateAuctionBehaviour());
 
     // Handles new bids
-    this.addBehaviour(new ResponseMakeBidBehaviour());
+    // this.addBehaviour(new ResponseMakeBidBehaviour());
   }
   
   @Override

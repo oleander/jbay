@@ -26,7 +26,7 @@ public abstract class B extends Behaviour {
     }
     
     protected void sendMessageTo(AID aid, Notification notification) {
-    	ACLMessage senderMessage = new ACLMessage(ACLMessage.REQUEST); 
+        ACLMessage senderMessage = new ACLMessage(ACLMessage.REQUEST); 
         senderMessage.addReceiver(aid);
         try {
             senderMessage.setContentObject((Serializable) notification);
@@ -84,7 +84,12 @@ public abstract class B extends Behaviour {
             Notification notification = (Notification) msg.getContentObject();
             if(notification.getStatus().equals(status)){
                 // Execute callback
-                message.execute(notification.getObject(), msg.createReply());
+                ACLMessage ply = msg.createReply();
+                AID sender = null;
+                if(ply != null){
+                    sender = ply.getSender();
+                }
+                message.execute(notification.getObject(), sender);
                 return true;
             }
         }
@@ -104,7 +109,7 @@ public abstract class B extends Behaviour {
                 // Is this what we where looking for?
                 if(notification.getStatus().equals(status)){
                     // Execute callback
-                    message.execute(notification.getObject(), msg.createReply());
+                    message.execute(notification.getObject(), msg.createReply().getSender());
                 }
                 return true;
             }

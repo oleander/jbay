@@ -1,5 +1,5 @@
-import jade.lang.acl.ACLMessage;
+import jade.core.AID;
 
 public interface Message{
-    void execute(Object object, ACLMessage aclMessage);
+    void execute(Object object, AID sender);
 }
