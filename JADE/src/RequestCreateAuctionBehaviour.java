@@ -7,30 +7,29 @@ import jade.lang.acl.ACLMessage;
     Use for requesting a new auction
 */
 public class RequestCreateAuctionBehaviour extends B {
-
     private static final long serialVersionUID = 6112036204823563993L;
     private int step = 0;
-    private Auction auction;
     private String id = Helper.getUUID();
-    
-    public RequestCreateAuctionBehaviour(Auction auction) {
-		super();
-		this.auction = auction;
-	}
+    private Auction auction;
+
+    public RequestCreateAuctionBehaviour(Auction auction){
+        super();
+        this.auction = auction;
+    }
     
     @Override
     public void action() {
         switch(this.step){
         case 0:
             say("Sending CREATEAUCTION to mediator");
-            Auction auction = new Auction("Fisk");
-            
+
             // Create auction
             this.sendMessageTo("mediator", id, Mediator.CREATEAUCTION, ACLMessage.REQUEST, auction);
             this.step = 1;
             break;
         case 1:
-            this.listen(id, Mediator.CREATEAUCTION, new Message(){
+            say("Waiting for: " + id);
+            this.listen(Mediator.CREATEAUCTION, new Message(){
                 public void execute(ACLMessage message, Object object, AID sender, String id) {
                     if(message.getPerformative() == ACLMessage.ACCEPT_PROPOSAL){
                         Auction auction = (Auction) object;
@@ -44,7 +43,6 @@ public class RequestCreateAuctionBehaviour extends B {
                         say("Invalid auction created in RequestCreateAuctionBehaviour");
                     } else {
                         say("Strange status code from Mediator");
-
                     }
 
                     step = 2;
@@ -52,6 +50,8 @@ public class RequestCreateAuctionBehaviour extends B {
             });
             break;
         }
+
+        block(1000);
     }
 
     public boolean done(){
