@@ -4,7 +4,7 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
-import jade.util.leap.Serializable;
+import java.io.Serializable;
 
 import java.io.IOException;
 import java.util.HashMap;

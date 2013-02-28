@@ -12,18 +12,17 @@ public class RequestCreateAuctionBehaviour extends B {
     private String id = Helper.getUUID();
     @Override
     public void action() {
-        say("I'm in: " + this.step);
         switch(this.step){
         case 0:
             say("Sending CREATEAUCTION to mediator");
             Auction auction = new Auction("Fisk");
             
             // Create auction
-            this.sendMessageTo("mediator", "random", Mediator.CREATEAUCTION, ACLMessage.REQUEST, auction);
+            this.sendMessageTo("mediator", id, Mediator.CREATEAUCTION, ACLMessage.REQUEST, auction);
             this.step = 1;
             break;
         case 1:
-            this.listen(id, "RANDOM", new Message(){
+            this.listen(id, Mediator.CREATEAUCTION, new Message(){
                 public void execute(ACLMessage message, Object object, AID sender, String id) {
                     if(message.getPerformative() == ACLMessage.ACCEPT_PROPOSAL){
                         Auction auction = (Auction) object;

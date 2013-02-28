@@ -7,9 +7,8 @@ import jade.core.AID;
 /*
   Used by: Mediator
 */
-public class CreateAuctionBehaviour extends B {
+public class CreateAuctionBehaviour extends CB {
     private static final long serialVersionUID = 1L;
-
     @Override
     public void action() {
         this.listen(Mediator.CREATEAUCTION, new Message(){
@@ -28,24 +27,19 @@ public class CreateAuctionBehaviour extends B {
                     try {
                         sendMessageTo(seller, id, Mediator.CREATEAUCTION, ACLMessage.ACCEPT_PROPOSAL, auction);
                     } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        say("Something went wrong: " + e.getMessage());
                     }
                  } else {
                      say("Auction is not valid");
                      try {
                         sendMessageTo(seller, id, Mediator.CREATEAUCTION, ACLMessage.FAILURE, auction);
                     } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        say("Something went wrong: " + e.getMessage());
                     }
                  }
             }
         });
-    }
 
-    @Override
-    public boolean done() {
-        return true;
+        block(1000);
     }
 }
