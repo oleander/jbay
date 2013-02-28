@@ -28,7 +28,6 @@ public class RequestCreateAuctionBehaviour extends B {
             this.step = 1;
             break;
         case 1:
-            say("Waiting for: " + id);
             this.listen(Mediator.CREATEAUCTION, new Message(){
                 public void execute(ACLMessage message, Object object, AID sender, String id) {
                     if(message.getPerformative() == ACLMessage.ACCEPT_PROPOSAL){

@@ -63,7 +63,6 @@ public abstract class WB extends WakerBehaviour {
 
     private void request(MessageTemplate mt, Message message){
         ACLMessage reply;
-        say("HELLO!");
         reply = myAgent.receive(mt);
         if (reply != null) { 
             try {

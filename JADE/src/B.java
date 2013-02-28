@@ -60,7 +60,6 @@ public abstract class B extends Behaviour {
 
     private void request(MessageTemplate mt, Message message){
         ACLMessage reply;
-        // say("HELLO!");
         reply = myAgent.receive(mt);
         if (reply != null) { 
             try {

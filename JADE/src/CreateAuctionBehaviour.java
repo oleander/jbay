@@ -14,7 +14,6 @@ public class CreateAuctionBehaviour extends CB {
         this.listen(Mediator.CREATEAUCTION, new Message(){
             public void execute(ACLMessage message, Object object, AID seller, String id){
                 System.out.println(id);
-                say("NEJNEJ");
                 String name = null;
                 if(seller != null){
                     name = seller.toString();
