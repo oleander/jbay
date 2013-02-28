@@ -19,7 +19,7 @@ public class Mediator extends Agent {
   protected void setup() { 
 
     // We can now create new auctions
-    this.addBehaviour(new CreateAuctionBehaviour());
+    // this.addBehaviour(new CreateAuctionBehaviour());
 
     // Handles new bids
     // this.addBehaviour(new ResponseMakeBidBehaviour());
