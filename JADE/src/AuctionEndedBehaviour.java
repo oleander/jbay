@@ -6,7 +6,8 @@ import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.WakerBehaviour;
 import jade.lang.acl.ACLMessage;
-
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
 
 public class AuctionEndedBehaviour extends WB {
     private Auction auction;
@@ -47,17 +48,17 @@ public class AuctionEndedBehaviour extends WB {
         this.sendMessageTo(agent, new AuctionNotification(this.auction, status));
     }
 
-    private void notifyWinnerOfAuction(bidder){
+    private void notifyWinnerOfAuction(Buyer winner){
         say("Sending notifyWinnerOfAuction to " + winner.getName());
         this.packageAndSendTo(winner, Mediator.WINNEROFAUCTION);
     }
 
-    private void notifyLoserOfAuction(looser){
-        say("Sending notifyLoserOfAuction to " + loosers.getName());
+    private void notifyLoserOfAuction(Buyer looser){
+        say("Sending notifyLoserOfAuction to " + looser.getName());
         this.packageAndSendTo(looser, Mediator.LOOSEROFAUCTION);
     }
 
-    private void notifyAboutEndedAuction(seller){
+    private void notifyAboutEndedAuction(Seller seller){
         say("Sending notifyAboutEndedAuction to " + seller.getName());
         this.packageAndSendTo(seller, Mediator.AUCTIONHASENDED);
     }
