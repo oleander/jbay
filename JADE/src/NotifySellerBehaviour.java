@@ -9,19 +9,14 @@ Used by: Seller
 public class NotifySellerBehaviour extends CB {
     @Override
     public void action() {
-        ACLMessage msg = myAgent.receive();
-        if (msg != null) {
-            try {
-                AuctionNotification an = (AuctionNotification) msg.getContentObject();
-                if(an.getStatus().equals(Mediator.AUCTIONHASENDED)){
-                    this.notifyAboutEndedAuction(an.getAuction());
-                }
-            } catch (UnreadableException e) {
-                say("Could not receive message");
+        this.addListeners(Mediator.AUCTIONHASENDED, new Message(){
+            public void execute(Object object, ACLMessage sender){
+                AuctionNotification an = (AuctionNotification) object;
+                notifyAboutEndedAuction(an.getAuction());
             }
-        } else {
-            block();
-        }
+        });
+
+        this.listen();
     }
 
     /*

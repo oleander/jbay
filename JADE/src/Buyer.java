@@ -12,8 +12,11 @@ public class Buyer extends Agent {
     // Makes it possible to search for auctions
 	  this.addBehaviour(new SearchForItemBehaviour());
 
-    // Get's notifications about winning auctions
+    // Gets notifications about winning auctions
     this.addBehaviour(new ListenToWinnerOfAuction());
+
+    // Gets notifications about losing auctions
+    this.addBehaviour(new ListenToLoserOfAuction());
   }
   
   protected void searchForItem(){

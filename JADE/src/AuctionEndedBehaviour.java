@@ -20,7 +20,7 @@ public class AuctionEndedBehaviour extends WB {
     private static final long serialVersionUID = 1L;
 
     public void handleElapsedTimeout(){
-        ArrayList<Buyer> loosers = new ArrayList<Buyer>();
+        ArrayList<Buyer> losers = new ArrayList<Buyer>();
         Seller seller = this.auction.getSeller();
         Bid higestBid = this.auction.getHigestBid();
         Buyer winner = null;
@@ -30,13 +30,13 @@ public class AuctionEndedBehaviour extends WB {
         }
 
         for(Bid bid : this.auction.getBids()){
-            Buyer looser = bid.getBidder();
+            Buyer loser = bid.getBidder();
             // We do not want to alert:
             // - A person that has already got the message
             // - The winner
-            if(loosers.contains(looser) && ! looser.equals(winner)){
-                this.notifyLoserOfAuction(looser);
-                loosers.add(looser);
+            if(losers.contains(loser) && ! loser.equals(winner)){
+                this.notifyLoserOfAuction(loser);
+                losers.add(loser);
             }
         }
 
@@ -53,9 +53,9 @@ public class AuctionEndedBehaviour extends WB {
         this.packageAndSendTo(winner, Mediator.WINNEROFAUCTION);
     }
 
-    private void notifyLoserOfAuction(Buyer looser){
-        say("Sending notifyLoserOfAuction to " + looser.getName());
-        this.packageAndSendTo(looser, Mediator.LOOSEROFAUCTION);
+    private void notifyLoserOfAuction(Buyer loser){
+        say("Sending notifyLoserOfAuction to " + loser.getName());
+        this.packageAndSendTo(loser, Mediator.LOSEROFAUCTION);
     }
 
     private void notifyAboutEndedAuction(Seller seller){
