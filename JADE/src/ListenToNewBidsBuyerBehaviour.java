@@ -7,7 +7,11 @@ import jade.lang.acl.ACLMessage;
 
 public class ListenToNewBidsBuyerBehaviour extends CB {
 	
-	private int bidInc;
+	
+	private Auction auction;
+	private int maxPrice;
+	private int interval;
+	
 
 	@Override
 	public void action() {
@@ -18,10 +22,16 @@ public class ListenToNewBidsBuyerBehaviour extends CB {
                 Buyer buyerAgent = (Buyer) myAgent;
                 int highestBid = auction.getHigestBid().getAmount();
                 
-                if(highestBid < buyerAgent.getMaxBid() - bidInc){
-                	int newBidAmount = highestBid + bidInc;
-                	buyerAgent.addBehaviour(new MakeBidBehaviour(auction, new Bid(
-                			0, newBidAmount, buyerAgent, new Date(System.currentTimeMillis()))));
+                if(highestBid < buyerAgent.getMaxBid() - interval){
+                	int newBidAmount = highestBid + interval;
+					try {
+						Bid bid = new Bid(auction.getId(), newBidAmount, buyerAgent,
+								new Date(System.currentTimeMillis()));
+					 
+						buyerAgent.addBehaviour(new MakeBidBehaviour(auction, bid));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
                 } else {
                 	System.out.println(buyerAgent.getLocalName() + " admits defeat");
                 }

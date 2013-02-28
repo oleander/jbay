@@ -4,6 +4,7 @@ import java.util.Map;
 
 import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
+import jade.core.behaviours.WakerBehaviour;
 
 public class Buyer extends Agent {
   static final long serialVersionUID = 3;
@@ -24,13 +25,9 @@ public class Buyer extends Agent {
 //		  System.out.println(key + itemsMap.get(key));
 //	  }
 
-	  addBehaviour(new TickerBehaviour(this,  2000L) {
+	  addBehaviour(new WakerBehaviour(this,  2000L) {
 		
-		@Override
-		protected void onTick() {
-			System.out.println("Väntaaaar");
-			
-		}
+		
 	});
 	  itemsMap.put("makrill", 13);
 	  itemsMap.put("saab", 29);

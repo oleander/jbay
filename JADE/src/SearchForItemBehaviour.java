@@ -45,7 +45,7 @@ public class SearchForItemBehaviour extends B {
 //            }
 
             //this.sendMessageTo(searcher.getName(), id , Mediator.SEARCHFORAUCTION, ACLMessage.PROPOSE, "Fisk");
-			this.sendMessageTo("searcher", id , Mediator.SEARCHFORAUCTION, ACLMessage.PROPOSE, "Fisk");
+			this.sendMessageTo("searcher", id , Mediator.SEARCHFORAUCTION, ACLMessage.PROPOSE, "Car");
             System.out.println("Sending search query to Searcher");
             step = 1;
             break;
