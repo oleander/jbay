@@ -17,8 +17,7 @@ public abstract class B extends Behaviour {
         try {
             this.sendMessageTo(agent.getAID(), id, type, acl, content);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            say("Something went wrong: " + e.getMessage());
         }
     }
     
@@ -26,8 +25,7 @@ public abstract class B extends Behaviour {
         try {
             sendMessageTo(new AID(name, AID.ISLOCALNAME), id, type, acl, content);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            say("Something went wrong: " + e.getMessage());
         }
     }
 
@@ -61,15 +59,14 @@ public abstract class B extends Behaviour {
     }
 
     private void request(MessageTemplate mt, Message message){
-        ACLMessage reply = myAgent.receive(mt);
-
+        ACLMessage reply;
         while(true){
+            reply = myAgent.receive(mt);
             if (reply != null) { 
                 try {
                     message.execute(reply, reply.getContentObject(), reply.getSender(), reply.getConversationId());
                 } catch (UnreadableException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    say("Something went wrong: " + e.getMessage());
                 }
                 break;
             } else {

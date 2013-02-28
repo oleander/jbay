@@ -7,9 +7,9 @@ import jade.lang.acl.ACLMessage;
     Use for requesting a new auction
 */
 public class RequestCreateAuctionBehaviour extends B {
-	private static final long serialVersionUID = 6112036204823563993L;
+    private static final long serialVersionUID = 6112036204823563993L;
 
-	@Override
+    @Override
     public void action() {
         say("Sending CREATEAUCTION to mediator");
         Auction auction = new Auction("Fisk");
