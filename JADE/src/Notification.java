@@ -1,13 +1,17 @@
+import java.util.UUID;
+
 /*
  * Encapsulates a message send over channel 
  */
 public class Notification {
     private Object item;
 	private String status;
+    private String id;
 
 	public Notification(Object item, String status) {
         this.item = item;
         this.status = status;
+        this.id = UUID.randomUUID().toString();
     }
 
     public Object getObject(){
@@ -16,5 +20,9 @@ public class Notification {
 
     public String getStatus(){
         return this.status;
+    }
+
+    public String getUniqueId(){
+        return this.id;
     }
 }

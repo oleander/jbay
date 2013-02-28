@@ -10,7 +10,18 @@ public class CreateAuctionBehaviour extends Behaviour {
 
 @Override
   public void action() {
-    // Fetch message
+    this.doStuff();
+
+    // VÄnta på svar ...
+  }
+
+  @Override
+  public boolean done() {
+    return false;
+  }
+
+  private void doStuff(){
+      // Fetch message
     ACLMessage msg = myAgent.receive();
 
     if (msg != null) {
@@ -41,11 +52,6 @@ public class CreateAuctionBehaviour extends Behaviour {
         myAgent.send(sellerChannel);
     } else { 
         block(); 
-    } 
-  }
-
-  @Override
-  public boolean done() {
-    return false;
+    }
   }
 }

@@ -1,3 +1,5 @@
+import jade.lang.acl.ACLMessage;
+
 
 
 /*
@@ -10,7 +12,25 @@ public class RequestCreateAuctionBehaviour extends B {
 	@Override
     public void action() {
     	Auction auction = new Auction("Car");;
-        this.sendMessageTo("mediator", new Notification(auction, Mediator.CREATENEWAUCTION));
+        Notification notifiction = new Notification(auction, Mediator.CREATENEWAUCTION);
+        this.sendMessageTo("mediator", notifiction);
+
+        this.addListeners(Mediator.VALIDAUCTION, notifiction, new Message(){
+            public void execute(Object object, ACLMessage sender){
+                Auction auction = (Auction) object;
+                say("Auction was created in ListenToConfirmCreatedAuctionBehaviour: " + auction);
+            }
+        });
+
+        // Listen for invalid auction
+        this.addListeners(Mediator.INVALIDAUCTION, notifiction, new Message(){
+            public void execute(Object object, ACLMessage sender){
+                Auction auction = (Auction) object;
+                say("Auction could not be created in ListenToConfirmCreatedAuctionBehaviour: " + auction);
+            }
+        });
+
+        this.listen();
     }
 
     @Override
