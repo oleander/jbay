@@ -9,12 +9,14 @@ Used by: Seller
 public class NotifySellerBehaviour extends CB {
     @Override
     public void action() {
-        this.listenTo(Mediator.AUCTIONHASENDED, new Message(){
-            public void execute(Object object){
+        this.addListeners(Mediator.AUCTIONHASENDED, new Message(){
+            public void execute(Object object, ACLMessage sender){
                 AuctionNotification an = (AuctionNotification) object;
                 notifyAboutEndedAuction(an.getAuction());
             }
         });
+
+        this.listen();
     }
 
     /*
