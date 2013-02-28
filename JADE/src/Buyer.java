@@ -22,7 +22,8 @@ public class Buyer extends Agent {
       itemsMap.put("Car", 13);
       itemsMap.put("saab", 29);
       itemsMap.put("tall", 34);
-      
+
+      addSearchBehaviours();
       // Gets notifications about winning auctions
       this.addBehaviour(new ListenToWinnerOfAuctionBehaviour());
 

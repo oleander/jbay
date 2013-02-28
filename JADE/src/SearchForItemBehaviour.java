@@ -29,6 +29,7 @@ public class SearchForItemBehaviour extends B {
         case 0:
             this.sendMessageTo("searcher", id , Mediator.SEARCHFORAUCTION, ACLMessage.REQUEST, this.item);
             say("Sending search query to Searcher");
+
             step = 1;
             break;
         case 1:
