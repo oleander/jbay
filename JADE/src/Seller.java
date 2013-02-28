@@ -15,7 +15,7 @@ public class Seller extends Agent {
         this.addBehaviour(new RequestCreateAuctionBehaviour());
 
         // When new bids arrives on started auctions
-        this.addBehaviour(new ListenToNewBidsBehaviour());
+        // this.addBehaviour(new ListenToNewBidsBehaviour());
     }
 
     @Override

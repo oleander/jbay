@@ -1,5 +1,4 @@
-import jade.lang.acl.ACLMessage;
-
+import jade.core.AID;
 
 /*
 Used by: Seller
@@ -10,7 +9,7 @@ public class NotifySellerBehaviour extends CB {
 	@Override
     public void action() {
         this.addListeners(Mediator.AUCTIONHASENDED, new Message(){
-            public void execute(Object object, ACLMessage sender){
+            public void execute(Object object, AID sender){
                 Auction auction = (Auction) object;
                 notifyAboutEndedAuction(auction);
             }

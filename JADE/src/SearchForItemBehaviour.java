@@ -6,8 +6,6 @@ import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 
-import jade.lang.acl.ACLMessage;
-
 import java.util.List;
 
 
@@ -35,7 +33,7 @@ public class SearchForItemBehaviour extends B {
 			Notification notifiction = new Notification("fisk", Mediator.SEARCHFORAUCTION);
 	        this.sendMessageTo(result.getName(), notifiction);
 	        this.addListeners(Mediator.SEARCHFORAUCTION, notifiction, new Message(){
-	            public void execute(Object object, ACLMessage sender){
+	            public void execute(Object object, AID sender){
 	                List<Auction> auctions = (List<Auction>) object;
 	                say("We received " + auctions.size() + " auctions");
 	            }

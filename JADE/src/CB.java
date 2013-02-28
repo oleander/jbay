@@ -39,6 +39,7 @@ public abstract class CB extends CyclicBehaviour {
     
 
     protected void listen() {
+        System.out.println("We're in!");
         while(true){
             ACLMessage msg = myAgent.receive();
             if (msg != null) {
@@ -86,7 +87,7 @@ public abstract class CB extends CyclicBehaviour {
             Notification notification = (Notification) msg.getContentObject();
             if(notification.getStatus().equals(status)){
                 // Execute callback
-                message.execute(notification.getObject(), msg.createReply());
+                message.execute(notification.getObject(), msg.createReply().getSender());
                 return true;
             }
         }
@@ -106,7 +107,7 @@ public abstract class CB extends CyclicBehaviour {
                 // Is this what we where looking for?
                 if(notification.getStatus().equals(status)){
                     // Execute callback
-                    message.execute(notification.getObject(), msg.createReply());
+                    message.execute(notification.getObject(), msg.createReply().getSender());
                 }
                 return true;
             }

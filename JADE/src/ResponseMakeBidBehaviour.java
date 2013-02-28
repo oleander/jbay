@@ -1,4 +1,4 @@
-import jade.lang.acl.ACLMessage;
+import jade.core.AID;
 
 /*
  * Used by: Mediator
@@ -9,7 +9,7 @@ public class ResponseMakeBidBehaviour extends CB {
     @Override
     public void action() {
         this.addListeners(Mediator.CREATENEWAUCTION, new Message(){
-            public void execute(Object object, ACLMessage sender){
+            public void execute(Object object, AID sender){
                 // Fetch new bid
                 Bid newBid = (Bid) object;
 
@@ -28,8 +28,8 @@ public class ResponseMakeBidBehaviour extends CB {
                         notifyNotHighestBidder(formerHighestBid.getBidder(), auction);
                         
                     } else {
-                        sender.setContent(Mediator.INVALIDBID);
-                        myAgent.send(sender);
+                        // sender.setContent(Mediator.INVALIDBID);
+                        // myAgent.send(sender);
                     }
                 }
             }
