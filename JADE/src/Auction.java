@@ -13,6 +13,7 @@ public class Auction implements Serializable {
     private String description;
 	private int minPrice;
 	private String type;
+    private int endTime;
     private ArrayList<Bid> bids = new ArrayList<Bid>();
 
 	public Auction(String description) {
@@ -20,12 +21,14 @@ public class Auction implements Serializable {
         // TODO: Fix this. Should not be static
         this.minPrice = 1000;
         this.type = "This is a type";
+        this.endTime = 1000;
     }
   
-    public Auction(String description, int minPrice, String type) {
+    public Auction(String description, int minPrice, String type, int endTime) {
         this.description = description;
         this.minPrice = minPrice;
         this.type = type;
+        this.endTime = endTime;
     }
 
     @Override
@@ -79,6 +82,10 @@ public class Auction implements Serializable {
      */
     public ArrayList<Bid> getBids(){
         return this.bids;
+    }
+
+    public int getEndTime(){
+        return this.endTime;
     }
 
 	public Seller getSeller() {

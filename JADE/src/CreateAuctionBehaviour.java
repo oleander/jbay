@@ -24,7 +24,12 @@ public class CreateAuctionBehaviour extends Behaviour {
              // Is auction valid?
              if(auction.isValid()){
                 sellerChannel.setContent(Mediator.VALIDAUCTION);
+                Mediator mediator = ((Mediator) myAgent);
+                // Store auction for later use
                 ((Mediator) myAgent).getAuctions().store(auction);
+
+                mediator.addBehaviour(new AuctionEndedBehaviour(mediator, auction));
+                
               } else {
                 sellerChannel.setContent(Mediator.INVALIDAUCTION);
               }

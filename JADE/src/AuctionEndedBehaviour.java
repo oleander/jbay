@@ -12,8 +12,8 @@ import jade.lang.acl.UnreadableException;
 public class AuctionEndedBehaviour extends WB {
     private Auction auction;
 
-    public AuctionEndedBehaviour(Agent agent, Integer time, Auction auction) {
-        super(agent, time);
+    public AuctionEndedBehaviour(Agent agent, Auction auction) {
+        super(agent, auction.getEndTime());
         this.auction = auction;
     }
     
