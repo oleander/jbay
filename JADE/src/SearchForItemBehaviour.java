@@ -27,6 +27,7 @@ public class SearchForItemBehaviour extends B {
     public void action() {
         switch(step){
         case 0:
+<<<<<<< HEAD
 //        	DFAgentDescription template = new DFAgentDescription();
 //            ServiceDescription sd = new ServiceDescription();
 //            sd.setType("searching");
@@ -47,20 +48,25 @@ public class SearchForItemBehaviour extends B {
             //this.sendMessageTo(searcher.getName(), id , Mediator.SEARCHFORAUCTION, ACLMessage.PROPOSE, "Fisk");
 			this.sendMessageTo("searcher", id , Mediator.SEARCHFORAUCTION, ACLMessage.PROPOSE, "Car");
             System.out.println("Sending search query to Searcher");
+=======
+            this.sendMessageTo("searcher", id , Mediator.SEARCHFORAUCTION, ACLMessage.REQUEST, this.item);
+            say("Sending search query to Searcher");
+>>>>>>> 14ae4145f957d52fd4ddddc8a6856045ee78fc33
             step = 1;
             break;
         case 1:
-        	
-	        this.listen(id, Mediator.SEARCHFORAUCTION, new Message(){
-	            public void execute(ACLMessage message, Object object, AID seller, String id){
-	                List<Auction> auctions = (List<Auction>) object;
-	                say("We received " + auctions.size() + " auctions");
-	                step = 2;
-	            }
-	        });
-	        
-	        break;
+            this.listen(Mediator.SEARCHFORAUCTION, new Message(){
+                public void execute(ACLMessage message, Object object, AID seller, String id){
+                    List<Auction> auctions = (List<Auction>) object;
+                    say("We received " + auctions.size() + " auctions");
+                    step = 2;
+                }
+            });
+            
+            break;
         }
+
+        block(1000);
     }
 
     @Override

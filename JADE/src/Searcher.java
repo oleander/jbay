@@ -9,31 +9,31 @@ public class Searcher extends Agent {
   
   @Override
   protected void setup(){
-	  System.out.println("Searcher started");
-	  addBehaviour(new ResponseSearchForItemBehaviour());
-	  
-	  DFAgentDescription dfd = new DFAgentDescription();
-	  dfd.setName(getAID());
-	  ServiceDescription sd = new ServiceDescription();
-	  sd.setType("searching");
-	  sd.setName("Search for auctions");
-	  dfd.addServices(sd);
-	  try {
-		  DFService.register(this, dfd);
-	  } catch(FIPAException fe) {
-		  fe.printStackTrace();
-	  } 
+      System.out.println("Searcher started");
+      addBehaviour(new ResponseSearchForItemBehaviour());
+      
+      // DFAgentDescription dfd = new DFAgentDescription();
+      // dfd.setName(getAID());
+      // ServiceDescription sd = new ServiceDescription();
+      // sd.setType("searching");
+      // sd.setName("Search for auctions");
+      // dfd.addServices(sd);
+      // try {
+       //  DFService.register(this, dfd);
+      // } catch(FIPAException fe) {
+       //  fe.printStackTrace();
+      // } 
   }
   
   @Override
   protected void takeDown(){
-	  
-	  try {
-		  DFService.deregister(this);
-	  } catch (FIPAException fe) {
-		  fe.printStackTrace();
-	  }
+    
+    try {
+      DFService.deregister(this);
+    } catch (FIPAException fe) {
+      fe.printStackTrace();
+    }
 
-        System.out.println("Mediator " + getAID().getName() + " terminating.");
+    System.out.println("Mediator " + getAID().getName() + " terminating.");
   }
 }
