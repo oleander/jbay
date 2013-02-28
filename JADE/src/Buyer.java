@@ -1,26 +1,37 @@
 
+import java.util.Map;
+
 import jade.core.Agent;
 
 public class Buyer extends Agent {
   static final long serialVersionUID = 3;
   
+  private Map<String, Integer>itemsMap;
+  
   @Override
   protected void setup(){
 
 	  System.out.println("Buyer started");
-	  searchForItem();
+//	  searchForItem();
     // Makes it possible to search for auctions
-	  this.addBehaviour(new SearchForItemBehaviour());
+	  addSearchBehaviours();  
+	  
 
     // Gets notifications about winning auctions
-    this.addBehaviour(new ListenToWinnerOfAuctionBehaviour());
+	  this.addBehaviour(new ListenToWinnerOfAuctionBehaviour());
 
     // Gets notifications about losing auctions
-    this.addBehaviour(new ListenToLoserOfAuctionBehaviour());
+	  this.addBehaviour(new ListenToLoserOfAuctionBehaviour());
   }
   
-  protected void searchForItem(){
-	  addBehaviour(new SearchForItemBehaviour());
+//  protected void searchForItem(){
+//	  addBehaviour(new SearchForItemBehaviour());
+//  }
+  
+  protected void addSearchBehaviours() {
+	  for(String item : itemsMap.keySet()){
+		  this.addBehaviour(new SearchForItemBehaviour(item, itemsMap.get(item)));  
+	  }
   }
   
   protected void makeBid(){

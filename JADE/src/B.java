@@ -14,12 +14,16 @@ public abstract class B extends Behaviour {
     private static final long serialVersionUID = 1L;
     
     protected void sendMessageTo(Agent agent, Notification notification) {
-        this.sendMessageTo(agent.getName(), notification);
+        this.sendMessageTo(agent.getAID(), notification);
     }
-
+    
     protected void sendMessageTo(String name, Notification notification) {
-        ACLMessage senderMessage = new ACLMessage(ACLMessage.REQUEST); 
-        senderMessage.addReceiver(new AID(name, AID.ISLOCALNAME));
+        sendMessageTo(new AID(name, AID.ISLOCALNAME), notification);
+    }
+    
+    protected void sendMessageTo(AID aid, Notification notification) {
+    	ACLMessage senderMessage = new ACLMessage(ACLMessage.REQUEST); 
+        senderMessage.addReceiver(aid);
         try {
             senderMessage.setContentObject((Serializable) notification);
             myAgent.send(senderMessage);
