@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 import jade.core.AID;
 import jade.lang.acl.ACLMessage;
 
@@ -35,11 +37,11 @@ public class ResponseMakeBidBehaviour extends CB {
                             // Notify previous higest bidder about not having the higest bid
                             notifyNotHighestBidder(formerHighestBid.getBidder(), auction);
                         }
+
+                        notifyBidderAboutRequest(sender, auction);
                         
                     } else {
-                        // TODO: FIX THIS
-                        // sender.setContent(Mediator.INVALIDBID);
-                        // myAgent.send(sender);
+                        notifyBidderAboutInvalidRequest(sender, auction);
                     }
                 }
             }
@@ -54,5 +56,21 @@ public class ResponseMakeBidBehaviour extends CB {
     
     public void notifyNotHighestBidder(Buyer bidder, Auction auction){
         this.sendMessageTo(bidder, null, Mediator.NEWBID, ACLMessage.FAILURE, auction);
+    }
+
+    public void notifyBidderAboutInvalidRequest(AID buyer, Auction auction){
+        try {
+            this.sendMessageTo(buyer, null, Mediator.MAKEBID, ACLMessage.FAILURE, auction);
+        } catch (IOException e) {
+            say("Something went wrong in: " + e.getMessage());
+        }
+    }
+
+    public void notifyBidderAboutRequest(AID buyer, Auction auction){
+        try {
+            this.sendMessageTo(buyer, null, Mediator.MAKEBID, ACLMessage.ACCEPT_PROPOSAL, auction);
+        } catch (IOException e) {
+            say("Something went wrong in: " + e.getMessage());
+        }
     }
 }

@@ -25,7 +25,6 @@ public class MakeBidBehaviour extends B {
   
     @Override
     public void action() {
-        System.out.println(this.step);
         switch(this.step){
         // Make a bid
         case 0:
@@ -58,9 +57,12 @@ public class MakeBidBehaviour extends B {
                 public void execute(ACLMessage message, Object object, AID sender, String id){
                     if(message.getPerformative() == ACLMessage.ACCEPT_PROPOSAL){
                         myAgent.addBehaviour(new ListenToNewBidsBuyerBehaviour(auction, maxPrice, interval));
+                        say("Our bid was valid");
                     } else if(message.getPerformative() == ACLMessage.REFUSE){
                         say("Our bid was invalid");
                         step = 2;
+                    } else {
+                        say("Invalid data from " + sender.getName());
                     }
                 }
             });
