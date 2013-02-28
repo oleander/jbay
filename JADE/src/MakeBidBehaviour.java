@@ -7,40 +7,79 @@ import java.io.Serializable;
 import java.util.Date;
 
 
-public class MakeBidBehaviour extends Behaviour {
-	private static final long serialVersionUID = -1288633840082856281L;
-	
-	private Auction auction;
-	private Bid bid;
-	
+public class MakeBidBehaviour extends B {
+    private static final long serialVersionUID = -1288633840082856281L;
 
-public MakeBidBehaviour(Auction auction, Bid bid) {
-		super();
-		this.auction = auction;
-		this.bid = bid;
-	}
+    private Auction auction;
+    private int step = 0;
+    private int interval;
+    private int maxPrice;
+    private String id = Helper.getUUID();
 
-@Override
-  public void action() {      
-      ACLMessage senderMessage = new ACLMessage(ACLMessage.REQUEST); 
-      senderMessage.addReceiver(new AID("mediator", AID.ISLOCALNAME));
-      Date timeStamp = new Date(System.currentTimeMillis());
-      Bid bid = new Bid(0, 10, (Buyer) myAgent, timeStamp);
-      try {
-        senderMessage.setContentObject((Serializable) bid);
-        myAgent.send(senderMessage);
-    } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+    public MakeBidBehaviour(Auction auction, int maxPrice, int interval) {
+        super();
+        this.auction = auction;
+        this.maxPrice = maxPrice;
+        this.interval = interval;
     }
-      
-    
-  }
+  
+    @Override
+    public void action() {
+        switch(this.step){
+        // Make a bid
+        case 0:
+            if(!this.shouldBid()){
+                say("Auction price is too high");
+                this.step = 5;
+                break;
+            }
 
-  @Override
-  public boolean done() {
-    // TODO Auto-generated method stub
-    return false;
-  }
+            Bid bid = null;
+			try {
+				bid = new Bid(this.auction.getId(), this.getNextBidValue(), (Buyer) myAgent);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				say("Something went wrong: " + e.getMessage());
+			}
+			
+			if(bid == null){
+				say("Abort!");
+				this.step = 2;
+				break;
+			}
+			
+            this.sendMessageTo("mediator", id , Mediator.MAKEBID, ACLMessage.PROPOSE, bid);
+            this.step = 1;
+            break;
+        // Was the bid okay?
+        case 1:
+            this.listen(Mediator.MAKEBID, new Message(){
+                public void execute(ACLMessage message, Object object, AID sender, String id){
+                    if(message.getPerformative() == ACLMessage.ACCEPT_PROPOSAL){
+                        myAgent.addBehaviour(new ListenToNewBidsBuyerBehaviour(auction, maxPrice, interval));
+                    } else if(message.getPerformative() == ACLMessage.REFUSE){
+                        say("Our bid was invalid");
+                        step = 2;
+                    }
+                }
+            });
+            break;
+        }
+
+        block(1000);
+    }
+  
+    @Override
+    public boolean done() {
+      return this.step == 2;
+    }
+
+    private int getNextBidValue(){
+        return this.auction.getPrice() + this.interval;
+    }
+
+    private boolean shouldBid(){
+        return this.getNextBidValue() < (this.maxPrice - this.interval);
+    }
 
 }

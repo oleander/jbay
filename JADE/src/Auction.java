@@ -80,6 +80,15 @@ public class Auction implements Serializable {
         return higestBid;
     }
 
+    public int getPrice(){
+        Bid bid = this.getHigestBid();
+        if(bid != null){
+            return bid.getAmount();
+        }
+
+        return 0;
+    }
+
     /*
      * @return All bids for auction
      */

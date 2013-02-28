@@ -42,6 +42,10 @@ public class Auctions {
         return this.auctions.remove(id) == null;
     }
 
+    public ArrayList<Auction> getAll(){
+        return this.auctions;
+    }
+
     /*
     * Search auction by string
     */

@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,33 +15,28 @@ public class Buyer extends Agent {
     
     @Override
     protected void setup(){
-      
+
+      final ArrayList<Auction> auctions = Auctions.getInstance().getAll();
       System.out.println("Buyer started");
-      
-  //    Object[] args = getArguments();
-  //    for (int i = 0; i < args.length; i+=2){
-  //      itemsMap.put((String) args[i], Integer.parseInt((String) args[i + 1]));
-  //    }
-  //    for (String key : itemsMap.keySet()){
-  //      System.out.println(key + itemsMap.get(key));
-  //    }
 
       itemsMap.put("Car", 13);
       itemsMap.put("saab", 29);
       itemsMap.put("tall", 34);
       
-
       // Gets notifications about winning auctions
       this.addBehaviour(new ListenToWinnerOfAuctionBehaviour());
 
       // Gets notifications about losing auctions
       this.addBehaviour(new ListenToLoserOfAuctionBehaviour());
 
-      addBehaviour(new WakerBehaviour(this,  2000L) {
+      this.addBehaviour(new WakerBehaviour(this,  2000) {
           @Override
           protected void handleElapsedTimeout() {
               System.out.println("Add search items");
-              addSearchBehaviours();
+              // addSearchBehaviours();
+
+              // Make bid on items
+              addBehaviour(new MakeBidBehaviour(auctions.get(0), 1000, 5));
           }
       });
     }
