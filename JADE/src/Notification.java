@@ -26,4 +26,8 @@ public class Notification implements Serializable {
     public String getUniqueId(){
         return this.id;
     }
+
+    public void setUniqueId(String id){
+        this.id = id;
+    }
 }

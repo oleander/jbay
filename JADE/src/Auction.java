@@ -9,14 +9,16 @@ Struct class for auctions
 */
 @Model
 public class Auction implements Serializable {
-	private static final long serialVersionUID = 1L;
-	private String description;
-	private int minPrice;
-	private String type;
+    private static final long serialVersionUID = 1L;
+    private int id = -1;
+    private String description;
+    private int minPrice;
+    private String type;
     private int endTime;
+    private Seller seller;
     private ArrayList<Bid> bids = new ArrayList<Bid>();
 
-	public Auction(String description) {
+    public Auction(String description) {
         this.description = description;
         // TODO: Fix this. Should not be static
         this.minPrice = 1000;
@@ -24,11 +26,12 @@ public class Auction implements Serializable {
         this.endTime = 1000;
     }
   
-    public Auction(String description, int minPrice, String type, int endTime) {
+    public Auction(String description, int minPrice, String type, int endTime, Seller seller) {
         this.description = description;
         this.minPrice = minPrice;
         this.type = type;
         this.endTime = endTime;
+        this.seller = seller;
     }
 
     @Override
@@ -88,8 +91,23 @@ public class Auction implements Serializable {
         return this.endTime;
     }
 
-	public Seller getSeller() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Seller getSeller() {
+        return this.seller;
+    }
+
+    public void setId(int id) throws IllegalArgumentException {
+        if(this.id != -1){
+            throw new IllegalArgumentException("Id for auction has already been set: " + this.id);
+        }
+
+        this.id = id;
+    }
+
+    public int getId() throws Exception {
+        if(this.id == -1){
+            throw new Exception("Id has not been set yet, has it been stored?");
+        }
+        
+        return this.id;
+    }
 }

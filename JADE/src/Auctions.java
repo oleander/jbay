@@ -22,7 +22,9 @@ public class Auctions {
     */  
     public synchronized int store(Auction auction){
         this.auctions.add(auction);
-        return this.auctions.size() - 1;
+        int id = this.auctions.size() - 1;
+        auction.setId(id);
+        return id;
     }
   
     /*

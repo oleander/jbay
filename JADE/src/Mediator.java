@@ -9,8 +9,10 @@ public class Mediator extends Agent {
   public final static String SELLERNEWBID     = "6";
   public final static String NOTHIGHESTBIDDER = "7";
   public final static String INVALIDBID       = "8";
-  public final static String CREATENEWAUCTION = "9";
+  public final static String CREATEAUCTION    = "9";
   public final static String SEARCHFORAUCTION = "10";
+  public final static String MAKEBID          = "11";
+  public final static String NEWBID           = "12";
 
   static final long serialVersionUID = 1;
   
