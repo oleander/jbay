@@ -46,6 +46,6 @@ public class CreateAuctionBehaviour extends B {
 
     @Override
     public boolean done() {
-        return false;
+        return true;
     }
 }
