@@ -18,12 +18,16 @@ public abstract class CB extends CyclicBehaviour {
 
     
     protected void sendMessageTo(Agent agent, Notification notification) {
-        this.sendMessageTo(agent.getName(), notification);
+        this.sendMessageTo(agent.getAID(), notification);
     }
-
+    
     protected void sendMessageTo(String name, Notification notification) {
-        ACLMessage senderMessage = new ACLMessage(ACLMessage.REQUEST); 
-        senderMessage.addReceiver(new AID(name, AID.ISLOCALNAME));
+        sendMessageTo(new AID(name, AID.ISLOCALNAME), notification);
+    }
+    
+    protected void sendMessageTo(AID aid, Notification notification) {
+    	ACLMessage senderMessage = new ACLMessage(ACLMessage.REQUEST); 
+        senderMessage.addReceiver(aid);
         try {
             senderMessage.setContentObject((Serializable) notification);
             myAgent.send(senderMessage);
@@ -31,6 +35,8 @@ public abstract class CB extends CyclicBehaviour {
             e.printStackTrace();
         }
     }
+
+    
 
     protected void listen() {
         ACLMessage msg = myAgent.receive();
