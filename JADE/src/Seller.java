@@ -8,7 +8,7 @@ import jade.lang.acl.ACLMessage;
 
 public class Seller extends Agent {
     static final long serialVersionUID = 4;
-
+    
     private ArrayList<Auction> auctions = new ArrayList<Auction>();
 
     @Override
