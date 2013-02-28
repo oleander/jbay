@@ -18,11 +18,15 @@ public abstract class WB extends WakerBehaviour {
      */
     private static final long serialVersionUID = 1L;
 
-    protected void sendMessageTo(Agent agent, Object item) {
+    protected void sendMessageTo(Agent agent, Notification notification) {
+        this.sendMessageTo(agent.getName(), notification);
+    }
+
+    protected void sendMessageTo(String name, Notification notification) {
         ACLMessage senderMessage = new ACLMessage(ACLMessage.REQUEST); 
-        senderMessage.addReceiver(new AID(agent.getName(), AID.ISLOCALNAME));
+        senderMessage.addReceiver(new AID(name, AID.ISLOCALNAME));
         try {
-            senderMessage.setContentObject((Serializable) item);
+            senderMessage.setContentObject((Serializable) notification);
             myAgent.send(senderMessage);
         } catch (IOException e) {
             e.printStackTrace();

@@ -10,10 +10,10 @@ public class Buyer extends Agent {
 	  this.addBehaviour(new SearchForItemBehaviour());
 
     // Gets notifications about winning auctions
-    this.addBehaviour(new ListenToWinnerOfAuction());
+    this.addBehaviour(new ListenToWinnerOfAuctionBehaviour());
 
     // Gets notifications about losing auctions
-    this.addBehaviour(new ListenToLoserOfAuction());
+    this.addBehaviour(new ListenToLoserOfAuctionBehaviour());
   }
   
   @Override

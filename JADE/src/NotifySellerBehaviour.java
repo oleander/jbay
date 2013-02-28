@@ -11,8 +11,8 @@ public class NotifySellerBehaviour extends CB {
     public void action() {
         this.addListeners(Mediator.AUCTIONHASENDED, new Message(){
             public void execute(Object object, ACLMessage sender){
-                AuctionNotification an = (AuctionNotification) object;
-                notifyAboutEndedAuction(an.getAuction());
+                Auction auction = (Auction) object;
+                notifyAboutEndedAuction(auction);
             }
         });
 

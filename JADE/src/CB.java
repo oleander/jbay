@@ -16,11 +16,15 @@ public abstract class CB extends CyclicBehaviour {
     }
 
     
-    protected void sendMessageTo(Agent agent, Object item) {
+    protected void sendMessageTo(Agent agent, Notification notification) {
+        this.sendMessageTo(agent.getName(), notification);
+    }
+
+    protected void sendMessageTo(String name, Notification notification) {
         ACLMessage senderMessage = new ACLMessage(ACLMessage.REQUEST); 
-        senderMessage.addReceiver(new AID(agent.getName(), AID.ISLOCALNAME));
+        senderMessage.addReceiver(new AID(name, AID.ISLOCALNAME));
         try {
-            senderMessage.setContentObject((Serializable) item);
+            senderMessage.setContentObject((Serializable) notification);
             myAgent.send(senderMessage);
         } catch (IOException e) {
             e.printStackTrace();
@@ -31,11 +35,11 @@ public abstract class CB extends CyclicBehaviour {
         ACLMessage msg = myAgent.receive();
         if (msg != null) {
             try {
-                for(String status : this.listeners.keySet()){
+                for(String status : this.listeners.keySet()) {
                     Message message = this.listeners.get(status);
-                    AuctionNotification an = (AuctionNotification) msg.getContentObject();
-                    if(an.getStatus().equals(status)){
-                        message.execute(msg.getContentObject(), msg.createReply());
+                    Notification notification = (Notification) msg.getContentObject();
+                    if(notification.getStatus().equals(status)){
+                        message.execute(notification.getObject(), msg.createReply());
                     }
                 }
             } catch (UnreadableException e) {

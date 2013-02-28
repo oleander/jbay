@@ -6,8 +6,12 @@ public class Seller extends Agent {
 
     @Override
     protected void setup(){
-        System.out.println("Creating auction");
-        addBehaviour(new RequestCreateAuctionBehaviour());
+        // Create new auction and listen for confirmation
+        this.addBehaviour(new RequestCreateAuctionBehaviour());
+        this.addBehaviour(new ListenToConfirmCreatedAuctionBehaviour());
+
+        // When new bids arrives on started auctions
+        this.addBehaviour(new ListenToNewBidsBehaviour());
     }
 
     @Override

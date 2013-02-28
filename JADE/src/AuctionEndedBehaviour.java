@@ -45,7 +45,7 @@ public class AuctionEndedBehaviour extends WB {
     }
 
     private void packageAndSendTo(Agent agent, String status) {
-        this.sendMessageTo(agent, new AuctionNotification(this.auction, status));
+        this.sendMessageTo(agent, new Notification(this.auction, status));
     }
 
     private void notifyWinnerOfAuction(Buyer winner){
