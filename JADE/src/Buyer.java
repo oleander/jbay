@@ -6,6 +6,9 @@ public class Buyer extends Agent {
   
   @Override
   protected void setup(){
+
+	  System.out.println("Buyer started");
+	  searchForItem();
     // Makes it possible to search for auctions
 	  this.addBehaviour(new SearchForItemBehaviour());
 
@@ -14,6 +17,14 @@ public class Buyer extends Agent {
 
     // Gets notifications about losing auctions
     this.addBehaviour(new ListenToLoserOfAuctionBehaviour());
+  }
+  
+  protected void searchForItem(){
+	  addBehaviour(new SearchForItemBehaviour());
+  }
+  
+  protected void makeBid(){
+	  addBehaviour(new MakeBidBehaviour());
   }
   
   @Override

@@ -12,6 +12,8 @@ import jade.lang.acl.UnreadableException;
  * Used by: Mediator
  */
 public class ResponseMakeBidBehaviour extends CB {
+    private static final long serialVersionUID = -6999339207150014475L;
+
     @Override
     public void action() {
         this.addListeners(Mediator.CREATENEWAUCTION, new Message(){
