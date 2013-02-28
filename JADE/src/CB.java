@@ -23,4 +23,20 @@ public abstract class CB extends CyclicBehaviour {
             e.printStackTrace();
         }
     }
+
+    protected void listenTo(String string, Message message) {
+        ACLMessage msg = myAgent.receive();
+        if (msg != null) {
+            try {
+            	AuctionNotification an = (AuctionNotification) msg.getContentObject();
+                if(an.getStatus().equals(string)){
+                    message.execute(msg.getContentObject());
+                }
+            } catch (UnreadableException e) {
+                say("Could not receive message");
+            }
+        } else {
+            block();
+        }
+    }
 }
