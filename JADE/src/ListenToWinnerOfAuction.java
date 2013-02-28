@@ -8,18 +8,13 @@ public class ListenToWinnerOfAuction extends CB {
 
     @Override
     public void action() {
-        ACLMessage msg = myAgent.receive();
-        if (msg != null) {
-            try {
-                AuctionNotification an = (AuctionNotification) msg.getContentObject();
-                if(an.getStatus().equals(Mediator.WINNEROFAUCTION)){
-                    say("Yay, I just won an auction: " + an.getAuction());
-                }
-            } catch (UnreadableException e) {
-                say("Could not receive message");
+        this.addListeners(Mediator.WINNEROFAUCTION, new Message(){
+            public void execute(Object object, ACLMessage sender){
+                AuctionNotification an = (AuctionNotification) object;
+                say("Yay, I just won an auction: " + an.getAuction());
             }
-        } else {
-            block();
-        }
+        });
+        
+        this.listen();
     }
 }
