@@ -10,7 +10,14 @@ import jade.lang.acl.UnreadableException;
 
 
 public class ResponseMakeBidBehaviour extends CyclicBehaviour {
-    @Override
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6999339207150014475L;
+
+
+
+	@Override
     public void action() {
         ACLMessage msg = myAgent.receive();
         if (msg != null) {

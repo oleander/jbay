@@ -7,7 +7,15 @@ public class Buyer extends Agent {
   @Override
   protected void setup(){
 	  System.out.println("Buyer started");
+	  searchForItem();
+  }
+  
+  protected void searchForItem(){
 	  addBehaviour(new SearchForItemBehaviour());
+  }
+  
+  protected void makeBid(){
+	  addBehaviour(new MakeBidBehaviour());
   }
   
   @Override

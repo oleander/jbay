@@ -1,4 +1,6 @@
-public class AuctionNotification {
+import java.io.Serializable;
+
+public class AuctionNotification implements Serializable {
     private Auction auction;
 	private String status;
 
