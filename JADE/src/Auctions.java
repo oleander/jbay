@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-
 public class Auctions {
     private static Auctions instance;
     private ArrayList<Auction> auctions;
@@ -21,11 +20,9 @@ public class Auctions {
     * Store auction in database
     * @return Auction id
     */  
-    public int store(Auction auction){
-        synchronized(this){
-            this.auctions.add(auction);
-            return this.auctions.size() - 1;
-        }
+    public synchronized int store(Auction auction){
+        this.auctions.add(auction);
+        return this.auctions.size() - 1;
     }
   
     /*
@@ -39,14 +36,12 @@ public class Auctions {
     /*
     * Delete user by id
     */
-    public boolean deleteByid(int id){
-        synchronized(this){
-            return this.auctions.remove(id) == null;
-        }
+    public synchronized boolean deleteByid(int id){
+        return this.auctions.remove(id) == null;
     }
 
     /*
-    * Search by string
+    * Search auction by string
     */
     public ArrayList<Auction> search(String any) {
         ArrayList<Auction> foundAuctions = new ArrayList<Auction>();
