@@ -11,7 +11,9 @@ public class ResponseMakeBidBehaviour extends CB {
     public void action() {
         this.listen(Mediator.MAKEBID, new Message(){
             public void execute(ACLMessage message, Object object, AID sender, String id){
-                if(message.getPerformative() != ACLMessage.REQUEST){
+                say("Just got a message from " + sender.getName());
+
+                if(message.getPerformative() != ACLMessage.PROPOSE){
                     say("Invalid request"); return;
                 }
 
@@ -28,9 +30,11 @@ public class ResponseMakeBidBehaviour extends CB {
                     if(auction.makeBid(newBid)){
                         // Notify seller about new bid
                         notifySellerAboutNewBid(auction.getSeller(), auction);
-
-                        // Notify previous higest bidder about not having the higest bid
-                        notifyNotHighestBidder(formerHighestBid.getBidder(), auction);
+                        
+                        if(formerHighestBid != null){
+                            // Notify previous higest bidder about not having the higest bid
+                            notifyNotHighestBidder(formerHighestBid.getBidder(), auction);
+                        }
                         
                     } else {
                         // TODO: FIX THIS
@@ -40,13 +44,15 @@ public class ResponseMakeBidBehaviour extends CB {
                 }
             }
         });
+
+        block(1000);
     }
     
     public void notifySellerAboutNewBid(Seller seller, Auction auction){
-        this.sendMessageTo(seller, null, Mediator.MAKEBID, ACLMessage.ACCEPT_PROPOSAL, auction);
+        this.sendMessageTo(seller, null, Mediator.NEWBID, ACLMessage.ACCEPT_PROPOSAL, auction);
     }
     
     public void notifyNotHighestBidder(Buyer bidder, Auction auction){
-        this.sendMessageTo(bidder, null, Mediator.MAKEBID, ACLMessage.FAILURE, auction);
+        this.sendMessageTo(bidder, null, Mediator.NEWBID, ACLMessage.FAILURE, auction);
     }
 }

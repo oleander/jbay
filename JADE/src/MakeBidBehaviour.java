@@ -25,6 +25,7 @@ public class MakeBidBehaviour extends B {
   
     @Override
     public void action() {
+        System.out.println(this.step);
         switch(this.step){
         // Make a bid
         case 0:
@@ -35,19 +36,19 @@ public class MakeBidBehaviour extends B {
             }
 
             Bid bid = null;
-			try {
-				bid = new Bid(this.auction.getId(), this.getNextBidValue(), (Buyer) myAgent);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				say("Something went wrong: " + e.getMessage());
-			}
-			
-			if(bid == null){
-				say("Abort!");
-				this.step = 2;
-				break;
-			}
-			
+            try {
+                bid = new Bid(this.auction.getId(), this.getNextBidValue(), (Buyer) myAgent);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                say("Something went wrong: " + e.getMessage());
+            }
+            
+            if(bid == null){
+                say("Abort!");
+                this.step = 2;
+                break;
+            }
+            
             this.sendMessageTo("mediator", id , Mediator.MAKEBID, ACLMessage.PROPOSE, bid);
             this.step = 1;
             break;
