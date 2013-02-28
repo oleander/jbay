@@ -1,4 +1,5 @@
 import jade.core.Agent;
+import jade.lang.acl.ACLMessage;
 
 import java.util.ArrayList;
 
@@ -38,7 +39,7 @@ public class AuctionEndedBehaviour extends WB {
     }
 
     private void packageAndSendTo(Agent agent, String status) {
-        this.sendMessageTo(agent, new Notification(this.auction, status));
+        this.sendMessageTo(agent, null, status, ACLMessage.PROPOSE, this.auction);
     }
 
     private void notifyWinnerOfAuction(Buyer winner){
