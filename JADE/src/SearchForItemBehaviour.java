@@ -27,40 +27,23 @@ public class SearchForItemBehaviour extends B {
     public void action() {
         switch(step){
         case 0:
-//        	DFAgentDescription template = new DFAgentDescription();
-//            ServiceDescription sd = new ServiceDescription();
-//            sd.setType("searching");
-//            template.addServices(sd); 
-//            DFAgentDescription searcher = null;
-//            
-//            try {
-//                searcher = DFService.search(myAgent, template)[0];
-//            } catch (FIPAException e1) {
-//                e1.printStackTrace();
-//            }   
-//
-//            if(searcher == null){
-//                say("No searcher found");
-//                return;
-//            }
-
-            //this.sendMessageTo(searcher.getName(), id , Mediator.SEARCHFORAUCTION, ACLMessage.PROPOSE, "Fisk");
-			this.sendMessageTo("searcher", id , Mediator.SEARCHFORAUCTION, ACLMessage.PROPOSE, "Fisk");
-            System.out.println("Sending search query to Searcher");
+            this.sendMessageTo("searcher", id , Mediator.SEARCHFORAUCTION, ACLMessage.REQUEST, this.item);
+            say("Sending search query to Searcher");
             step = 1;
             break;
         case 1:
-        	
-	        this.listen(id, Mediator.SEARCHFORAUCTION, new Message(){
-	            public void execute(ACLMessage message, Object object, AID seller, String id){
-	                List<Auction> auctions = (List<Auction>) object;
-	                say("We received " + auctions.size() + " auctions");
-	                step = 2;
-	            }
-	        });
-	        
-	        break;
+            this.listen(Mediator.SEARCHFORAUCTION, new Message(){
+                public void execute(ACLMessage message, Object object, AID seller, String id){
+                    List<Auction> auctions = (List<Auction>) object;
+                    say("We received " + auctions.size() + " auctions");
+                    step = 2;
+                }
+            });
+            
+            break;
         }
+
+        block(1000);
     }
 
     @Override
