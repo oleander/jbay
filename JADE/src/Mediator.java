@@ -1,6 +1,3 @@
-import java.util.LinkedList;
-import java.util.Queue;
-
 import jade.core.Agent;
 
 public class Mediator extends Agent {
@@ -15,10 +12,8 @@ public class Mediator extends Agent {
   public final static String CREATENEWAUCTION = "9";
 
   static final long serialVersionUID = 1;
-  private Queue<Auction> auctionQueue;
   
-  protected void setup() {
-    this.auctionQueue = new LinkedList<Auction>();  
+  protected void setup() { 
 
     // We can now create new auctions
     this.addBehaviour(new CreateAuctionBehaviour());

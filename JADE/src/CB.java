@@ -1,6 +1,3 @@
-import java.io.IOException;
-import java.util.HashMap;
-
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -8,8 +5,12 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 import jade.util.leap.Serializable;
 
+import java.io.IOException;
+import java.util.HashMap;
+
 public abstract class CB extends CyclicBehaviour {
-    HashMap<String, Message> listeners = new HashMap<String, Message>();
+	private static final long serialVersionUID = 1L;
+	HashMap<String, Message> listeners = new HashMap<String, Message>();
 
     public void say(String message) {
         System.out.println(this.myAgent.getAID().getName() + ": " + message);

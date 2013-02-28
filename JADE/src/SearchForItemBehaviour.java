@@ -1,15 +1,15 @@
-import java.util.List;
-
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
-import jade.tools.testagent.ReceiveCyclicBehaviour;
+
+import java.util.List;
 
 
 public class SearchForItemBehaviour extends Behaviour {
+	private static final long serialVersionUID = 1L;
 
-  @Override
+@Override
   public void action() {
 	String searchQuery = "fisk";
 	ACLMessage senderMessage = new ACLMessage(ACLMessage.REQUEST); 

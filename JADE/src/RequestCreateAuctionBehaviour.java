@@ -1,9 +1,3 @@
-import java.io.IOException;
-
-import jade.core.AID;
-import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
-import jade.lang.acl.ACLMessage;
 
 
 /*
@@ -11,7 +5,9 @@ import jade.lang.acl.ACLMessage;
     Use for requesting a new auction
 */
 public class RequestCreateAuctionBehaviour extends B {
-    @Override
+	private static final long serialVersionUID = 6112036204823563993L;
+
+	@Override
     public void action() {
     	Auction auction = new Auction("Car");;
         this.sendMessageTo("mediator", new Notification(auction, Mediator.CREATENEWAUCTION));

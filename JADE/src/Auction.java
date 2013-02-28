@@ -1,8 +1,7 @@
-import java.util.ArrayList;
-import redis.clients.johm.*;
-import jade.lang.acl.ACLMessage;
 import java.io.Serializable;
-import jade.lang.acl.ACLMessage;
+import java.util.ArrayList;
+
+import redis.clients.johm.Model;
 
 
 /*
@@ -10,7 +9,8 @@ Struct class for auctions
 */
 @Model
 public class Auction implements Serializable {
-    private String description;
+	private static final long serialVersionUID = 1L;
+	private String description;
 	private int minPrice;
 	private String type;
     private int endTime;

@@ -1,11 +1,10 @@
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.Date;
-
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.WakerBehaviour;
 import jade.lang.acl.ACLMessage;
+
+import java.io.IOException;
+import java.io.Serializable;
 
 
 public abstract class WB extends WakerBehaviour {

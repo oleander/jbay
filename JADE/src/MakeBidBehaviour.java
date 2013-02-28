@@ -1,15 +1,16 @@
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.Date;
-
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.Date;
+
 
 public class MakeBidBehaviour extends Behaviour {
+	private static final long serialVersionUID = -1288633840082856281L;
 
-  @Override
+@Override
   public void action() {      
       ACLMessage senderMessage = new ACLMessage(ACLMessage.REQUEST); 
       senderMessage.addReceiver(new AID("mediator", AID.ISLOCALNAME));

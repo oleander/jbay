@@ -1,14 +1,12 @@
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.HashMap;
-
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
-import jade.core.behaviours.WakerBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.HashMap;
 
 
 public abstract class B extends Behaviour {

@@ -1,7 +1,9 @@
 import jade.lang.acl.ACLMessage;
 
 public class ListenToLoserOfAuctionBehaviour extends CB {
-    @Override
+	private static final long serialVersionUID = 1L;
+
+	@Override
     public void action() {
         this.addListeners(Mediator.LOSEROFAUCTION, new Message(){
             public void execute(Object object, ACLMessage sender){

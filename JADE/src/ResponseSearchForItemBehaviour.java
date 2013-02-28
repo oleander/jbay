@@ -1,16 +1,15 @@
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
-
-import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.List;
+
 
 public class ResponseSearchForItemBehaviour extends CyclicBehaviour {
+	private static final long serialVersionUID = 844913931022530879L;
 
-    @Override
+	@Override
     public void action() {
         ACLMessage msg = myAgent.receive();
         

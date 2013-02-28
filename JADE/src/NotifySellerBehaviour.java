@@ -1,13 +1,13 @@
-import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.UnreadableException;
 
 
 /*
 Used by: Seller
 */
 public class NotifySellerBehaviour extends CB {
-    @Override
+	private static final long serialVersionUID = 1L;
+
+	@Override
     public void action() {
         this.addListeners(Mediator.AUCTIONHASENDED, new Message(){
             public void execute(Object object, ACLMessage sender){

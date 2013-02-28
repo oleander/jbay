@@ -1,12 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.johm.JOhm;
 
 
 public class Auctions {

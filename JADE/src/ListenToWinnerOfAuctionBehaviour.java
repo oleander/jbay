@@ -1,12 +1,12 @@
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.UnreadableException;
 
 /*
     Used by: Buyer
 */
 public class ListenToWinnerOfAuctionBehaviour extends CB {
+	private static final long serialVersionUID = -4486539774038431412L;
 
-    @Override
+	@Override
     public void action() {
         this.addListeners(Mediator.WINNEROFAUCTION, new Message(){
             public void execute(Object object, ACLMessage sender){

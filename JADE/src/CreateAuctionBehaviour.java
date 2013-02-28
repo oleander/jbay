@@ -1,4 +1,3 @@
-import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
@@ -7,11 +6,12 @@ import jade.lang.acl.UnreadableException;
   Used by: Mediator
 */
 public class CreateAuctionBehaviour extends Behaviour {
-  @Override
+	private static final long serialVersionUID = 1L;
+
+@Override
   public void action() {
     // Fetch message
     ACLMessage msg = myAgent.receive();
-    Auctions auctions = Auctions.getInstance();
 
     if (msg != null) {
         // Channel for contact seller

@@ -1,13 +1,6 @@
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
-
-import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.WakerBehaviour;
-import jade.lang.acl.ACLMessage;
-import jade.lang.acl.ACLMessage;
-import jade.lang.acl.UnreadableException;
+
+import java.util.ArrayList;
 
 public class AuctionEndedBehaviour extends WB {
     private Auction auction;
