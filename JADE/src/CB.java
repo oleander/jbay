@@ -2,6 +2,7 @@ import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
 import jade.util.leap.Serializable;
 
@@ -10,109 +11,73 @@ import java.util.HashMap;
 
 public abstract class CB extends CyclicBehaviour {
     private static final long serialVersionUID = 1L;
-    // Key = UUID
-    HashMap<String, Package> listeners1 = new HashMap<String, Package>();
-    // Key = Event name
-    HashMap<String, Package> listeners2 = new HashMap<String, Package>();
-
-    HashMap<String, Message> listeners = new HashMap<String, Message>();
-
-    protected void sendMessageTo(Agent agent, Notification notification) {
-        this.sendMessageTo(agent.getAID(), notification);
-    }
     
-    protected void sendMessageTo(String name, Notification notification) {
-        sendMessageTo(new AID(name, AID.ISLOCALNAME), notification);
-    }
-    
-    protected void sendMessageTo(AID aid, Notification notification) {
-    	ACLMessage senderMessage = new ACLMessage(ACLMessage.REQUEST); 
-        senderMessage.addReceiver(aid);
+    protected void sendMessageTo(Agent agent, String id, String type, int acl, Object content) {
         try {
-            senderMessage.setContentObject((Serializable) notification);
-            myAgent.send(senderMessage);
-        } catch (IOException e) {
-            e.printStackTrace();
+			this.sendMessageTo(agent.getAID(), id, type, acl, content);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    protected void sendMessageTo(String name, String id, String type, int acl, Object content) {
+        try {
+			sendMessageTo(new AID(name, AID.ISLOCALNAME), id, type, acl, content);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+
+    protected void sendMessageTo(AID aid, String id, String type, int acl, Object content) throws IOException {
+        ACLMessage senderMessage = new ACLMessage(acl); 
+        senderMessage.addReceiver(aid);
+        senderMessage.setConversationId(type);
+        senderMessage.setContentObject((Serializable) content);
+        senderMessage.setReplyWith(id);
+        myAgent.send(senderMessage);
+    }
+
+    protected void listen(String id, String type, int times, Message message) {
+        for (int i = 0; i < times; i++) {
+            this.listen(id, type, message);
         }
     }
 
-    
+    protected void listen(String type, Message message) {
+        MessageTemplate mt = MessageTemplate.MatchConversationId(type);
+        this.request(mt, message);
+    }
 
-    protected void listen() {
-        System.out.println("We're in!");
+    protected void listen(String id, String type, Message message) {
+        MessageTemplate mt = MessageTemplate.and(
+            MessageTemplate.MatchConversationId(type), 
+            MessageTemplate.MatchInReplyTo(id)
+        );
+
+        this.request(mt, message);
+    }
+
+    private void request(MessageTemplate mt, Message message){
+        ACLMessage reply = myAgent.receive(mt);
+
         while(true){
-            ACLMessage msg = myAgent.receive();
-            if (msg != null) {
+            if (reply != null) { 
                 try {
-                    // Do we've any listeners without id?
-                    if(!listeners2.isEmpty()) {
-                        if(this.eventsWithoutId(msg)){
-                            break;
-                        }
-                    } else {
-                        if(this.eventsWithid(msg)){
-                            break;
-                        }
-                    }
-                } catch (UnreadableException e) {
-                    say("Could not receive message");
-                    break;
-                }
+					message.execute(reply, reply.getContentObject(), reply.getSender(), reply.getConversationId());
+				} catch (UnreadableException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                break;
             } else {
                 block();
-            }
+            } 
         }
-    }
-
-    protected void addListeners(String status, Notification notifiction, Message message) {
-        listeners1.put(notifiction.getUniqueId(), new Package(status, message));
-    }
-
-    protected void addListeners(String status, Message message) throws IllegalArgumentException {
-        if(!listeners1.isEmpty()){
-            throw new IllegalArgumentException("You can't have two type of listeners");
-        }
-
-        listeners2.put(status, new Package(status, message));
     }
     
     protected void say(String message) {
         System.out.println(this.myAgent.getAID().getName() + ": " + message);
-    }
-    
-    private boolean eventsWithoutId(ACLMessage msg) throws UnreadableException{
-        for(String status : this.listeners2.keySet()) {
-            Package p = this.listeners2.get(status);
-            Message message = p.getMessage();
-            Notification notification = (Notification) msg.getContentObject();
-            if(notification.getStatus().equals(status)){
-                // Execute callback
-                message.execute(notification.getObject(), msg.createReply().getSender());
-                return true;
-            }
-        }
-        
-        return false;
-    }
-    
-    private boolean eventsWithid(ACLMessage msg) throws UnreadableException{
-        for(String id : this.listeners1.keySet()) {
-            Package p = this.listeners1.get(id);
-            String status = p.getStatus();
-            Message message = p.getMessage();
-
-            Notification notification = (Notification) msg.getContentObject();
-            // This is the correct event we're looking for
-            if(id.equals(notification.getUniqueId())){
-                // Is this what we where looking for?
-                if(notification.getStatus().equals(status)){
-                    // Execute callback
-                    message.execute(notification.getObject(), msg.createReply().getSender());
-                }
-                return true;
-            }
-        }
-        
-        return false;
     }
 }

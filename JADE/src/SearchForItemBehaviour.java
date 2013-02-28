@@ -5,47 +5,56 @@ import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.lang.acl.ACLMessage;
 
+import java.io.IOException;
 import java.util.List;
 
 
 public class SearchForItemBehaviour extends B {
-	private static final long serialVersionUID = 1L;
-	private String item;
-	private int maxPrice;
-	
-	public SearchForItemBehaviour(String item, int maxPrice){
-		this.item = item;
-		this.maxPrice = maxPrice;
-	}
-	
+    private static final long serialVersionUID = 1L;
+    private String item;
+    private int maxPrice;
+    
+    public SearchForItemBehaviour(String item, int maxPrice){
+        this.item = item;
+        this.maxPrice = maxPrice;
+    }
 
     @Override
     public void action() {
-	
-		DFAgentDescription template = new DFAgentDescription();
-		ServiceDescription sd = new ServiceDescription();
-		sd.setType("searching");
-		template.addServices(sd); 
-		
-		try {
-			DFAgentDescription result = DFService.search(myAgent, template)[0];
-			Notification notifiction = new Notification("fisk", Mediator.SEARCHFORAUCTION);
-	        this.sendMessageTo(result.getName(), notifiction);
-	        this.addListeners(Mediator.SEARCHFORAUCTION, notifiction, new Message(){
-	            public void execute(Object object, AID sender){
-	                List<Auction> auctions = (List<Auction>) object;
-	                say("We received " + auctions.size() + " auctions");
-	            }
-	        });
-	        this.listen();
-		} catch (FIPAException e1) {
-			e1.printStackTrace();
-		}	
-
+        String id = Helper.getUUID();
+        DFAgentDescription template = new DFAgentDescription();
+        ServiceDescription sd = new ServiceDescription();
+        sd.setType("searching");
+        template.addServices(sd); 
+        DFAgentDescription searcher = null;
         
-        
+        try {
+            searcher = DFService.search(myAgent, template)[0];
+        } catch (FIPAException e1) {
+            e1.printStackTrace();
+        }   
 
+        if(searcher == null){
+            say("No searcher found");
+            return;
+        }
+
+        // Search for item
+        try {
+			this.sendMessageTo(searcher.getName(), id , Mediator.SEARCHFORAUCTION, ACLMessage.PROPOSE, "Fisk");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+        this.listen(Mediator.SEARCHFORAUCTION, new Message(){
+            public void execute(ACLMessage message, Object object, AID seller, String id){
+                List<Auction> auctions = (List<Auction>) object;
+                say("We received " + auctions.size() + " auctions");
+            }
+        });
     }
 
     @Override

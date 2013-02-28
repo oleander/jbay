@@ -1,4 +1,5 @@
 import jade.core.AID;
+import jade.lang.acl.ACLMessage;
 
 /*
     Used by: Buyer
@@ -8,13 +9,11 @@ public class ListenToWinnerOfAuctionBehaviour extends CB {
 
 	@Override
     public void action() {
-        this.addListeners(Mediator.WINNEROFAUCTION, new Message(){
-            public void execute(Object object, AID sender){
+        this.listen(Mediator.WINNEROFAUCTION, new Message(){
+            public void execute(ACLMessage message, Object object, AID sender, String id){
                 Auction auction = (Auction) object;
                 say("Yay, I just won an auction: " + auction);
             }
         });
-        
-        this.listen();
     }
 }
