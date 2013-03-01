@@ -64,8 +64,8 @@ public class Auction implements Serializable {
             }
         } 
         
-        if(bid.getAmount()< this.minPrice){
-        	System.out.println("för lååågt");
+        if(bid.getAmount() < this.minPrice){
+        	System.out.println("fï¿½r lï¿½ï¿½ï¿½gt");
         	return false;
         }
         this.bids.add(bid);
@@ -121,5 +121,9 @@ public class Auction implements Serializable {
         }
         
         return this.id;
+    }
+
+    public String getStringId() throws Exception {
+		return this.getId() + "";
     }
 }

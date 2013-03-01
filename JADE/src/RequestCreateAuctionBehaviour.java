@@ -33,12 +33,14 @@ public class RequestCreateAuctionBehaviour extends B {
             
             
             // Create auction
+
             try {
 				this.sendMessageTo(mediator, id, Mediator.CREATEAUCTION, ACLMessage.REQUEST, auction);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+
             this.step = 1;
             break;
         case 1:

@@ -39,5 +39,7 @@ public class ListenToNewBidsBuyerBehaviour extends CB {
                 }
             }
         });
+
+        block(1000);
     }
 }
