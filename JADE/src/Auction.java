@@ -86,7 +86,7 @@ public class Auction implements Serializable {
             return bid.getAmount();
         }
 
-        return 0;
+        return this.minPrice;
     }
 
     /*

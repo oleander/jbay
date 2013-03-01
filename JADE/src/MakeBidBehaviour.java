@@ -58,8 +58,8 @@ public class MakeBidBehaviour extends B {
                     if(message.getPerformative() == ACLMessage.ACCEPT_PROPOSAL){
                         // myAgent.addBehaviour(new ListenToNewBidsBuyerBehaviour(auction, maxPrice, interval));
                         say("Our bid was valid");
-                    } else if(message.getPerformative() == ACLMessage.REFUSE){
-                        say("Our bid was invalid");
+                    } else if(message.getPerformative() == ACLMessage.FAILURE){
+                        say("Our bid was to low");
                         step = 2;
                     } else {
                         say("Invalid data from " + sender.getName());
