@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.ArrayList;
 import jade.core.AID;
 import jade.core.Agent;
+import jade.core.behaviours.WakerBehaviour;
 import jade.lang.acl.ACLMessage;
 
 public class Seller extends Agent {
@@ -14,8 +15,17 @@ public class Seller extends Agent {
     @Override
     protected void setup(){
     	
+    	this.addBehaviour(new WakerBehaviour(this, (long) (Math.random() * 1000.0)) {
+            @Override
+            protected void handleElapsedTimeout() {
+                System.out.println("Add search items");
+                execute();
+            }
+        });
     	
-    	
+    }
+    
+    public void execute(){    	
     	Object[] args = getArguments();
     	
     	for (int i = 0; i < args.length; i+=4){    		
@@ -61,7 +71,7 @@ public class Seller extends Agent {
             }
         });
     }
-
+    
     @Override
     protected void takeDown(){
         System.out.println("Mediator " + getAID().getName() + " terminating.");

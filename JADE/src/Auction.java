@@ -58,7 +58,7 @@ public class Auction implements Serializable {
     public synchronized boolean makeBid(Bid bid) {
         Bid higestBid = this.getHigestBid();
         if(higestBid != null){
-            if(higestBid.getAmount() > bid.getAmount()){
+            if(higestBid.getAmount() >= bid.getAmount()){
                 // Bid is not valid, amount too low
                 return false;
             }

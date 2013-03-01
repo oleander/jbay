@@ -56,7 +56,7 @@ public class MakeBidBehaviour extends B {
             this.listen(Mediator.MAKEBID, new Message(){
                 public void execute(ACLMessage message, Object object, AID sender, String id){
                     if(message.getPerformative() == ACLMessage.ACCEPT_PROPOSAL){
-                        // myAgent.addBehaviour(new ListenToNewBidsBuyerBehaviour(auction, maxPrice, interval));
+                         myAgent.addBehaviour(new ListenToNewBidsBuyerBehaviour(auction, maxPrice, interval));
                         say("Our bid was valid");
                     } else if(message.getPerformative() == ACLMessage.FAILURE){
                         say("Our bid was to low");

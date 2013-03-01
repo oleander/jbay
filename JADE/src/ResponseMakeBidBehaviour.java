@@ -32,7 +32,7 @@ public class ResponseMakeBidBehaviour extends CB {
                     if(auction.makeBid(newBid)){
                         // Notify seller about new bid
                         notifySellerAboutNewBid(auction.getSeller(), auction);
-                        
+                        say("new bid was added: " + newBid.getAmount());
                         if(formerHighestBid != null){
                             // Notify previous higest bidder about not having the higest bid
                             notifyNotHighestBidder(formerHighestBid.getBidder(), auction);
