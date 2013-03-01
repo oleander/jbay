@@ -1,15 +1,9 @@
 
 import jade.core.AID;
-import jade.core.behaviours.Behaviour;
-import jade.domain.DFService;
-import jade.domain.FIPAException;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 
 import java.io.IOException;
 import java.util.List;
-
 
 public class SearchForItemBehaviour extends B {
     private static final long serialVersionUID = 1L;
@@ -27,12 +21,12 @@ public class SearchForItemBehaviour extends B {
     public void action() {
         switch(step){
         case 0:
-        	 AID searcher = Catalog.getAgent("searching", myAgent);
-			try {
-				this.sendMessageTo(searcher, id , Mediator.SEARCHFORAUCTION, ACLMessage.REQUEST, this.item);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+             AID searcher = Catalog.getAgent("searching", myAgent);
+            try {
+                this.sendMessageTo(searcher, id , Mediator.SEARCHFORAUCTION, ACLMessage.REQUEST, this.item);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             say("Sending search query to Searcher");
 
             step = 1;

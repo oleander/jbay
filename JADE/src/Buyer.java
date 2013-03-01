@@ -1,11 +1,9 @@
+import jade.core.Agent;
+import jade.core.behaviours.WakerBehaviour;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import jade.core.Agent;
-import jade.core.behaviours.TickerBehaviour;
-import jade.core.behaviours.WakerBehaviour;
 
 public class Buyer extends Agent {
     static final long serialVersionUID = 3;
@@ -20,16 +18,12 @@ public class Buyer extends Agent {
       
       
       Object[] args = getArguments();
-  	
-  	for (int i = 0; i < args.length; i+=2){    		
-  		String item =  (String) args[i];
-      	int maxPrice = Integer.parseInt((String) args[i + 1]);
-      	itemsMap.put(item, maxPrice);
-  	}
-      
-      
-//      itemsMap.put("Car", 13);
-
+    
+    for (int i = 0; i < args.length; i+=2){         
+        String item =  (String) args[i];
+        int maxPrice = Integer.parseInt((String) args[i + 1]);
+        itemsMap.put(item, maxPrice);
+    }
 
       addSearchBehaviours();
       // Gets notifications about winning auctions
@@ -38,8 +32,11 @@ public class Buyer extends Agent {
       // Gets notifications about losing auctions
       this.addBehaviour(new ListenToLoserOfAuctionBehaviour());
 
-      this.addBehaviour(new WakerBehaviour(this,  (long) (Math.random() * 1000.0 + 6500.0)) {
-          @Override
+      // Start search at random times for buyer
+      this.addBehaviour(new WakerBehaviour(this, (long) (Math.random() * 1000.0 + 6500.0)) {
+		private static final long serialVersionUID = 1L;
+
+		@Override
           protected void handleElapsedTimeout() {
               System.out.println("Add search items");
               // addSearchBehaviours();
@@ -57,14 +54,9 @@ public class Buyer extends Agent {
       }
       
       public int getMaxPrice(String item){
-    	  System.out.println(item);
-    	  return itemsMap.get(item);
+          System.out.println(item);
+          return itemsMap.get(item);
       }
-
-
-  //protected void makeBid(){
-  //    addBehaviour(new MakeBidBehaviour());
-  //  }
     
     @Override
     protected void takeDown(){

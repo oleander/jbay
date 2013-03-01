@@ -4,10 +4,9 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
-import java.io.Serializable;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.io.Serializable;
 
 public abstract class CB extends CyclicBehaviour {
     private static final long serialVersionUID = 1L;

@@ -1,7 +1,8 @@
 import java.io.Serializable;
 
 public class Bid implements Serializable {
-    private final int auctionID;
+	private static final long serialVersionUID = 1L;
+	private final int auctionID;
     private final int amount;
     private final Buyer bidder;
     

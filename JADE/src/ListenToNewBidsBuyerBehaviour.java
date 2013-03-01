@@ -1,12 +1,10 @@
-import java.util.Date;
-
 import jade.core.AID;
-import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 
 
 public class ListenToNewBidsBuyerBehaviour extends CB { 
-    private Auction auction;
+	private static final long serialVersionUID = 1L;
+	private Auction auction;
     private int maxPrice;
     private int interval;
     
@@ -27,10 +25,8 @@ public class ListenToNewBidsBuyerBehaviour extends CB {
                 Buyer buyerAgent = (Buyer) myAgent;
                 int highestBid = auction.getHigestBid().getAmount();
                 if(highestBid + interval < buyerAgent.getMaxPrice(auction.getType())){
-                    int newBidAmount = highestBid + interval;
                     try {
-                      Bid bid = new Bid(auction.getId(), newBidAmount, buyerAgent);
-                        buyerAgent.addBehaviour(new MakeBidBehaviour(auction, maxPrice, interval));
+                      buyerAgent.addBehaviour(new MakeBidBehaviour(auction, maxPrice, interval));
                     } catch (Exception e) {
                         say("Something went wrong: " + e.getMessage());
                     }

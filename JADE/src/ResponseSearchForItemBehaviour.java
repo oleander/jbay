@@ -1,10 +1,7 @@
-import jade.core.behaviours.CyclicBehaviour;
-import jade.lang.acl.ACLMessage;
 import jade.core.AID;
-import java.io.IOException;
-import java.io.Serializable;
+import jade.lang.acl.ACLMessage;
+
 import java.util.ArrayList;
-import java.util.List;
 
 /*
 * Used by: Searcher

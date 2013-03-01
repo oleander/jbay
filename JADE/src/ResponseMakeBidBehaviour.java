@@ -1,7 +1,7 @@
-import java.io.IOException;
-
 import jade.core.AID;
 import jade.lang.acl.ACLMessage;
+
+import java.io.IOException;
 
 /*
  * Used by: Mediator

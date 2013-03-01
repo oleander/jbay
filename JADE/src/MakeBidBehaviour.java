@@ -1,14 +1,7 @@
 import jade.core.AID;
-import jade.core.behaviours.Behaviour;
-import jade.domain.DFService;
-import jade.domain.FIPAException;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 
 import java.io.IOException;
-import java.io.Serializable;
-import java.util.Date;
 
 
 public class MakeBidBehaviour extends B {

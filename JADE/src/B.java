@@ -7,7 +7,6 @@ import jade.lang.acl.UnreadableException;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashMap;
 
 
 public abstract class B extends Behaviour {
