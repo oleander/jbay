@@ -62,8 +62,12 @@ public class Auction implements Serializable {
                 // Bid is not valid, amount too low
                 return false;
             }
+        } 
+        
+        if(bid.getAmount()< this.minPrice){
+        	System.out.println("för lååågt");
+        	return false;
         }
-
         this.bids.add(bid);
         this.higestBid = bid;
         return true;

@@ -14,16 +14,24 @@ public class Seller extends Agent {
     @Override
     protected void setup(){
     	
-//    	String description =  (String) getArguments()[0];
-//    	int minPrice = (int) getArguments()[1];
-//    	String type;
     	
-    	String description = "Volvo V70";
-    	int minPrice = 100;
-    	String type = "Car";
-    	int endtime = 10000;
     	
-    	auctions.add(new Auction(description, minPrice, type, endtime, this));
+    	Object[] args = getArguments();
+    	
+    	for (int i = 0; i < args.length; i+=4){    		
+    		String description =  (String) args[i];
+        	int minPrice = Integer.parseInt((String) args[i + 1]);
+        	String type = (String) args[i + 2];
+        	int endTime = Integer.parseInt((String) args[i + 3]);
+    		auctions.add(new Auction(description, minPrice, type, endTime, this));
+    	}
+    	
+//    	String description = "Volvo V70";
+//    	int minPrice = 100;
+//    	String type = "Car";
+//    	int endtime = 10000;
+    	
+    	
     	
     	for (Auction auction : auctions) {
     		this.addBehaviour(new RequestCreateAuctionBehaviour(auction));
