@@ -18,14 +18,6 @@ public class Auction implements Serializable {
     private Seller seller;
     private Bid higestBid;
     private ArrayList<Bid> bids = new ArrayList<Bid>();
-
-    public Auction(String description) {
-        this.description = description;
-        // TODO: Fix this. Should not be static
-        this.minPrice = 1000;
-        this.type = "This is a type";
-        this.endTime = 1000;
-    }
   
     public Auction(String description, int minPrice, String type, int endTime, Seller seller) {
         this.description = description;

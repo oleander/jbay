@@ -15,7 +15,7 @@ public class ListenToWinnerOfAuctionBehaviour extends CB {
                 if(message.getPerformative() == ACLMessage.INFORM){
                     say("Yay, I just won an auction: " + auction);
                 } else {
-                    // TODO: Respond to @sender with invalid request
+                    // TODO: Respond with ACLMessage.INVALID_REQUEST
                     say("Invalid request");
                 }
             }

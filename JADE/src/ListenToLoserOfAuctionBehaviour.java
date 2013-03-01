@@ -12,7 +12,7 @@ public class ListenToLoserOfAuctionBehaviour extends CB {
                 if(message.getPerformative() == ACLMessage.INFORM){
                     say("Yay, I just lost an auction: " + auction + " to " + auction.getHigestBid().getBidder().getName());
                 } else {
-                    // TODO: Respond to @sender with invalid request
+                    // TODO: Respond with ACLMessage.INVALID_REQUEST
                     say("Invalid request");
                 }
             }

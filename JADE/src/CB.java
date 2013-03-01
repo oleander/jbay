@@ -13,20 +13,18 @@ public abstract class CB extends CyclicBehaviour {
     
     protected void sendMessageTo(Agent agent, String id, String type, int acl, Object content) {
         try {
-			this.sendMessageTo(agent.getAID(), id, type, acl, content);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            this.sendMessageTo(agent.getAID(), id, type, acl, content);
+        } catch (IOException e) {
+            say("Something went wrong: " + e.getMessage());
+        }
     }
     
     protected void sendMessageTo(String name, String id, String type, int acl, Object content) {
         try {
-			sendMessageTo(new AID(name, AID.ISLOCALNAME), id, type, acl, content);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            sendMessageTo(new AID(name, AID.ISLOCALNAME), id, type, acl, content);
+        } catch (IOException e) {
+            say("Something went wrong: " + e.getMessage());
+        }
     }
 
     protected void sendMessageTo(AID aid, String id, String type, int acl, Object content) throws IOException {

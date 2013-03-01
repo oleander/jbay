@@ -34,7 +34,6 @@ public class MakeBidBehaviour extends B {
             try {
                 bid = new Bid(this.auction.getId(), this.getNextBidValue(), (Buyer) myAgent);
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 say("Something went wrong: " + e.getMessage());
             }
             
