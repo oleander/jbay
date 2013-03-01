@@ -23,7 +23,7 @@ public class AuctionEndedBehaviour extends WB {
         
         if(higestBid != null){
             say("Run notifyWinnerOfAuction");
-            // this.notifyWinnerOfAuction(higestBid.getBidder());
+            this.notifyWinnerOfAuction(higestBid.getBidder());
         }
 
         for(Bid bid : this.auction.getBids()){
@@ -33,7 +33,7 @@ public class AuctionEndedBehaviour extends WB {
             // - The winner
             if(losers.contains(loser) && ! loser.equals(winner)){
                 say("Run notifyLoserOfAuction");
-                // this.notifyLoserOfAuction(loser);
+                this.notifyLoserOfAuction(loser);
                 losers.add(loser);
             }
         }
@@ -44,7 +44,7 @@ public class AuctionEndedBehaviour extends WB {
     }
 
     private void packageAndSendTo(Agent agent, String status) {
-        this.sendMessageTo(agent, null, status, ACLMessage.PROPOSE, this.auction);
+        this.sendMessageTo(agent, null, status, ACLMessage.INFORM, this.auction);
     }
 
     private void notifyWinnerOfAuction(Buyer winner){

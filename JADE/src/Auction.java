@@ -77,7 +77,7 @@ public class Auction implements Serializable {
     }
 
     public int getHigestBidPrice(){
-        if(this.getHigestBid()){
+        if(this.getHigestBid() != null){
             return this.getHigestBid().getAmount();
         }
 

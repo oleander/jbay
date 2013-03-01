@@ -12,7 +12,12 @@ public class ListenToWinnerOfAuctionBehaviour extends CB {
         this.listen(Mediator.WINNEROFAUCTION, new Message(){
             public void execute(ACLMessage message, Object object, AID sender, String id){
                 Auction auction = (Auction) object;
-                say("Yay, I just won an auction: " + auction);
+                if(message.getPerformative() == ACLMessage.INFORM){
+                    say("Yay, I just won an auction: " + auction);
+                } else {
+                    // TODO: Respond to @sender with invalid request
+                    say("Invalid request");
+                }
             }
         });
     }
