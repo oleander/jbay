@@ -65,9 +65,9 @@ public class Auction implements Serializable {
         } 
         
         if(bid.getAmount() < this.minPrice){
-        	System.out.println("f�r l���gt");
-        	return false;
+            return false;
         }
+        
         this.bids.add(bid);
         this.higestBid = bid;
         return true;
@@ -124,6 +124,6 @@ public class Auction implements Serializable {
     }
 
     public String getStringId() throws Exception {
-		return this.getId() + "";
+        return this.getId() + "";
     }
 }

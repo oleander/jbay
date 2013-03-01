@@ -54,7 +54,6 @@ public class Buyer extends Agent {
       }
       
       public int getMaxPrice(String item){
-          System.out.println(item);
           return itemsMap.get(item);
       }
     
