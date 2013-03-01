@@ -28,6 +28,9 @@ public class CreateAuctionBehaviour extends CB {
                     } catch (IOException e) {
                         say("Something went wrong: " + e.getMessage());
                     }
+
+                    say("Add auction to queue, wait " + auction.getEndTime() + " ms");
+                    myAgent.addBehaviour(new AuctionEndedBehaviour(myAgent, auction));
                  } else {
                      say("Auction is not valid");
                      try {

@@ -14,13 +14,16 @@ public class AuctionEndedBehaviour extends WB {
     private static final long serialVersionUID = 1L;
 
     public void handleElapsedTimeout(){
+        say("We're now in AuctionEndedBehaviour");
+
         ArrayList<Buyer> losers = new ArrayList<Buyer>();
         Seller seller = this.auction.getSeller();
         Bid higestBid = this.auction.getHigestBid();
         Buyer winner = null;
         
         if(higestBid != null){
-            this.notifyWinnerOfAuction(higestBid.getBidder());
+            say("Run notifyWinnerOfAuction");
+            // this.notifyWinnerOfAuction(higestBid.getBidder());
         }
 
         for(Bid bid : this.auction.getBids()){
@@ -29,12 +32,14 @@ public class AuctionEndedBehaviour extends WB {
             // - A person that has already got the message
             // - The winner
             if(losers.contains(loser) && ! loser.equals(winner)){
-                this.notifyLoserOfAuction(loser);
+                say("Run notifyLoserOfAuction");
+                // this.notifyLoserOfAuction(loser);
                 losers.add(loser);
             }
         }
 
         // Notify seller about ended auction
+        say("Run notifyAboutEndedAuction");
         this.notifyAboutEndedAuction(seller);
     }
 

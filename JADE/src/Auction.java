@@ -16,6 +16,7 @@ public class Auction implements Serializable {
     private String type;
     private int endTime;
     private Seller seller;
+    private Bid higestBid;
     private ArrayList<Bid> bids = new ArrayList<Bid>();
 
     public Auction(String description) {
@@ -63,21 +64,16 @@ public class Auction implements Serializable {
             }
         }
 
-        return this.bids.add(bid);
+        this.bids.add(bid);
+        this.higestBid = bid;
+        return true;
     }
 
     /*
      * @return Higest bid for auction
      */
     public Bid getHigestBid(){
-        Bid higestBid = null;
-        for (Bid bid : this.bids) {
-            if(higestBid != null && bid.getAmount() > higestBid.getAmount()){
-                higestBid = bid;
-            }
-        }
-
-        return higestBid;
+        return this.higestBid;
     }
 
     public int getPrice(){
