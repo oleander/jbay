@@ -1,13 +1,9 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import redis.clients.johm.Model;
-
-
 /*
 Struct class for auctions
 */
-@Model
 public class Auction implements Serializable {
     private static final long serialVersionUID = 1L;
     private int id = -1;
