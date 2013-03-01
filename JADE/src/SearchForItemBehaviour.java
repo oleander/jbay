@@ -27,7 +27,12 @@ public class SearchForItemBehaviour extends B {
     public void action() {
         switch(step){
         case 0:
-            this.sendMessageTo("searcher", id , Mediator.SEARCHFORAUCTION, ACLMessage.REQUEST, this.item);
+        	 AID searcher = Catalog.getAgent("searching", myAgent);
+			try {
+				this.sendMessageTo(searcher, id , Mediator.SEARCHFORAUCTION, ACLMessage.REQUEST, this.item);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
             say("Sending search query to Searcher");
 
             step = 1;

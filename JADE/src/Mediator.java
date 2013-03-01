@@ -1,4 +1,8 @@
 import jade.core.Agent;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 
 public class Mediator extends Agent {
   public final static String VALIDAUCTION     = "1";
@@ -17,6 +21,9 @@ public class Mediator extends Agent {
   static final long serialVersionUID = 1;
   
   protected void setup() { 
+	  
+	  Catalog.register("mediating", this);
+ 
 
     // We can now create new auctions
     this.addBehaviour(new CreateAuctionBehaviour());

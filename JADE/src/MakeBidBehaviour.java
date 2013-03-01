@@ -1,5 +1,9 @@
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 
 import java.io.IOException;
@@ -48,7 +52,13 @@ public class MakeBidBehaviour extends B {
                 break;
             }
             
-            this.sendMessageTo("mediator", id , Mediator.MAKEBID, ACLMessage.PROPOSE, bid);
+	         AID mediator = Catalog.getAgent("mediating", myAgent);
+            
+            try {
+				this.sendMessageTo(mediator, id , Mediator.MAKEBID, ACLMessage.PROPOSE, bid);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
             this.step = 1;
             break;
         // Was the bid okay?

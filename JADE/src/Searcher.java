@@ -12,17 +12,7 @@ public class Searcher extends Agent {
       System.out.println("Searcher started");
       addBehaviour(new ResponseSearchForItemBehaviour());
       
-      // DFAgentDescription dfd = new DFAgentDescription();
-      // dfd.setName(getAID());
-      // ServiceDescription sd = new ServiceDescription();
-      // sd.setType("searching");
-      // sd.setName("Search for auctions");
-      // dfd.addServices(sd);
-      // try {
-       //  DFService.register(this, dfd);
-      // } catch(FIPAException fe) {
-       //  fe.printStackTrace();
-      // } 
+       Catalog.register("searching", this);
   }
   
   @Override

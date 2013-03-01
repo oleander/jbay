@@ -1,4 +1,10 @@
+import java.io.IOException;
+
 import jade.core.AID;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 
 
@@ -22,9 +28,17 @@ public class RequestCreateAuctionBehaviour extends B {
         switch(this.step){
         case 0:
             say("Sending CREATEAUCTION to mediator");
-
+            
+            AID mediator = Catalog.getAgent("mediating", myAgent);
+            
+            
             // Create auction
-            this.sendMessageTo("mediator", id, Mediator.CREATEAUCTION, ACLMessage.REQUEST, auction);
+            try {
+				this.sendMessageTo(mediator, id, Mediator.CREATEAUCTION, ACLMessage.REQUEST, auction);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
             this.step = 1;
             break;
         case 1:

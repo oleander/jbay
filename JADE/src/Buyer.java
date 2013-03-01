@@ -15,9 +15,8 @@ public class Buyer extends Agent {
     @Override
     protected void setup(){
 
-      final ArrayList<Auction> auctions = Auctions.getInstance().getAll();
-      System.out.println("Buyer started");
       
+      System.out.println("Buyer started");
       
       
       Object[] args = getArguments();
@@ -39,12 +38,12 @@ public class Buyer extends Agent {
       // Gets notifications about losing auctions
       this.addBehaviour(new ListenToLoserOfAuctionBehaviour());
 
-      this.addBehaviour(new WakerBehaviour(this,  (long) (Math.random() * 2000.0)) {
+      this.addBehaviour(new WakerBehaviour(this,  (long) (Math.random() * 1000.0 + 6500.0)) {
           @Override
           protected void handleElapsedTimeout() {
               System.out.println("Add search items");
               // addSearchBehaviours();
-
+              final ArrayList<Auction> auctions = Auctions.getInstance().getAll();
               // Make bid on items
               addBehaviour(new MakeBidBehaviour(auctions.get(0), 1000, 5));
           }

@@ -14,7 +14,7 @@ public class Seller extends Agent {
 
     @Override
     protected void setup(){
-    	
+    	System.out.println("Seller started");
     	execute();
     	
     }
