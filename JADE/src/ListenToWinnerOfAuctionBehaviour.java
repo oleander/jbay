@@ -20,5 +20,7 @@ public class ListenToWinnerOfAuctionBehaviour extends CB {
                 }
             }
         });
+
+        block(1000);
     }
 }
