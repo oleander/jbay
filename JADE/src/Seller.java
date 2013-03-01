@@ -48,6 +48,9 @@ public class Seller extends Agent {
                         } else {
                             say(auction + " just ended with no bidders");
                         }
+
+                        // No one else can bid on the auction
+                        auction.lock();
                     }
                 });
                 block(1000);

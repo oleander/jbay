@@ -29,7 +29,15 @@ public class ResponseMakeBidBehaviour extends CB {
                 // The interaction should be atomic
                 synchronized (auction) {
                     Bid formerHighestBid = auction.getHigestBid();
-                    if(auction.makeBid(newBid)){
+                    boolean success;
+					try {
+						success = auction.makeBid(newBid);
+					} catch (Exception e) {
+						success = false;
+						say(auction + " has ended, no more bids");
+					}
+					
+                    if(success){
                         // Notify seller about new bid
                         notifySellerAboutNewBid(auction.getSeller(), auction);
                         say("new bid was added: " + newBid.getAmount());
