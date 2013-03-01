@@ -24,7 +24,7 @@ public class RequestCreateAuctionBehaviour extends B {
             say("Sending CREATEAUCTION to mediator");
 
             // Create auction
-            this.sendMessageTo("mediator", id, Mediator.CREATEAUCTION, ACLMessage.REQUEST, auction);
+            this.sendMessageTo("mediator", null, Mediator.CREATEAUCTION, ACLMessage.REQUEST, auction);
             this.step = 1;
             break;
         case 1:

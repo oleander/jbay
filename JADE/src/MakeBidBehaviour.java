@@ -14,7 +14,6 @@ public class MakeBidBehaviour extends B {
     private int step = 0;
     private int interval;
     private int maxPrice;
-    private String id = Helper.getUUID();
 
     public MakeBidBehaviour(Auction auction, int maxPrice, int interval) {
         super();
@@ -48,13 +47,23 @@ public class MakeBidBehaviour extends B {
                 break;
             }
             
-            this.sendMessageTo("mediator", id , Mediator.MAKEBID, ACLMessage.PROPOSE, bid);
+            this.sendMessageTo("mediator", null , Mediator.MAKEBID, ACLMessage.PROPOSE, bid);
             this.step = 1;
             break;
         // Was the bid okay?
         case 1:
             this.listen(Mediator.MAKEBID, new Message(){
                 public void execute(ACLMessage message, Object object, AID sender, String id){
+                    Auction a = (Auction) object;
+                    // This is not the correct auction
+                    try {
+                        if(a.getId() != auction.getId()){
+                            return;
+                        }
+                    } catch (Exception e) {
+                        say("Someting went wrong: " + e.getMessage());
+                    }
+                    
                     if(message.getPerformative() == ACLMessage.ACCEPT_PROPOSAL){
                          myAgent.addBehaviour(new ListenToNewBidsBuyerBehaviour(auction, maxPrice, interval));
                         say("Our bid was valid");

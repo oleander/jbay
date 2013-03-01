@@ -35,7 +35,7 @@ public abstract class CB extends CyclicBehaviour {
         senderMessage.addReceiver(aid);
         senderMessage.setConversationId(type);
         senderMessage.setContentObject((Serializable) content);
-        senderMessage.setReplyWith(id);
+        senderMessage.setReplyWith(id);// Does not work as aspected
         myAgent.send(senderMessage);
     }
 
@@ -55,7 +55,6 @@ public abstract class CB extends CyclicBehaviour {
             MessageTemplate.MatchConversationId(type), 
             MessageTemplate.MatchInReplyTo(id)
         );
-
         this.request(mt, message);
     }
 
