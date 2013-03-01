@@ -18,10 +18,20 @@ public class Buyer extends Agent {
 
       final ArrayList<Auction> auctions = Auctions.getInstance().getAll();
       System.out.println("Buyer started");
+      
+      
+      
+      Object[] args = getArguments();
+  	
+  	for (int i = 0; i < args.length; i+=2){    		
+  		String item =  (String) args[i];
+      	int maxPrice = Integer.parseInt((String) args[i + 1]);
+      	itemsMap.put(item, maxPrice);
+  	}
+      
+      
+//      itemsMap.put("Car", 13);
 
-      itemsMap.put("Car", 13);
-      itemsMap.put("saab", 29);
-      itemsMap.put("tall", 34);
 
       addSearchBehaviours();
       // Gets notifications about winning auctions
