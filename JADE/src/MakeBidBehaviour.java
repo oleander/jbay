@@ -82,7 +82,7 @@ public class MakeBidBehaviour extends B {
     }
 
     private boolean shouldBid(){
-        return this.getNextBidValue() < (this.maxPrice - this.interval);
+        return this.getNextBidValue() < this.maxPrice;
     }
 
 }
