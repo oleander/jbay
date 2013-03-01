@@ -11,7 +11,6 @@ public class Buyer extends Agent {
     static final long serialVersionUID = 3;
     
     private Map<String, Integer>itemsMap = new HashMap<String, Integer>();
-    private int maxBid;
     
     @Override
     protected void setup(){
@@ -40,7 +39,7 @@ public class Buyer extends Agent {
       // Gets notifications about losing auctions
       this.addBehaviour(new ListenToLoserOfAuctionBehaviour());
 
-      this.addBehaviour(new WakerBehaviour(this,  2000) {
+      this.addBehaviour(new WakerBehaviour(this,  (long) (Math.random() * 2000.0)) {
           @Override
           protected void handleElapsedTimeout() {
               System.out.println("Add search items");
@@ -57,11 +56,12 @@ public class Buyer extends Agent {
           this.addBehaviour(new SearchForItemBehaviour(item, itemsMap.get(item)));  
         }
       }
+      
+      public int getMaxPrice(String item){
+    	  System.out.println(item);
+    	  return itemsMap.get(item);
+      }
 
-    
-    public int getMaxBid() {
-    return maxBid;
-  }
 
   //protected void makeBid(){
   //    addBehaviour(new MakeBidBehaviour());

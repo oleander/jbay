@@ -15,13 +15,7 @@ public class Seller extends Agent {
     @Override
     protected void setup(){
     	
-    	this.addBehaviour(new WakerBehaviour(this, (long) (Math.random() * 1000.0)) {
-            @Override
-            protected void handleElapsedTimeout() {
-                System.out.println("Add search items");
-                execute();
-            }
-        });
+    	execute();
     	
     }
     

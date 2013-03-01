@@ -35,6 +35,8 @@ public class AuctionEndedBehaviour extends WB {
                 say("Run notifyLoserOfAuction");
                 this.notifyLoserOfAuction(loser);
                 losers.add(loser);
+            } else {
+                say("=====> NOT LOSER: " + loser.getName());
             }
         }
 
