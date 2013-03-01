@@ -26,8 +26,6 @@ public class ListenToNewBidsBuyerBehaviour extends CB {
                 say("Someone made a new bid on " + auction.toString());
                 Buyer buyerAgent = (Buyer) myAgent;
                 int highestBid = auction.getHigestBid().getAmount();
-                System.out.println("hej");  
-                System.out.println(highestBid + ":" + buyerAgent.getMaxBid());
                 if(highestBid + interval < buyerAgent.getMaxBid()){
                 	System.out.println("troibneipo");
                     int newBidAmount = highestBid + interval;
@@ -42,5 +40,7 @@ public class ListenToNewBidsBuyerBehaviour extends CB {
                 }
             }
         });
+
+        block(1000);
     }
 }
