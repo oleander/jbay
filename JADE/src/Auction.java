@@ -80,12 +80,15 @@ public class Auction implements Serializable {
         return this.higestBid;
     }
 
-    public int getPrice(){
-        Bid bid = this.getHigestBid();
-        if(bid != null){
-            return bid.getAmount();
+    public int getHigestBidPrice(){
+        if(this.getHigestBid()){
+            return this.getHigestBid().getAmount();
         }
 
+        return 0;
+    }
+
+    public int getMinPrice(){
         return this.minPrice;
     }
 

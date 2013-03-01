@@ -78,7 +78,7 @@ public class MakeBidBehaviour extends B {
     }
 
     private int getNextBidValue(){
-        return this.auction.getPrice() + this.interval;
+        return Math.max(this.auction.getHigestBidPrice() + this.interval, this.auction.getMinPrice());
     }
 
     private boolean shouldBid(){
