@@ -70,7 +70,6 @@ public class Auction2 extends Environment {
             }
         }
 
-        addPercept("searcher", Literal.parseLiteral("auction(0, volvo, car, 50)"));
         return returnedAuctions;
     }
 
@@ -81,8 +80,9 @@ public class Auction2 extends Environment {
         switch(action.getFunctor()){
             case "addAuction":
                 this.addAuction(terms); break;
-            case "searchAuctions": 
-                searchAuctions(terms); break;
+            case "searchAuctions":
+                searchAuctions(terms); 
+                break;
             default:
                 logger.info("executing: "+action+", but not implemented!"); break;
         }
