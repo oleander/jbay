@@ -5,7 +5,10 @@
 /* Initial goals */
 
 /* Plans */
++confirmCreatedAuction(Id, Seller) <-
+  .send(Seller, tell, confirmCreatedAuction(Id)).
 
-+!createAuction(Descr, Type, MinPrice, EndTime)[source(S)] 
-  <- .print("Received request from ", S,  ": ", Descr, Type, MinPrice, EndTime);
-    addAuction(Descr, Type, MinPrice, EndTime, S).
++!createAuction(Descr, Type, MinPrice, EndTime)[source(S)] <- 
+    .print("Received request from ", S,  ": ", Descr, Type, MinPrice, EndTime);
+    addAuction(Descr, Type, MinPrice, EndTime, S);
+    .print("Hej hej").

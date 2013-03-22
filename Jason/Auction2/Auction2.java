@@ -32,12 +32,11 @@ public class Auction2 extends Environment {
             @seller String
         @return Integer Unique id for auction
     */
-    public int addAuction(List<Term> terms){
+    public void addAuctionHander(List<Term> terms){
         if(terms.size() != 5){
             throw new IllegalArgumentException("Auction#addAuction takes 5 arguments");
         }
 
-        int id             = map.size();
         String description = terms.get(0).toString();
         String type        = terms.get(1).toString();
         int minPrice       = Integer.parseInt(terms.get(2).toString());
@@ -45,7 +44,8 @@ public class Auction2 extends Environment {
         String seller      = terms.get(4).toString();
 
         Auction auction = new Auction(description, minPrice, type, endTime, seller);
-        return this.auctions.store(auction);
+        int id = this.auctions.store(auction);
+        addPercept("mediator", Literal.parseLiteral("confirmCreatedAuction(" + id + ", " + seller +")"));
     }
     
     /*
@@ -53,7 +53,7 @@ public class Auction2 extends Environment {
             @query String Search query
             @maxPrice Integer
     */
-    public ArrayList<Auction> searchAuctions(List<Term> terms){
+    public void searchAuctionHandler(List<Term> terms){
         if(terms.size() != 2){
             throw new IllegalArgumentException("Auction#searchAuctions takes 2 arguments");
         }
@@ -70,7 +70,7 @@ public class Auction2 extends Environment {
             }
         }
 
-        return returnedAuctions;
+        addPercept("searcher", Literal.parseLiteral("auction(0, volvo, car, 50)"));
     }
 
     @Override
@@ -79,9 +79,9 @@ public class Auction2 extends Environment {
         List<Term> terms = action.getTerms();
         switch(action.getFunctor()){
             case "addAuction":
-                this.addAuction(terms); break;
+                this.addAuctionHander(terms); break;
             case "searchAuctions":
-                searchAuctions(terms); 
+                searchAuctionHandler(terms); 
                 break;
             default:
                 logger.info("executing: "+action+", but not implemented!"); break;
