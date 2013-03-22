@@ -4,9 +4,9 @@ public class Bid implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private final int auctionID;
     private final int amount;
-    private final Buyer bidder;
+    private final String bidder;
     
-    public Bid(int auctionID, int amount, Buyer bidder) {
+    public Bid(int auctionID, int amount, String bidder) {
         this.auctionID = auctionID; 
         this.amount = amount;
         this.bidder = bidder;
@@ -20,7 +20,7 @@ public class Bid implements Serializable {
         return amount;
     }
 
-    public Buyer getBidder() {
+    public String getBidder() {
         return bidder;
     }
 }
