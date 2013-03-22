@@ -11,12 +11,12 @@ public class Auction implements Serializable {
     private int minPrice;
     private String type;
     private int endTime;
-    private Seller seller;
     private Bid higestBid;
     private boolean locked = false;
+    private String seller;
     private ArrayList<Bid> bids = new ArrayList<Bid>();
   
-    public Auction(String description, int minPrice, String type, int endTime, Seller seller) {
+    public Auction(String description, int minPrice, String type, int endTime, String seller) {
         this.description = description;
         this.minPrice = minPrice;
         this.type = type;
@@ -24,10 +24,9 @@ public class Auction implements Serializable {
         this.seller = seller;
     }
 
-    public Auction(String description, int minPrice, int endTime, Seller seller) {
-        super(description, minPrice, endTime, seller);
+    public Auction(String description, int minPrice, int endTime, String seller) {
+        this(description, minPrice, "", endTime, seller);
     }
-
 
     @Override
     public String toString() {
@@ -99,10 +98,6 @@ public class Auction implements Serializable {
 
     public int getEndTime(){
         return this.endTime;
-    }
-
-    public Seller getSeller() {
-        return this.seller;
     }
 
     public void setId(int id) throws IllegalArgumentException {
