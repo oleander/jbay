@@ -5,7 +5,7 @@
 /* Initial beliefs and rules */
 
 
-search_result(volvo, 110).
+auction(0, volvo, car, 110).
 
 
 /* Initial goals */
@@ -24,6 +24,7 @@ search_result(volvo, 110).
 
 +?auction(ID, Item, Type, Price) 
 	<-	search_auctions(Item, Price);
+		//.send(bidder, tell, auction(volvo, Item, Type, 110));
 		.print(Price).
 
 

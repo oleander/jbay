@@ -5,7 +5,7 @@
 /* Initial beliefs and rules */
 
 
-
+search_for(Item, 120).
 /* Initial goals */
 
 
@@ -24,6 +24,6 @@
 	<- .print("Sending search request to ", searcher, ": ", Item, ", ", Max_price); 
 		.send(searcher, askOne, auction(ID, Item, Type, Max_price)).
 		
-+auction(ID, Item, Type, Price) : search_for(Item, Price)   <- .print("boyaa").
++auction(ID, Item, Type, Price) : search_for(Item, Price2)  <- .print(Price2).
 
 
