@@ -16,7 +16,7 @@
 
 
 
-// Kšr sina goals
+// Kör sina goals
 +!create_auction(Descr, Type, Price)[source(S)] 
 	<- .print("Received request from ", S,  ": ", Descr, Type, Price);
 		add_auction(Descr, Type, Price).

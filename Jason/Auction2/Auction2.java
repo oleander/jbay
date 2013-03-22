@@ -94,8 +94,11 @@ public class Auction2 extends Environment {
                 auctions.add(auction);
             }
         }
-        //addPercept(Literal.parseLiteral("search_result(" + auction.getDescription() + "," + auction));
-        return auctions;
+		
+		
+        //addPercept("searcher", Literal.parseLiteral("search_result(" + auctions.get(0).getDescription() + "," + auctions.get(0).getPrice()));
+        addPercept("searcher", Literal.parseLiteral("auction(0, volvo, car, 50)"));
+		return auctions;
     }
 
 
