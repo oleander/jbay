@@ -4,20 +4,24 @@
 
 /* Initial beliefs and rules */
 
-item(a)[name(Volvo)].
+
 
 /* Initial goals */
 
 
 
-!start.
-
+!request_auction(volvo, car, 100).
 
 
 /* Plans */
 
 
 
-+!start : true <- .print("hello world.").
 
-+new_item[name(A)] <- .print("new item ", A).
+
++new_item(Descr, Type, Price) <- !request_auction(Descr, Type, Price). 
+
++!request_auction(Descr, Type, Price) 
+	<- .print("Sending request to ", mediator, " ", Descr, Type,  Price);
+		.send(mediator, achieve, create_auction(Descr, Type, Price)).
+		
