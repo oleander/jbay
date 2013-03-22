@@ -1,0 +1,23 @@
+// Agent seller in project Auction2.mas2j
+
+
+
+/* Initial beliefs and rules */
+
+item(a)[name(Volvo)].
+
+/* Initial goals */
+
+
+
+!start.
+
+
+
+/* Plans */
+
+
+
++!start : true <- .print("hello world.").
+
++new_item[name(A)] <- .print("new item ", A).

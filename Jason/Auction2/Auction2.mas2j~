@@ -1,0 +1,13 @@
+/* Jason Project */
+
+MAS auction2 {
+
+    infrastructure: Centralised
+
+    environment: Auction2
+
+    agents:
+        seller;
+
+}
+

@@ -1,0 +1,30 @@
+// Agent searcher in project Auction2.mas2j
+
+
+
+/* Initial beliefs and rules */
+
+
+search_result(volvo, 110).
+
+
+/* Initial goals */
+
+
+
+!start.
+
+
+
+/* Plans */
+
+
+
++!start : true <- .print("hello world.").
+
++?auction(ID, Item, Type, Price) 
+	<-	search_auctions(Item, Price);
+		.print(Price).
+
+
+
