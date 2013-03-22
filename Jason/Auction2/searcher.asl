@@ -23,7 +23,7 @@ auction(0, volvo, car, 110).
 +!start : true <- .print("hello world.").
 
 +?auction(ID, Item, Type, Price) 
-	<-	search_auctions(Item, Price);
+	<-	searchAuctions(Item, Price);
 		.send(bidder, tell, auction(volvo, Item, Type, 50));
 		.print(Price).
 
