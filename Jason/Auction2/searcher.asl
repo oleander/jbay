@@ -15,8 +15,8 @@
 +auction(ID, Item, Type, Price) <- .print("found auction", Price).
 
 +?auction(ID, Item, Type, Price)[maxPrice(M)] 
-  <-  .print("dealing with search request");
-     searchAuctions(Item, 120).
+  <-  .print("dealing with search request").//;
+     //searchAuctions(Item, 120).
     //.send(bidder, tell, auction(volvo, Item, Type, 50));
 
 

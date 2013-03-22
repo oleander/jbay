@@ -17,5 +17,5 @@
 // Skapar en G hos mediator
 +!requestAuction(Descr, Type, MinPrice, EndTime) 
 	<- .print("Sending request to ", mediator, " ", Descr, Type, MinPrice, EndTime);
-		.send(mediator, achieve, createAuction(Descr, Type, MinPrice, EndTime)).
+		.send("mediator", achieve, createAuction(Descr, Type, MinPrice, EndTime)).
 		
