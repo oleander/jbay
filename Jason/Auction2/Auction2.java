@@ -69,6 +69,8 @@ public class Auction2 extends Environment {
                 returnedAuctions.add(auction);
             }
         }
+
+        addPercept("searcher", Literal.parseLiteral("auction(0, volvo, car, 50)"));
         return returnedAuctions;
     }
 

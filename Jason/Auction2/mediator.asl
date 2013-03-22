@@ -4,7 +4,6 @@
 
 /* Initial goals */
 
-
 /* Plans */
 
 +!createAuction(Descr, Type, MinPrice, EndTime)[source(S)] 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Agent mediator in project Auction2.mas2j
 
 /* Initial beliefs and rules */
@@ -13,3 +14,29 @@
 		add_auction(Descr, Type, Price).
 	
 
+=======
+// Agent mediator in project Auction2.mas2j
+
+
+
+/* Initial beliefs and rules */
+
+
+
+/* Initial goals */
+
+
+
+
+
+/* Plans */
+
+
+
+// Kšr sina goals
++!create_auction(Descr, Type, Price)[source(S)] 
+	<- .print("Received request from ", S,  ": ", Descr, Type, Price);
+		add_auction(Descr, Type, Price).
+	
+
+>>>>>>> a8f4ef875901591f3c2c5fb803d284b24e2b23ed
