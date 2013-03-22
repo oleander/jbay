@@ -10,18 +10,12 @@
 
 
 
-!request_auction(volvo, car, 100).
-
+!requestAuction(volvo, car, 100, 100).
 
 /* Plans */
 
-
-
-
-
-+new_item(Descr, Type, Price) <- !request_auction(Descr, Type, Price). 
-
-+!request_auction(Descr, Type, Price) 
-	<- .print("Sending request to ", mediator, " ", Descr, Type,  Price);
-		.send(mediator, achieve, create_auction(Descr, Type, Price)).
+// Skapar en G hos mediator
++!requestAuction(Descr, Type, MinPrice, EndTime) 
+	<- .print("Sending request to ", mediator, " ", Descr, Type, MinPrice, EndTime);
+		.send(mediator, achieve, createAuction(Descr, Type, MinPrice, EndTime)).
 		
