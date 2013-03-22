@@ -13,6 +13,7 @@ public class Auction implements Serializable {
     private int endTime;
     private Seller seller;
     private Bid higestBid;
+    private boolean locked = false;
     private ArrayList<Bid> bids = new ArrayList<Bid>();
   
     public Auction(String description, int minPrice, String type, int endTime, Seller seller) {
@@ -43,7 +44,11 @@ public class Auction implements Serializable {
     /*
      * @return Is the given bid the highest one?
      */
-    public synchronized boolean makeBid(Bid bid) {
+    public synchronized boolean makeBid(Bid bid) throws Exception {
+        if(this.locked){
+            throw new Exception("Auction is locked");
+        }
+
         Bid higestBid = this.getHigestBid();
         if(higestBid != null){
             if(higestBid.getAmount() >= bid.getAmount()){
@@ -113,5 +118,9 @@ public class Auction implements Serializable {
 
     public String getStringId() throws Exception {
         return this.getId() + "";
+    }
+
+    public void lock(){
+        this.locked = true;
     }
 }
