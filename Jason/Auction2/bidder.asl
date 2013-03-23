@@ -6,12 +6,14 @@
 
 
 searchFor(volvo, 120).
+searchFor(cod, 12).
 /* Initial goals */
 
 
 
 !start.
 !searchFor(volvo, 120).
+!searchFor(cod, 8).
 
 
 /* Plans */
@@ -20,13 +22,14 @@ searchFor(volvo, 120).
 
 +!start : true <- .print("hello world.").
 
-
+//achieve
 +!searchFor(Item, Max_price)
-	<-  .wait(5000);
+	<-  .wait(2000);
 		.print("Sending search request to ", searcher, ": ", Item, ", ", Max_price); 
-		.send(searcher, achieve, auction(ID, Item, Type, Price)[maxPrice(Max_price)]).
+		.send(searcher, achieve, searchAuctions(Item, Max_price)).
+
 		
-+auction(ID, Item, Type, Price2)[source(S)] : searchFor(Item, MaxPrice) & Price2 < MaxPrice  <- .print("received auction!!",Item, Price2, MaxPrice).
++auction(Item, Type, Price2, EndTime): searchFor(Item, MaxPrice) & Price2 < MaxPrice <- .print("received auction!!",Item, Type, Price2, EndTime).
 
 
 

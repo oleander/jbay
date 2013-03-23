@@ -54,12 +54,13 @@ public class Auction2 extends Environment {
             @maxPrice Integer
     */
     public void searchAuctionHandler(List<Term> terms){
-        if(terms.size() != 2){
-            throw new IllegalArgumentException("Auction#searchAuctions takes 2 arguments");
+        if(terms.size() != 3){
+            throw new IllegalArgumentException("Auction#searchAuctions takes 3 arguments");
         }
 
         String query = terms.get(0).toString();
         int maxPrice = Integer.parseInt(terms.get(1).toString());
+		String agent = terms.get(2).toString();
 
         ArrayList<Auction> returnedAuctions = new ArrayList<Auction>();
         ArrayList<Auction> foundAuctions = this.auctions.search(query);
@@ -69,8 +70,11 @@ public class Auction2 extends Environment {
                 returnedAuctions.add(auction);
             }
         }
-
-        addPercept("searcher", Literal.parseLiteral("auction(0, volvo, car, 50)"));
+		
+		Auction auction = returnedAuctions.get(0);
+		
+		logger.info(("searchResult(" + auction + "," + agent +")"));
+        addPercept("searcher", Literal.parseLiteral("searchResult(" + auction + "," + agent +")"));
     }
 
     @Override

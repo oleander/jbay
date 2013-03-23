@@ -9,6 +9,7 @@
 
 
 !requestAuction(volvo, car, 100, 100).
+!requestAuction(cod, fish, 10, 123).
 
 /* Plans */
 +confirmCreatedAuction(Id): true <- .print("Auction id: ", Id).

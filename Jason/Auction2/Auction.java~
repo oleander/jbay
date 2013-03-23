@@ -30,17 +30,8 @@ public class Auction implements Serializable {
 
     @Override
     public String toString() {
-		return toString(description, type, minPrice, endTime);
+        return "Auction [description=" + description + ", minPrice=" + minPrice + ", type=" + type + "]";
     }
-	
-	private String toString(Object... variables) {
-		StringBuilder sb = new StringBuilder("auction(");
-		for(Object variable : variables){			
-			sb.append(variable).append(",");
-		}
-		sb.setCharAt(sb.length() - 1, ')');
-		return sb.toString();
-	}
 
     public boolean isValid() {
         return true;
