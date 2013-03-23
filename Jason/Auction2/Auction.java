@@ -132,4 +132,8 @@ public class Auction implements Serializable {
     public void lock(){
         this.locked = true;
     }
+
+    public String getSeller(){
+        return this.seller;
+    }
 }

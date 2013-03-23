@@ -52,7 +52,6 @@ public class Auction2 extends Environment {
             @auctionId Integer
             @newPrice Integer
             @bidder String
-        @return Integer Unique id for auction
     */
     public void makeBidHandler(List<Term> terms){
         if(terms.size() != 3){
@@ -85,6 +84,31 @@ public class Auction2 extends Environment {
         }
 
         addPercept("mediator", Literal.parseLiteral("confirmCreatedBid(" + auctionId + ", " + bidder +")"));
+    }
+
+    /*
+        @terms
+            @auctionId Integer
+            @previousBidder String
+    */
+    public void notifyEveryOneAboutNewBidHandler(List<Term> terms) {
+        if(terms.size() != 2){
+            throw new IllegalArgumentException("Auction#notifyEveryOneAboutNewBidHandler takes 2 arguments");
+        }
+
+        int auctionId           = Integer.parseInt(terms.get(0).toString());
+        String previousBidder   = terms.get(1).toString();
+        Auction auction         = this.auctions.findByid(auctionId);
+        int currentHighestPrice = auction.getHigestBidPrice();
+
+        for(Bid bid : auction.getBids()) {
+            // We do not want to notify new bidder about new bidds
+            if(bid.getBidder() != previousBidder) {
+                addPercept(bid.getBidder(), Literal.parseLiteral("newHigherBid(" + auctionId + ", " + currentHighestPrice +")"));
+            }
+        }
+
+        addPercept(auction.getSeller(), Literal.parseLiteral("newBid(" + auctionId + ", " + currentHighestPrice + ", " + previousBidder +")"));
     }
     
     /*
@@ -127,6 +151,8 @@ public class Auction2 extends Environment {
                 searchAuctionHandler(terms); break;
             case "makeBind":
                 makeBidHandler(terms); break;
+            case "notifyEveryOneAboutNewBid":
+                notifyEveryOneAboutNewBidHandler(terms); break;
             default:
                 logger.info("executing: "+action+", but not implemented!"); break;
         }

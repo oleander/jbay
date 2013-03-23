@@ -10,10 +10,15 @@
   
 /*
  Bid was successfully created on auction
+ Sends message to:
+   Bidder: Bid was a success
+   Seller: New bid
+   Other bidders: New higher bid arrived
 */
 +confirmCreatedBid(AuctionId, Bidder) <-
   .print("confirmCreatedBid : ", AuctionId, " ", Bidder);
-  .send(Bidder, tell, confirmCreatedBid(AuctionId)).
+  .send(Bidder, tell, confirmCreatedBid(AuctionId));
+  notifyEveryOneAboutNewBid(AuctionId, Bidder).
 
 +!createAuction(Descr, Type, MinPrice, EndTime)[source(S)] <- 
     .print("Received request from ", S,  ": ", Descr, Type, MinPrice, EndTime);

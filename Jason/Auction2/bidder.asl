@@ -21,6 +21,12 @@ searchFor(cod, 12).
 +confirmCreatedBid(AuctionId) <-
   .print("My bid on ", AuctionId, " was a success").
 
+/*
+ Notifyed about not higest bidder.
+*/
++newHigherBid(AuctionId, CurrentHighestPrice) <-
+  .print("Darn, someone overbid me on auction", AuctionId, " width ", CurrentHighestPrice).
+
 +!start : true <- .print("hello world.").
 
 //achieve
