@@ -1,15 +1,3 @@
-// Agent bidder in project Auction2.mas2j
-
-/* Initial beliefs and rules */
-
-searchFor(volvo, 120).
-searchFor(cod, 12).
-/* Initial goals */
-
-!start.
-!searchFor(volvo, 120).
-!searchFor(cod, 8).
-
 /* Plans */
 
 +confirmCreatedBid(AuctionId) <-
@@ -24,11 +12,11 @@ searchFor(cod, 12).
 
 +!start : true <- .print("hello world.").
 
-//achieve
-+!searchFor(Item, Max_price)
-  <-  .wait(2000);
-    .print("Sending search request to ", searcher, ": ", Item, ", ", Max_price); 
-    .send(searcher, achieve, searchAuctions(Item, Max_price)).
++!searchFor(Item, Max_price) <-  
+  .random(N);
+  .wait(N * 2000);
+  .print("Sending search request to ", searcher, ": ", Item, ", ", Max_price); 
+  .send(searcher, achieve, searchAuctions(Item, Max_price)).
 
     
 +auction(Item, Type, Price, EndTime, Id): searchFor(Item, MaxPrice) & Price + 5 < MaxPrice <- 
