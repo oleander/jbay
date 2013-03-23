@@ -1,20 +1,14 @@
 // Agent bidder in project Auction2.mas2j
 
-
-
 /* Initial beliefs and rules */
-
 
 searchFor(volvo, 120).
 searchFor(cod, 12).
 /* Initial goals */
 
-
-
 !start.
 !searchFor(volvo, 120).
 !searchFor(cod, 8).
-
 
 /* Plans */
 
@@ -22,7 +16,7 @@ searchFor(cod, 12).
   .print("My bid on ", AuctionId, " was a success").
 
 /*
- Notifyed about not higest bidder.
+ Notifyed about not highest bidder.
 */
 +notifyNotHighestBidder(AuctionId, CurrentHighestPrice) <-
   .print("Darn, someone overbid me on auction", AuctionId, " width ", CurrentHighestPrice);
@@ -32,18 +26,19 @@ searchFor(cod, 12).
 
 //achieve
 +!searchFor(Item, Max_price)
-	<-  .wait(2000);
-		.print("Sending search request to ", searcher, ": ", Item, ", ", Max_price); 
-		.send(searcher, achieve, searchAuctions(Item, Max_price)).
+  <-  .wait(2000);
+    .print("Sending search request to ", searcher, ": ", Item, ", ", Max_price); 
+    .send(searcher, achieve, searchAuctions(Item, Max_price)).
 
-		
+    
 +auction(Item, Type, Price, EndTime, Id): searchFor(Item, MaxPrice) & Price + 5 < MaxPrice <- 
   .print("Found auction", Id);
   .send(mediator, achieve, makeBid(Id, Price + 5)).
 
+/*
+ We're not longer the highest bidder on AuctionId
+ Trying to make a new bid, given that current price (CurrentHighestPrice) isn't to high
+*/
 +!tryMakeBid(AuctionId, CurrentHighestPrice) : searchFor(Item, MaxPrice) & CurrentHighestPrice + 5 < MaxPrice <-
   .print("Trying to make a new bid on ", AuctionId, " width ", CurrentHighestPrice + 5);
   .send(mediator, achieve, makeBid(AuctionId, CurrentHighestPrice + 5)).
-
-
-
