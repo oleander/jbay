@@ -103,7 +103,7 @@ public class Auction2 extends Environment {
 
         for(Bid bid : auction.getBids()) {
             // We do not want to notify new bidder about new bidds
-            if(bid.getBidder() != previousBidder) {
+            if(!bid.getBidder().equals(previousBidder)) {
                 addPercept(bid.getBidder(), Literal.parseLiteral("notifyNotHighestBidder(" + auctionId + ", " + currentHighestPrice +")"));
             }
         }

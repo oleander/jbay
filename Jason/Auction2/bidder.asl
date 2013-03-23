@@ -25,7 +25,8 @@ searchFor(cod, 12).
  Notifyed about not higest bidder.
 */
 +notifyNotHighestBidder(AuctionId, CurrentHighestPrice) <-
-  .print("Darn, someone overbid me on auction", AuctionId, " width ", CurrentHighestPrice).
+  .print("Darn, someone overbid me on auction", AuctionId, " width ", CurrentHighestPrice);
+  !tryMakeBid(AuctionId, CurrentHighestPrice).
 
 +!start : true <- .print("hello world.").
 
@@ -40,6 +41,9 @@ searchFor(cod, 12).
   .print("Found auction", Id);
   .send(mediator, achieve, makeBid(Id, Price + 5)).
 
++!tryMakeBid(AuctionId, CurrentHighestPrice) : searchFor(Item, MaxPrice) & CurrentHighestPrice + 5 < MaxPrice <-
+  .print("Trying to make a new bid on ", AuctionId, " width ", CurrentHighestPrice + 5);
+  .send(mediator, achieve, makeBid(AuctionId, CurrentHighestPrice + 5)).
 
 
 
