@@ -24,7 +24,7 @@ searchFor(cod, 12).
 /*
  Notifyed about not higest bidder.
 */
-+newHigherBid(AuctionId, CurrentHighestPrice) <-
++notifyNotHighestBidder(AuctionId, CurrentHighestPrice) <-
   .print("Darn, someone overbid me on auction", AuctionId, " width ", CurrentHighestPrice).
 
 +!start : true <- .print("hello world.").

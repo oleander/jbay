@@ -17,7 +17,7 @@
 /*
  Notify seller about new bid
 */
-+newBid(AuctionId, CurrentHighestPrice, Bidder) <-
++notifySellerAboutNewBid(AuctionId, CurrentHighestPrice, Bidder) <-
   .print(Bidder, " is highest bidder on ", AuctionId, " width ", CurrentHighestPrice).
 
 // Skapar en G hos mediator
