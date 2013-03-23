@@ -18,7 +18,8 @@ searchFor(cod, 12).
 
 /* Plans */
 
-
++confirmCreatedBid(AuctionId) <-
+  .print("My bid on ", AuctionId, " was a success").
 
 +!start : true <- .print("hello world.").
 
@@ -29,7 +30,9 @@ searchFor(cod, 12).
 		.send(searcher, achieve, searchAuctions(Item, Max_price)).
 
 		
-+auction(Item, Type, Price2, EndTime): searchFor(Item, MaxPrice) & Price2 < MaxPrice <- .print("received auction!!",Item, Type, Price2, EndTime).
++auction(Item, Type, Price, EndTime, Id): searchFor(Item, MaxPrice) & Price + 5 < MaxPrice <- 
+  .print("Found auction", Id);
+  .send(mediator, achieve, makeBid(Id, Price + 5)).
 
 
 

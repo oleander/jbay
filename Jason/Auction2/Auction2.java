@@ -30,7 +30,6 @@ public class Auction2 extends Environment {
             @type String
             @endTime Integer
             @seller String
-        @return Integer Unique id for auction
     */
     public void addAuctionHander(List<Term> terms){
         if(terms.size() != 5){
@@ -46,6 +45,46 @@ public class Auction2 extends Environment {
         Auction auction = new Auction(description, minPrice, type, endTime, seller);
         int id = this.auctions.store(auction);
         addPercept("mediator", Literal.parseLiteral("confirmCreatedAuction(" + id + ", " + seller +")"));
+    }
+
+    /*
+        @terms
+            @auctionId Integer
+            @newPrice Integer
+            @bidder String
+        @return Integer Unique id for auction
+    */
+    public void makeBidHandler(List<Term> terms){
+        if(terms.size() != 3){
+            throw new IllegalArgumentException("Auction#makeBindHandler takes 3 arguments");
+        }
+
+        int auctionId = Integer.parseInt(terms.get(0).toString());
+        int newPrice  = Integer.parseInt(terms.get(1).toString());
+        String bidder = terms.get(2).toString();
+
+        Auction auction = this.auctions.findByid(auctionId);
+        if(auction == null){
+            throw new IllegalArgumentException("Auction width id " + auctionId + " was not found");
+        }
+
+        Bid bid = new Bid(auctionId, newPrice, bidder);
+        boolean status = false;
+
+        try {
+            status = auction.makeBid(bid);
+        } catch(Exception e) {
+            // TODO: Send status to mediator
+            // Auction was locked
+            status = false;
+        }
+
+        if(!status){
+            // TODO: Send proper responds to mediator
+            throw new IllegalArgumentException("Invalid bid was made on auction " + auctionId);
+        }
+
+        addPercept("mediator", Literal.parseLiteral("confirmCreatedBid(" + auctionId + ", " + bidder +")"));
     }
     
     /*
@@ -85,8 +124,9 @@ public class Auction2 extends Environment {
             case "addAuction":
                 this.addAuctionHander(terms); break;
             case "searchAuctions":
-                searchAuctionHandler(terms); 
-                break;
+                searchAuctionHandler(terms); break;
+            case "makeBind":
+                makeBidHandler(terms); break;
             default:
                 logger.info("executing: "+action+", but not implemented!"); break;
         }

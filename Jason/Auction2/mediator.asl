@@ -7,8 +7,19 @@
 /* Plans */
 +confirmCreatedAuction(Id, Seller) <-
   .send(Seller, tell, confirmCreatedAuction(Id)).
+  
+/*
+ Bid was successfully created on auction
+*/
++confirmCreatedBid(AuctionId, Bidder) <-
+  .print("confirmCreatedBid : ", AuctionId, " ", Bidder);
+  .send(Bidder, tell, confirmCreatedBid(AuctionId)).
 
 +!createAuction(Descr, Type, MinPrice, EndTime)[source(S)] <- 
     .print("Received request from ", S,  ": ", Descr, Type, MinPrice, EndTime);
     addAuction(Descr, Type, MinPrice, EndTime, S);
     .print("Hej hej").
+
++!makeBid(Id, NewPrice)[source(Bidder)] <-
+  .print(Bidder, " just bid ", NewPrice, " on auction ", Id);
+  makeBind(Id, NewPrice, Bidder).

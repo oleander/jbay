@@ -30,12 +30,12 @@ public class Auction implements Serializable {
 
     @Override
     public String toString() {
-		return toString(description, type, minPrice, endTime);
+		return toString(description, type, minPrice, endTime, id);
     }
 	
 	private String toString(Object... variables) {
 		StringBuilder sb = new StringBuilder("auction(");
-		for(Object variable : variables){			
+		for(Object variable : variables){
 			sb.append(variable).append(",");
 		}
 		sb.setCharAt(sb.length() - 1, ')');
