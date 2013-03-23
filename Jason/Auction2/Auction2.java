@@ -83,7 +83,7 @@ public class Auction2 extends Environment {
             throw new IllegalArgumentException("Invalid bid was made on auction " + auctionId);
         }
 
-        addPercept("mediator", Literal.parseLiteral("confirmCreatedBid(" + auctionId + ", " + bidder +")"));
+        addPercept("mediator", Literal.parseLiteral("confirmCreatedBid(" + auctionId + ", " + bidder + ", " + newPrice +")"));
     }
 
     /*

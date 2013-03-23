@@ -6,7 +6,8 @@
 
 /* Plans */
 +confirmCreatedAuction(Id, Seller) <-
-  .send(Seller, tell, confirmCreatedAuction(Id)).
+  .send(Seller, tell, confirmCreatedAuction(Id));
+  -confirmCreatedAuction(Id, Seller).
   
 /*
  Bid was successfully created on auction
@@ -15,9 +16,10 @@
    Seller: New bid
    Other bidders: New higher bid arrived
 */
-+confirmCreatedBid(AuctionId, Bidder) <-
+
++confirmCreatedBid(AuctionId, Bidder, Price) <-
   .print("confirmCreatedBid : ", AuctionId, " ", Bidder);
-  .send(Bidder, tell, confirmCreatedBid(AuctionId));
+  .send(Bidder, tell, confirmCreatedBid(AuctionId, Price));
   notifyEveryOneAboutNewBid(AuctionId, Bidder).
 
 +!createAuction(Descr, Type, MinPrice, EndTime)[source(S)] <- 

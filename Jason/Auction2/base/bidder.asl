@@ -1,14 +1,14 @@
 /* Plans */
 
-+confirmCreatedBid(AuctionId) <-
++confirmCreatedBid(AuctionId, Price) <-
   .print("My bid on ", AuctionId, " was a success").
 
 /*
- Notifyed about not highest bidder.
+ Notifyed about not highest bidder. Inc by 1
 */
-+notifyNotHighestBidder(AuctionId, CurrentHighestPrice) <-
-  .print("Darn, someone overbid me on auction", AuctionId, " width ", CurrentHighestPrice);
-  !tryMakeBid(AuctionId, CurrentHighestPrice).
++notifyNotHighestBidder(AuctionId, CurrentHighestPrice) : searchFor(Item, MaxPrice) & CurrentHighestPrice + 1 < MaxPrice <-
+  .print("Trying to make a new bid on ", AuctionId, " width ", CurrentHighestPrice + 1);
+  .send(mediator, achieve, makeBid(AuctionId, CurrentHighestPrice + 1)).
 
 +!start : true <- .print("hello world.").
 
@@ -19,9 +19,9 @@
   .send(searcher, achieve, searchAuctions(Item, Max_price)).
 
     
-+auction(Item, Type, Price, EndTime, Id): searchFor(Item, MaxPrice) & Price + 5 < MaxPrice <- 
++auction(Item, Type, Price, EndTime, Id, MinPrice): searchFor(Item, MaxPrice) & MinPrice + 5 < MaxPrice <- 
   .print("Found auction", Id);
-  .send(mediator, achieve, makeBid(Id, Price + 5)).
+  .send(mediator, achieve, makeBid(Id, MinPrice + 5)).
 
 /*
  We're not longer the highest bidder on AuctionId

@@ -30,7 +30,7 @@ public class Auction implements Serializable {
 
     @Override
     public String toString() {
-		return toString(description, type, minPrice, endTime, id);
+		return toString(description, type, minPrice, endTime, id, getMinimumBidValue());
     }
 	
 	private String toString(Object... variables) {
@@ -92,6 +92,15 @@ public class Auction implements Serializable {
         }
 
         return 0;
+    }
+
+    public int getMinimumBidValue(){
+        int value = this.getHigestBidPrice();
+        if(value == 0){
+            return this.getMinPrice();
+        } else {
+            return value;
+        }
     }
 
     public int getMinPrice(){

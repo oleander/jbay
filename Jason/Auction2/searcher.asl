@@ -12,9 +12,9 @@ auction(0, volvo, car, 110).
 
 +!start : true <- .print("hello world.").
 
-+searchResult(auction(Item, Type, Price, EndTime, Id), OriginalRequester) 
-<- 	.print("found auction", auction(Item, Type, Price, EndTime));
-	.send(OriginalRequester, tell, auction(Item, Type, Price, EndTime, Id)).
++searchResult(auction(Item, Type, Price, EndTime, Id, MinPrice), OriginalRequester) 
+<- 	.print("found auction", auction(Item, Type, Price, EndTime, MinPrice));
+	.send(OriginalRequester, tell, auction(Item, Type, Price, EndTime, Id, MinPrice)).
 	
 
 +!searchAuctions(Item, Max_price)[source(S)] 
