@@ -4,7 +4,7 @@ MAS auction2 {
     infrastructure: Centralised
     environment: Auction2
     agents:
-        seller;
+        seller1;
         mediator;
         bidder1;
         bidder2;
