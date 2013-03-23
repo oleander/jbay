@@ -8,8 +8,8 @@
 /* Initial goals */
 
 
-!requestAuction(volvo, car, 100, 100).
-!requestAuction(cod, fish, 10, 123).
+!requestAuction(volvo, car, 100, 3000).
+!requestAuction(cod, fish, 10, 3230).
 
 /* Plans */
 +confirmCreatedAuction(Id): true <- .print("Auction id: ", Id).

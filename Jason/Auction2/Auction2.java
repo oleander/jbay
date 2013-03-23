@@ -9,8 +9,10 @@ import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.*;
 import java.util.LinkedList;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent; 
 
-public class Auction2 extends Environment {
+public class Auction2 extends Environment implements ChangeListener {
     private Logger logger = Logger.getLogger("Auction2.mas2j." + Auction2.class.getName());
     private HashMap<Integer, AuctionObject> map = new HashMap<Integer, AuctionObject>();
     private Auctions auctions = null;
@@ -43,10 +45,17 @@ public class Auction2 extends Environment {
         int endTime        = Integer.parseInt(terms.get(3).toString());
         String seller      = terms.get(4).toString();
 
-        Auction auction = new Auction(description, minPrice, type, endTime, seller);
+        Auction auction = new Auction(description, minPrice, type, endTime, seller, this);
         int id = this.auctions.store(auction);
         addPercept("mediator", Literal.parseLiteral("confirmCreatedAuction(" + id + ", " + seller +")"));
     }
+	
+	@Override
+	public void stateChanged(ChangeEvent e){
+		Auction auction = (Auction) e.getSource();
+		logger.info("state changed");
+		addPercept("mediator", Literal.parseLiteral("auctionEnded(" + auction + "," + auction.getSeller() + ")"));
+	}
     
     /*
         @terms

@@ -1,10 +1,11 @@
 import java.io.Serializable;
 import java.util.ArrayList;
-
+import javax.swing.event.ChangeListener; 
+import javax.swing.event.ChangeEvent; 
 /*
 Struct class for auctions
 */
-public class Auction implements Serializable {
+public class Auction implements Serializable, Runnable {
     private static final long serialVersionUID = 1L;
     private int id = -1;
     private String description;
@@ -15,18 +16,34 @@ public class Auction implements Serializable {
     private boolean locked = false;
     private String seller;
     private ArrayList<Bid> bids = new ArrayList<Bid>();
+	private ChangeListener changeListener;
+	private Thread thread;
   
-    public Auction(String description, int minPrice, String type, int endTime, String seller) {
+    public Auction(String description, int minPrice, String type, int endTime, String seller, ChangeListener changeListener) {
         this.description = description;
         this.minPrice = minPrice;
         this.type = type;
         this.endTime = endTime;
         this.seller = seller;
+		this.changeListener = changeListener;
+		thread = new Thread(this);
+		thread.start();
     }
 
-    public Auction(String description, int minPrice, int endTime, String seller) {
-        this(description, minPrice, "", endTime, seller);
+    public Auction(String description, int minPrice, int endTime, String seller, ChangeListener changeListener) {
+        this(description, minPrice, "", endTime, seller, changeListener);
     }
+	
+	@Override
+	public void run() {
+		try {
+			thread.sleep(endTime);
+			changeListener.stateChanged(new ChangeEvent(this));
+		} catch (InterruptedException ie) {
+			ie.printStackTrace();
+		}
+		
+	}
 
     @Override
     public String toString() {
@@ -53,6 +70,10 @@ public class Auction implements Serializable {
     public String getType() {
         return this.type;
     }
+	
+	public String getSeller() {
+		return seller;
+	}
 
     /*
      * @return Is the given bid the highest one?
