@@ -22,8 +22,9 @@
   .send(Bidder, tell, confirmCreatedBid(AuctionId, Price));
   notifyEveryOneAboutNewBid(AuctionId, Bidder).
   
-+auctionEnded(auction(description, type, minPrice, endTime), Seller) 
-  <- .print("Auction ", Descr, " has ended.").
++auctionEnded(auction(Description, Type, MinPrice, EndTime, ID, MinimumBid), Seller) 
+  <- .print("Auction ", Description, " has ended.").
+  
 
 +!createAuction(Descr, Type, MinPrice, EndTime)[source(S)] <- 
     .print("Received request from ", S,  ": ", Descr, Type, MinPrice, EndTime);
