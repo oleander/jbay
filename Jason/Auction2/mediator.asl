@@ -24,7 +24,7 @@
   
 +auctionEnded(auction(Description, Type, MinPrice, EndTime, ID, MinimumBid), Seller, Winner) 
   <- .print("Auction ", Description, " has ended.");
-  		.send(Seller, tell, auctionEnded(auction(Description, Type, MinPrice, EndTime, ID, MinimumBid)), Winner);
+  		.send(Seller, tell, auctionEnded(auction(Description, Type, MinPrice, EndTime, ID, MinimumBid), Winner));
 		.send(Winner, tell, auctionWon(auction(Description, Type, MinPrice, EndTime, ID, MinimumBid))).
 		
 +auctionLost(auction(Description, Type, MinPrice, EndTime, ID, MinimumBid), Loser)
