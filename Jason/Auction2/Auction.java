@@ -134,6 +134,17 @@ public class Auction implements Serializable, Runnable {
         return this.bids;
     }
 	
+	public ArrayList<String> getLosersOfAuction() {
+			ArrayList<String> losers = new ArrayList<String>();			
+			for (Bid bid : bids) {
+				String bidder = bid.getBidder();
+				if( !(bidder.equals(getHigestBid().getBidder()) || losers.contains(bidder)) ) {
+					losers.add(bidder);										
+				}				
+			}
+		return losers; 
+	}
+	
 	public ArrayList<String> getBidders() {
 		ArrayList<String> bidders = new ArrayList<String>();
 		for (Bid bid : bids) {

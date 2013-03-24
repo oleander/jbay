@@ -18,11 +18,6 @@
   .print("Sending search request to ", searcher, ": ", Item, ", ", Max_price); 
   .send(searcher, achieve, searchAuctions(Item, Max_price)).
 
-+auctionWon(auction(Description, Type, MinPrice, EndTime, ID, MinimumBid))
-	<- .print("Yay, I just won an auction: ", Description).
-  
-+auctionLost(auction(Description, Type, MinPrice, EndTime, ID, MinimumBid)) 
-	 <- .print("Darn, just lost an auction: ", Description).
     
 +auction(Item, Type, Price, EndTime, Id, MinPrice): searchFor(Item, MaxPrice) & MinPrice + 5 < MaxPrice <- 
   .print("Found auction", Id);

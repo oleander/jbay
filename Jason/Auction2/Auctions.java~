@@ -30,7 +30,7 @@ public class Auctions {
     /*
     * Find auction by it's unique id
     */
-    public Auction findById(int id){
+    public Auction findByid(int id){
         return this.auctions.get(id);
     }
 

@@ -53,12 +53,22 @@ public class Auction2 extends Environment implements ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent e){
 		Auction auction = (Auction) e.getSource();
-		
-		String bidders = new ESB("[", "]").insert(auction.getBidders());
+		logger.info("Highest : " + auction.getHigestBid());
+		/*String bidders = new ESB("[", "]").insert(auction.getBidders());
 		String perc = new ESB("auctionEnded").insert(auction, auction.getSeller(), bidders);
 		logger.info("state changed" + perc);		
-		addPercept("mediator", Literal.parseLiteral(perc));
+		addPercept("mediator", Literal.parseLiteral(perc));*/
+		
+		addPercept("mediator",Literal.parseLiteral(new ESB("auctionEnded").
+			insert(auction, auction.getSeller(), auction.getHigestBid().getBidder())));
+
+		
+		for (String loser : auction.getLosersOfAuction()) {
+			addPercept("mediator", Literal.parseLiteral(new ESB("auctionLost").insert(auction, loser)));			
+		}
 	}
+	
+	
     
     /*
         @terms
@@ -88,6 +98,20 @@ public class Auction2 extends Environment implements ChangeListener {
 		logger.info(("searchResult(" + auction + "," + agent +")"));
         addPercept("searcher", Literal.parseLiteral("searchResult(" + auction + "," + agent +")"));
     }
+	
+	public void makeBid(List<Term> terms) {
+		int id = Integer.parseInt(terms.get(0).toString());
+		int newPrice = Integer.parseInt(terms.get(1).toString());
+		String bidder = terms.get(2).toString();
+		
+		Auction auction = auctions.findById(id);
+		Bid bid = new Bid(id, newPrice, bidder);
+		try {
+			auction.makeBid(bid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
     @Override
 
@@ -99,6 +123,9 @@ public class Auction2 extends Environment implements ChangeListener {
             case "searchAuctions":
                 searchAuctionHandler(terms); 
                 break;
+			case "makeBid":
+				makeBid(terms);
+				break;
             default:
                 logger.info("executing: "+action+", but not implemented!"); break;
         }
