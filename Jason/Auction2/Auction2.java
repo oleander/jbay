@@ -99,7 +99,7 @@ public class Auction2 extends Environment implements ChangeListener {
         addPercept("searcher", Literal.parseLiteral("searchResult(" + auction + "," + agent +")"));
     }
 	
-	public void makeBid(List<Term> terms) {
+	public void makeBidHandler(List<Term> terms) {
 		int id = Integer.parseInt(terms.get(0).toString());
 		int newPrice = Integer.parseInt(terms.get(1).toString());
 		String bidder = terms.get(2).toString();
@@ -129,7 +129,7 @@ public class Auction2 extends Environment implements ChangeListener {
                 searchAuctionHandler(terms); 
                 break;
 			case "makeBid":
-				makeBid(terms);
+				makeBidHandler(terms);
 				break;
             default:
                 logger.info("executing: "+action+", but not implemented!"); break;
