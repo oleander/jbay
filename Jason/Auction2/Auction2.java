@@ -4,11 +4,7 @@ import jason.asSyntax.*;
 import jason.environment.*;
 import java.util.Map.Entry;
 import java.util.logging.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.ArrayList;
 import java.util.*;
-import java.util.LinkedList;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent; 
 
