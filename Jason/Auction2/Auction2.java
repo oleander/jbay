@@ -54,10 +54,6 @@ public class Auction2 extends Environment implements ChangeListener {
 	public void stateChanged(ChangeEvent e){
 		Auction auction = (Auction) e.getSource();
 		logger.info("Highest : " + auction.getHigestBid());
-		/*String bidders = new ESB("[", "]").insert(auction.getBidders());
-		String perc = new ESB("auctionEnded").insert(auction, auction.getSeller(), bidders);
-		logger.info("state changed" + perc);		
-		addPercept("mediator", Literal.parseLiteral(perc));*/
 		
 		addPercept("mediator",Literal.parseLiteral(new ESB("auctionEnded").
 			insert(auction, auction.getSeller(), auction.getHigestBid().getBidder())));
