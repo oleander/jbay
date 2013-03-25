@@ -7,7 +7,7 @@
  Notifyed about not highest bidder. Inc by 1
 */
 +notifyNotHighestBidder(AuctionId, CurrentHighestPrice) : searchFor(Item, MaxPrice) & CurrentHighestPrice + 1 < MaxPrice <-
-  .print("Trying to make a new bid on ", AuctionId, " width ", CurrentHighestPrice + 1);
+  .print("Trying to make a new bid on ", AuctionId, " with ", CurrentHighestPrice + 1);
   .send(mediator, achieve, makeBid(AuctionId, CurrentHighestPrice + 1)).
 
 +!start : true <- .print("hello world.").

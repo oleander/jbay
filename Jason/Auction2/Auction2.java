@@ -107,7 +107,12 @@ public class Auction2 extends Environment implements ChangeListener {
 		Auction auction = auctions.findById(id);
 		Bid bid = new Bid(id, newPrice, bidder);
 		try {
-			auction.makeBid(bid);
+			Bid previousBid = auction.getHigestBid();
+			//Bid was accepted and this was not the first bid
+			if (auction.makeBid(bid) && previousBid != null) {
+				String previousBidder = previousBid.getBidder();
+				addPercept(previousBidder, Literal.parseLiteral(new ESB("notifyNotHighestBidder").insert(id, newPrice)));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

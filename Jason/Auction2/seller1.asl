@@ -1,3 +1,3 @@
 { include("base/seller.asl") }
 
-!requestAuction(volvo, car, 100, 3000).
+!requestAuction(volvo, car, 100, 8000).
