@@ -52,21 +52,16 @@ public class Auction2 extends Environment implements ChangeListener {
 	
 	@Override
 	public void stateChanged(ChangeEvent e){
-		Auction auction = (Auction) e.getSource();
-		logger.info("Highest : " + auction.getHigestBid());
-		/*String bidders = new ESB("[", "]").insert(auction.getBidders());
-		String perc = new ESB("auctionEnded").insert(auction, auction.getSeller(), bidders);
-		logger.info("state changed" + perc);		
-		addPercept("mediator", Literal.parseLiteral(perc));*/
+        Auction auction = (Auction) e.getSource();
+        logger.info("Highest : " + auction.getHigestBid());
 		
-		addPercept("mediator",Literal.parseLiteral(new ESB("auctionEnded").
-			insert(auction, auction.getSeller(), auction.getHigestBid().getBidder())));
-
+        addPercept("mediator",Literal.parseLiteral(new ESB("auctionEnded").
+        insert(auction, auction.getSeller(), auction.getHigestBid().getBidder())));
 		
-		for (String loser : auction.getLosersOfAuction()) {
-			addPercept("mediator", Literal.parseLiteral(new ESB("auctionLost").insert(auction, loser)));			
-		}
-	}
+        for (String loser : auction.getLosersOfAuction()) {
+            addPercept("mediator", Literal.parseLiteral(new ESB("auctionLost").insert(auction, loser)));			
+        }
+    }
 	
 	
     
@@ -93,9 +88,9 @@ public class Auction2 extends Environment implements ChangeListener {
             }
         }
 		
-		Auction auction = returnedAuctions.get(0);
+        Auction auction = returnedAuctions.get(0);
 		
-		logger.info(("searchResult(" + auction + "," + agent +")"));
+        logger.info(("searchResult(" + auction + "," + agent +")"));
         addPercept("searcher", Literal.parseLiteral("searchResult(" + auction + "," + agent +")"));
     }
 	
@@ -124,7 +119,8 @@ public class Auction2 extends Environment implements ChangeListener {
         List<Term> terms = action.getTerms();
         switch(action.getFunctor()){
             case "addAuction":
-                this.addAuctionHander(terms); break;
+                this.addAuctionHander(terms);
+				break;
             case "searchAuctions":
                 searchAuctionHandler(terms); 
                 break;
@@ -132,7 +128,8 @@ public class Auction2 extends Environment implements ChangeListener {
 				makeBidHandler(terms);
 				break;
             default:
-                logger.info("executing: "+action+", but not implemented!"); break;
+                logger.info("executing: "+action+", but not implemented!");
+				break;
         }
 
         return true;
