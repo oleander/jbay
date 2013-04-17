@@ -10,7 +10,7 @@ public class AuctionEnvironment extends Environment {
     private final boolean log = true;
     
     public static void main(String [] args) {
-        this.log("AuctionEnvironment has been loaded");
+        System.out.println("AuctionEnvironment has been loaded");
     }
     
     /**
