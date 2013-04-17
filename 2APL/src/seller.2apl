@@ -7,7 +7,6 @@ pgrules:
     dropgoal(requestAuction(Desc, MinPrice, EndTime));
   ]}
 
-
   
 // /* Plans */
 // +confirmCreatedAuction(Id): true <- .print("Auction id: ", Id).

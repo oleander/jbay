@@ -1,13 +1,19 @@
+import java.util.LinkedList;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import apapl.Environment;
 import apapl.ExternalActionFailedException;
 import apapl.data.APLFunction;
 import apapl.data.APLIdent;
+import apapl.data.APLList;
 import apapl.data.APLNum;
 import apapl.data.APLVar;
 import apapl.data.Term;
 
 
-public class AuctionEnvironment extends Environment {
+public class AuctionEnvironment extends Environment implements ChangeListener {
     private final boolean log = true;
 	private Auctions auctions = Auctions.getInstance();
     
@@ -46,9 +52,19 @@ public class AuctionEnvironment extends Environment {
         // throwEvent(event);
     }
 
-    public Term createAuction(String mediator, APLVar user, APLVar desc, APLNum minPrice, APLNum endTime) {
-        System.out.println("createAuction was called");
-        return null;
+    /*
+        Creates an auction
+        Called by: Mediator
+        Returns: An auction id
+    */
+    public Term createAuction(String mediator, APLIdent seller, APLIdent description, APLNum minPrice, APLNum endTime) throws ExternalActionFailedException {
+        LinkedList result = new LinkedList();
+        Auction auction = new Auction(description.getName(), minPrice.toInt(), endTime.toInt(), seller.toString(), this);
+        APLNum id = new APLNum(this.auctions.store(auction));
+        result.add(id);
+        System.out.println("createAuction was called: " + id.toInt());
+
+        return new APLList(result);
     }
 
     /**
@@ -133,6 +149,25 @@ public class AuctionEnvironment extends Environment {
     //     }
     // }
 
+    @Override
+    public void stateChanged(ChangeEvent e){
+        Auction auction = (Auction) e.getSource();
+        // TODO: Fix this
+        System.out.println("Auction has ended");
+        // logger.info("Highest : " + auction.getHigestBid());
+        // /*String bidders = new ESB("[", "]").insert(auction.getBidders());
+        // String perc = new ESB("auctionEnded").insert(auction, auction.getSeller(), bidders);
+        // logger.info("state changed" + perc);        
+        // addPercept("mediator", Literal.parseLiteral(perc));*/
+        
+        // addPercept("mediator",Literal.parseLiteral(new ESB("auctionEnded").
+        //     insert(auction, auction.getSeller(), auction.getHigestBid().getBidder())));
+
+        
+        // for (String loser : auction.getLosersOfAuction()) {
+        //     addPercept("mediator", Literal.parseLiteral(new ESB("auctionLost").insert(auction, loser)));            
+        // }
+    }
     private void log(String str) {
         if (log) System.out.println(str);
     }

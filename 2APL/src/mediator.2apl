@@ -1,4 +1,5 @@
 pcrules:
-  message(User, request, _, _, createAuction(Desc, MinPrice, EndTime)) <- true | {[ 
-    print("Just got a message from ");
-  ]}
+  message(Seller, request, _, _, createAuction(Desc, MinPrice, EndTime)) <- true | {
+    @auction(createAuction(Seller, Desc, MinPrice, EndTime), R);
+    print(R);
+  }
