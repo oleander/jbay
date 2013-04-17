@@ -1,6 +1,6 @@
 goals:
-	sendMessage.
-	
+  sendMessage.
+  
 pgrules:
-	sendMessage <- true |
-	{[send(mediator, inform, greeting(hej)); dropGoal(sendMessage);]}
+  sendMessage <- true |
+  {[send(mediator, inform, "hej"); dropgoal(sendMessage);]}
