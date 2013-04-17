@@ -64,45 +64,6 @@ public class AuctionEnvironment extends Environment implements ChangeListener {
         return id;
     }
 
-    /**
-     * External actions of agents can be caught by defining methods that have a Term as return value.
-     * This method can be called by a 2APL agents as follows: \@env(square(5), X).
-     * X will now contain the return value, in this case 25.
-     * @param agName The name of the agent that does the external action
-     * @param num The num to calculate the square of, coded in an APLNum
-     * @return The square of the input, coded in an APLNum
-     */
-    public Term square(String agName, APLNum aplNum) throws ExternalActionFailedException {
-        int num = aplNum.toInt();
-        
-        log("env> agent " + agName + " requests the square of " + num + ".");
-            
-        try {
-            return new APLNum(num*num);
-        } catch (Exception e) {
-            //exception handling
-            System.err.println("env> external action square() of " + agName + " failed: " +e.getMessage());
-            return null;
-        }
-    } 
-
-    // public void addAuctionHander(List<Term> terms){
-    //     if(terms.size() != 5){
-    //         throw new IllegalArgumentException("Auction#addAuction takes 5 arguments");
-    //     }
-
-    //     String description = terms.get(0).toString();
-    //     String type        = terms.get(1).toString();
-    //     int minPrice       = Integer.parseInt(terms.get(2).toString());
-    //     int endTime        = Integer.parseInt(terms.get(3).toString());
-    //     String seller      = terms.get(4).toString();
-
-    //     Auction auction = new Auction(description, minPrice, type, endTime, seller, this);
-    //     int id = this.auctions.store(auction);
-    //     addPercept("mediator", Literal.parseLiteral(new ESB("confirmCreatedAuction").insert(id, seller)));
-    // }
-
-
     /*
         @terms
             @query String Search query
