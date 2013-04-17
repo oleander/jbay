@@ -1,5 +1,5 @@
 <apaplmas>
-    <environment name="auction" file="../env.jar"/>
+    <environment name="auction" file="../auction.jar"/>
     <agent name="bidder" file="bidder.2apl"/>
     <agent name="seller" file="seller.2apl"/>
     <agent name="mediator" file="mediator.2apl"/>
