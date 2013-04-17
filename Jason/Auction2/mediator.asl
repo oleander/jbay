@@ -22,8 +22,15 @@
   .send(Bidder, tell, confirmCreatedBid(AuctionId, Price));
   notifyEveryOneAboutNewBid(AuctionId, Bidder).
   
-+auctionEnded(auction(description, type, minPrice, endTime), Seller) 
-  <- .print("Auction ", Descr, " has ended.").
++auctionEnded(auction(Description, Type, MinPrice, EndTime, ID, MinimumBid), Seller, Winner) 
+  <- .print("Auction ", Description, " has ended.");
+  		.send(Seller, tell, auctionEnded(auction(Description, Type, MinPrice, EndTime, ID, MinimumBid), Winner));
+		.send(Winner, tell, auctionWon(auction(Description, Type, MinPrice, EndTime, ID, MinimumBid))).
+		
++auctionLost(auction(Description, Type, MinPrice, EndTime, ID, MinimumBid), Loser)
+	<- .print(Loser, " lost an auction");
+		.send(Loser, tell, auctionLost(auction(Description, Type, MinPrice, EndTime, ID, MinimumBid))).
+  
 
 +!createAuction(Descr, Type, MinPrice, EndTime)[source(S)] <- 
     .print("Received request from ", S,  ": ", Descr, Type, MinPrice, EndTime);
@@ -32,4 +39,4 @@
 
 +!makeBid(Id, NewPrice)[source(Bidder)] <-
   .print(Bidder, " just bid ", NewPrice, " on auction ", Id);
-  makeBind(Id, NewPrice, Bidder).
+  makeBid(Id, NewPrice, Bidder).

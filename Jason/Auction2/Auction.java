@@ -47,9 +47,12 @@ public class Auction implements Serializable, Runnable {
 
     @Override
     public String toString() {
-		return toString(description, type, minPrice, endTime, id, getMinimumBidValue());
+		return new ESB("auction").insert(description, type,
+			minPrice, endTime, id, getMinimumBidValue());
+		
+		//return toString(description, type, minPrice, endTime, id, getMinimumBidValue());
     }
-	
+	/*
 	private String toString(Object... variables) {
 		StringBuilder sb = new StringBuilder("auction(");
 		for(Object variable : variables){
@@ -57,7 +60,7 @@ public class Auction implements Serializable, Runnable {
 		}
 		sb.setCharAt(sb.length() - 1, ')');
 		return sb.toString();
-	}
+	}*/
 
     public boolean isValid() {
         return true;
@@ -130,6 +133,25 @@ public class Auction implements Serializable, Runnable {
     public ArrayList<Bid> getBids(){
         return this.bids;
     }
+	
+	public ArrayList<String> getLosersOfAuction() {
+			ArrayList<String> losers = new ArrayList<String>();			
+			for (Bid bid : bids) {
+				String bidder = bid.getBidder();
+				if( !(bidder.equals(getHigestBid().getBidder()) || losers.contains(bidder)) ) {
+					losers.add(bidder);										
+				}				
+			}
+		return losers; 
+	}
+	
+	public ArrayList<String> getBidders() {
+		ArrayList<String> bidders = new ArrayList<String>();
+		for (Bid bid : bids) {
+			bidders.add(bid.getBidder());
+		}
+		return bidders;
+	}
 
     public int getEndTime(){
         return this.endTime;

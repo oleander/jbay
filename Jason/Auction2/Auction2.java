@@ -4,11 +4,7 @@ import jason.asSyntax.*;
 import jason.environment.*;
 import java.util.Map.Entry;
 import java.util.logging.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.ArrayList;
 import java.util.*;
-import java.util.LinkedList;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent; 
 
@@ -32,6 +28,7 @@ public class Auction2 extends Environment implements ChangeListener {
             @type String
             @endTime Integer
             @seller String
+        @return Integer Unique id for auction
     */
     public void addAuctionHander(List<Term> terms){
         if(terms.size() != 5){
@@ -46,79 +43,23 @@ public class Auction2 extends Environment implements ChangeListener {
 
         Auction auction = new Auction(description, minPrice, type, endTime, seller, this);
         int id = this.auctions.store(auction);
-        addPercept("mediator", Literal.parseLiteral("confirmCreatedAuction(" + id + ", " + seller +")"));
+        addPercept("mediator", Literal.parseLiteral(new ESB("confirmCreatedAuction").insert(id, seller)));
     }
-    
-    /*
-        @terms
-            @auctionId Integer
-            @newPrice Integer
-            @bidder String
-    */
-    public void makeBidHandler(List<Term> terms){
-        if(terms.size() != 3){
-            throw new IllegalArgumentException("Auction#makeBindHandler takes 3 arguments");
-        }
-
-        int auctionId = Integer.parseInt(terms.get(0).toString());
-        int newPrice  = Integer.parseInt(terms.get(1).toString());
-        String bidder = terms.get(2).toString();
-
-        Auction auction = this.auctions.findByid(auctionId);
-        if(auction == null){
-            throw new IllegalArgumentException("Auction width id " + auctionId + " was not found");
-        }
-
-        Bid bid = new Bid(auctionId, newPrice, bidder);
-        boolean status = false;
-
-        try {
-            status = auction.makeBid(bid);
-        } catch(Exception e) {
-            // TODO: Send status to mediator
-            // Auction was locked
-            status = false;
-        }
-
-        if(!status){
-            // TODO: Send proper responds to mediator
-            throw new IllegalArgumentException("Invalid bid was made on auction " + auctionId);
-        }
-
-        addPercept("mediator", Literal.parseLiteral("confirmCreatedBid(" + auctionId + ", " + bidder + ", " + newPrice +")"));
-    }
-
-    /*
-        @terms
-            @auctionId Integer
-            @previousBidder String
-    */
-    public void notifyEveryOneAboutNewBidHandler(List<Term> terms) {
-        if(terms.size() != 2){
-            throw new IllegalArgumentException("Auction#notifyEveryOneAboutNewBidHandler takes 2 arguments");
-        }
-
-        int auctionId           = Integer.parseInt(terms.get(0).toString());
-        String previousBidder   = terms.get(1).toString();
-        Auction auction         = this.auctions.findByid(auctionId);
-        int currentHighestPrice = auction.getHigestBidPrice();
-
-        for(Bid bid : auction.getBids()) {
-            // We do not want to notify new bidder about new bidds
-            if(!bid.getBidder().equals(previousBidder)) {
-                addPercept(bid.getBidder(), Literal.parseLiteral("notifyNotHighestBidder(" + auctionId + ", " + currentHighestPrice +")"));
-            }
-        }
-
-        addPercept(auction.getSeller(), Literal.parseLiteral("notifySellerAboutNewBid(" + auctionId + ", " + currentHighestPrice + ", " + previousBidder +")"));
-    }
-    
-    @Override
-    public void stateChanged(ChangeEvent e){
+	
+	@Override
+	public void stateChanged(ChangeEvent e){
         Auction auction = (Auction) e.getSource();
-        logger.info("state changed");
-        addPercept("mediator", Literal.parseLiteral("auctionEnded(" + auction + "," + auction.getSeller() + ")"));
+        logger.info("Highest : " + auction.getHigestBid());
+		
+        addPercept("mediator",Literal.parseLiteral(new ESB("auctionEnded").
+        insert(auction, auction.getSeller(), auction.getHigestBid().getBidder())));
+		
+        for (String loser : auction.getLosersOfAuction()) {
+            addPercept("mediator", Literal.parseLiteral(new ESB("auctionLost").insert(auction, loser)));			
+        }
     }
+	
+	
     
     /*
         @terms
@@ -132,7 +73,7 @@ public class Auction2 extends Environment implements ChangeListener {
 
         String query = terms.get(0).toString();
         int maxPrice = Integer.parseInt(terms.get(1).toString());
-        String agent = terms.get(2).toString();
+		String agent = terms.get(2).toString();
 
         ArrayList<Auction> returnedAuctions = new ArrayList<Auction>();
         ArrayList<Auction> foundAuctions = this.auctions.search(query);
@@ -142,12 +83,31 @@ public class Auction2 extends Environment implements ChangeListener {
                 returnedAuctions.add(auction);
             }
         }
-        
+		
         Auction auction = returnedAuctions.get(0);
-        
+		
         logger.info(("searchResult(" + auction + "," + agent +")"));
         addPercept("searcher", Literal.parseLiteral("searchResult(" + auction + "," + agent +")"));
     }
+	
+	public void makeBidHandler(List<Term> terms) {
+		int id = Integer.parseInt(terms.get(0).toString());
+		int newPrice = Integer.parseInt(terms.get(1).toString());
+		String bidder = terms.get(2).toString();
+		
+		Auction auction = auctions.findById(id);
+		Bid bid = new Bid(id, newPrice, bidder);
+		try {
+			Bid previousBid = auction.getHigestBid();
+			//Bid was accepted and this was not the first bid
+			if (auction.makeBid(bid) && previousBid != null) {
+				String previousBidder = previousBid.getBidder();
+				addPercept(previousBidder, Literal.parseLiteral(new ESB("notifyNotHighestBidder").insert(id, newPrice)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
     @Override
 
@@ -155,15 +115,17 @@ public class Auction2 extends Environment implements ChangeListener {
         List<Term> terms = action.getTerms();
         switch(action.getFunctor()){
             case "addAuction":
-                this.addAuctionHander(terms); break;
+                this.addAuctionHander(terms);
+				break;
             case "searchAuctions":
-                searchAuctionHandler(terms); break;
-            case "makeBind":
-                makeBidHandler(terms); break;
-            case "notifyEveryOneAboutNewBid":
-                notifyEveryOneAboutNewBidHandler(terms); break;
+                searchAuctionHandler(terms); 
+                break;
+			case "makeBid":
+				makeBidHandler(terms);
+				break;
             default:
-                logger.info("executing: "+action+", but not implemented!"); break;
+                logger.info("executing: "+action+", but not implemented!");
+				break;
         }
 
         return true;

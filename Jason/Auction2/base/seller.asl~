@@ -12,6 +12,3 @@
 +!requestAuction(Descr, Type, MinPrice, EndTime) <-
   .print("Sending request to ", mediator, " ", Descr, Type, MinPrice, EndTime);
   .send(mediator, achieve, createAuction(Descr, Type, MinPrice, EndTime)).
-  
-+auctionEnded(auction(Description, Type, MinPrice, EndTime, ID, MinimumBid), Winner)
-<- .print("My auction just ended with winner: ", Winner).
