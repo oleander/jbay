@@ -9,6 +9,7 @@ import apapl.data.Term;
 
 public class AuctionEnvironment extends Environment {
     private final boolean log = true;
+	private Auctions auctions = Auctions.getInstance();
     
     public static void main(String [] args) {
         System.out.println("AuctionEnvironment has been loaded");
@@ -70,7 +71,67 @@ public class AuctionEnvironment extends Environment {
             System.err.println("env> external action square() of " + agName + " failed: " +e.getMessage());
             return null;
         }
-    }  
+    } 
+
+    // public void addAuctionHander(List<Term> terms){
+    //     if(terms.size() != 5){
+    //         throw new IllegalArgumentException("Auction#addAuction takes 5 arguments");
+    //     }
+
+    //     String description = terms.get(0).toString();
+    //     String type        = terms.get(1).toString();
+    //     int minPrice       = Integer.parseInt(terms.get(2).toString());
+    //     int endTime        = Integer.parseInt(terms.get(3).toString());
+    //     String seller      = terms.get(4).toString();
+
+    //     Auction auction = new Auction(description, minPrice, type, endTime, seller, this);
+    //     int id = this.auctions.store(auction);
+    //     addPercept("mediator", Literal.parseLiteral(new ESB("confirmCreatedAuction").insert(id, seller)));
+    // }
+
+
+    /*
+        @terms
+            @query String Search query
+            @maxPrice Integer
+    */
+    // public void searchAuctionHandler(List<Term> terms){
+    //     if(terms.size() != 3){
+    //         throw new IllegalArgumentException("Auction#searchAuctions takes 3 arguments");
+    //     }
+
+    //     String query = terms.get(0).toString();
+    //     int maxPrice = Integer.parseInt(terms.get(1).toString());
+    //     String agent = terms.get(2).toString();
+
+    //     ArrayList<Auction> returnedAuctions = new ArrayList<Auction>();
+    //     ArrayList<Auction> foundAuctions = this.auctions.search(query);
+
+    //     for(Auction auction : foundAuctions) {
+    //         if(auction.getHigestBidPrice() < maxPrice){
+    //             returnedAuctions.add(auction);
+    //         }
+    //     }
+        
+    //     Auction auction = returnedAuctions.get(0);
+        
+    //     logger.info(("searchResult(" + auction + "," + agent +")"));
+    //     addPercept("searcher", Literal.parseLiteral("searchResult(" + auction + "," + agent +")"));
+    // }
+
+    // public void makeBid(List<Term> terms) {
+    //     int id = Integer.parseInt(terms.get(0).toString());
+    //     int newPrice = Integer.parseInt(terms.get(1).toString());
+    //     String bidder = terms.get(2).toString();
+        
+    //     Auction auction = auctions.findById(id);
+    //     Bid bid = new Bid(id, newPrice, bidder);
+    //     try {
+    //         auction.makeBid(bid);
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 
     private void log(String str) {
         if (log) System.out.println(str);
