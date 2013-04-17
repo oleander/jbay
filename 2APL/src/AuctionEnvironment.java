@@ -3,6 +3,7 @@ import apapl.ExternalActionFailedException;
 import apapl.data.APLFunction;
 import apapl.data.APLIdent;
 import apapl.data.APLNum;
+import apapl.data.APLVar;
 import apapl.data.Term;
 
 
@@ -43,7 +44,12 @@ public class AuctionEnvironment extends Environment {
         // note: we can also throw an event to all agents by letting out the last parameter: 
         // throwEvent(event);
     }
-    
+
+    public Term createAuction(String mediator, APLVar user, APLVar desc, APLNum minPrice, APLNum endTime) {
+        System.out.println("createAuction was called");
+        return null;
+    }
+
     /**
      * External actions of agents can be caught by defining methods that have a Term as return value.
      * This method can be called by a 2APL agents as follows: \@env(square(5), X).

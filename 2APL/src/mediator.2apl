@@ -1,3 +1,4 @@
 pcrules:
-  message(User, inform, _, _, testing(Something)) <- true |
-    {[ print("Just got a message from "); print(User); print(" saying "); print(Something); ]}
+  message(User, request, _, _, createAuction(Desc, MinPrice, EndTime)) <- true | {[ 
+    print("Just got a message from ");
+  ]}
