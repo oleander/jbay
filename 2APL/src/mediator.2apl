@@ -1,3 +1,3 @@
 pcrules:
-  message(User, inform, Message) <- true |
-    {[ print("Just got a message from "); print(User); print(" saying "); print(Message);]}
+  message(User, inform, _, _, testing(Something)) <- true |
+    {[ print("Just got a message from "); print(User); print(" saying "); print(Something); ]}

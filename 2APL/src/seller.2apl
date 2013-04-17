@@ -3,4 +3,4 @@ goals:
   
 pgrules:
   sendMessage <- true |
-  {[send(mediator, inform, "hej"); dropgoal(sendMessage);]}
+  {[send(mediator, inform, testing("pelle")); dropgoal(sendMessage); ]}
