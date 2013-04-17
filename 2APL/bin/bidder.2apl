@@ -1,4 +1,0 @@
-pcrules:
-  message(User, inform, Message) <- true | {
-    [print("Just got a from", User)]
-  }

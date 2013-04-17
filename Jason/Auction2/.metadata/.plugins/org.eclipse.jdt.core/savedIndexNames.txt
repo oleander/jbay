@@ -1,1 +1,0 @@
-INDEX VERSION 1.126+C:\Users\Daniel\Auction2\.metadata\.plugins\org.eclipse.jdt.core

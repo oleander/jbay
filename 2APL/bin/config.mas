@@ -1,5 +1,0 @@
-<apaplmas>
-    <environment name="env" file="../env.jar"/>
-    <agent name="bidder" file="bidder.2apl"/>
-    <agent name="seller" file="seller.2apl"/>
-</apaplmas>
