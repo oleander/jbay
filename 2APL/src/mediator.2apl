@@ -1,0 +1,3 @@
+pgrules:
+	message(User, inform, greeting(Message)) <- true |
+		{[ print("Just got a message from "); print(User); print(" saying "); print(Message);]}	
