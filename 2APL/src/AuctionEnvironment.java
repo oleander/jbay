@@ -58,13 +58,10 @@ public class AuctionEnvironment extends Environment implements ChangeListener {
         Returns: An auction id
     */
     public Term createAuction(String mediator, APLIdent seller, APLIdent description, APLNum minPrice, APLNum endTime) throws ExternalActionFailedException {
-        LinkedList result = new LinkedList();
         Auction auction = new Auction(description.getName(), minPrice.toInt(), endTime.toInt(), seller.toString(), this);
         APLNum id = new APLNum(this.auctions.store(auction));
-        result.add(id);
         System.out.println("createAuction was called: " + id.toInt());
-
-        return new APLList(result);
+        return id;
     }
 
     /**

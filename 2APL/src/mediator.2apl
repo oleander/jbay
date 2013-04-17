@@ -1,5 +1,5 @@
 pcrules:
   message(Seller, request, _, _, createAuction(Desc, MinPrice, EndTime)) <- true | {
-    @auction(createAuction(Seller, Desc, MinPrice, EndTime), R);
-    print(R);
+    @auction(createAuction(Seller, Desc, MinPrice, EndTime), AuctionId);
+    print(AuctionId);
   }
