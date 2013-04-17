@@ -2,9 +2,6 @@ goals:
   requestAuction("An awesome car", 2000, 10).
   
 pgrules:
-  sendMessage <- true |
-  {[send(mediator, inform, testing("pelle")); dropgoal(sendMessage); ]}
-
   requestAuction(Desc, MinPrice, EndTime) <- true | {[
     send(mediator, request, createAuction(Desc, MinPrice, EndTime));
     dropgoal(requestAuction(Desc, MinPrice, EndTime));
